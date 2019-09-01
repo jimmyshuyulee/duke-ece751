@@ -1,0 +1,19 @@
+Grading at 09/01/2019:04:19:21.104426
+For commit ID 5cd672e596c4b5da08c7e812c56aaafddb0c776f
+Grading at Sun Sep  1 00:19:20 EDT 2019
+Thank you for submitting random story!
+This assignment is not yet due, so we aren't grading it yet.
+However, we will do some basic sanity checking to avoid careless mistake..
+You have a Makefile--great!
+Trying to run 'make'
+gcc -o rand_story -std=gnu99 -pedantic -Wall -Werror -ggdb3 main.o
+make succeeded--great!
+make produced rand_story---great!
+Trying to the testcase in the README to sanity check your output...
+  - Valgrind was clean (no errors, no memory leaks)
+Your file matched the expected output
+You have the same output on the textcase in the README
+NOTE: you should do your own more extensive testing!
+We will use many more testcases when we grade!
+
+Overall Grade: NO GRADE YET
