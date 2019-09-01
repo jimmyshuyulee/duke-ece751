@@ -72,5 +72,10 @@ these, making sure it handles a variety of invalid inputs by printing
 an appropriate error message and exiting failure. As always, it should
 valgrind cleanly for full credit.
 
-Note that your program MUST be compilable with the provide Makefile.
-You may not change this Makefile.
+Note that you MUST submit a Makefile that compiles your program
+to a binary called rand_story as its default target.
+That is, we should be able to do
+
+make
+
+and produce rand_story and be able to run it.
