@@ -1,0 +1,14 @@
+Grading at 09/05/2019:01:58:17.848529
+For commit ID b172ff57d5086e0355bd4b722cfcd06d02845e1c
+Grading at Wed Sep  4 21:58:17 EDT 2019
+Attempting to compile:
+g++ -o code code.cpp
+Your Makefile produced a binary called 'code'
+Line_12_did_not_match
+Line_13_did_not_match
+Line_14_did_not_match
+Line_15_did_not_match
+Your file did not match the expected ouput
+Your output did not match what we expected.
+
+Overall Grade: FAILED
