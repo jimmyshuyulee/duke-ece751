@@ -1,6 +1,6 @@
-Grading at 09/06/2019:20:08:47.313510
+Grading at 09/06/2019:20:11:09.708149
 For commit ID 5cd672e596c4b5da08c7e812c56aaafddb0c776f
-Grading at Fri Sep  6 16:07:54 EDT 2019
+Grading at Fri Sep  6 16:10:17 EDT 2019
 running passed-in stu_imp ./rand_story
 [32mSuccessfully compiled .[0m
 ********************test case 1********************
