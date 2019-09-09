@@ -5,8 +5,8 @@
 
 #include "catarray.h"
 
+//returns the index of a particular category in a catarray_t *
 size_t catIndex(catarray_t * words, char * cat) {
-  //returns the index of a particular category in a catarray_t *
   for (int i = 0; i < words->n_cats; i++)
     if (strcmp(words->catlist[i]->category, cat) == 0)
       return i;
@@ -14,8 +14,8 @@ size_t catIndex(catarray_t * words, char * cat) {
   return -1;
 }
 
+//adds a new category to a catarray_t *
 size_t addCat(catarray_t * words, char * cat) {
-  //adds a new category to a catarray_t *
   size_t cat_len = ++words->n_cats;
   words->catlist = realloc(words->catlist, sizeof(*(words->catlist)) * cat_len);
 
@@ -29,16 +29,16 @@ size_t addCat(catarray_t * words, char * cat) {
   return cat_len - 1;
 }
 
+//adds a new word to an existing category
 void addWordToCat(catarray_t * words, char * word, int idx) {
-  //adds a new word to an existing category
   size_t word_len = ++words->catlist[idx]->n_words;
   words->catlist[idx]->wordlist = realloc(
       words->catlist[idx]->wordlist, sizeof(*(words->catlist[idx]->wordlist)) * word_len);
   words->catlist[idx]->wordlist[word_len - 1] = word;
 }
 
+//adds a words to a category in a catarray_t *
 void addWord(catarray_t * words, char * line) {
-  //adds a words to a category in a catarray_t *
   char * p = strchr(line, '\n');
   if (p != NULL)
     *p = '\0';
@@ -58,12 +58,10 @@ void addWord(catarray_t * words, char * line) {
   addWordToCat(words, new_word, index);
 }
 
-void parseLine() {
-  //handles one line read from the template file
-  ;
-}
-
-void handleUsedlist(usedlist_t * usedlist, char * word) {
+//replaces a blank with the appropriate words
+//and handle the usedlist
+void replaceBlank(usedlist_t * usedlist, char * word) {
+  printf("%s", word);
   usedlist->wordlist =
       realloc(usedlist->wordlist, sizeof(*(usedlist->wordlist)) * ++(usedlist->n_words));
   char * used = malloc(sizeof(char) * (strlen(word) + 1));
@@ -71,8 +69,8 @@ void handleUsedlist(usedlist_t * usedlist, char * word) {
   usedlist->wordlist[usedlist->n_words - 1] = used;
 }
 
-void replaceBlank(char * line, catarray_t * words, usedlist_t * usedlist) {
-  //replaces a single blank with the appropriate word
+//handles one line read from the template file
+void parseLine(char * line, catarray_t * words, usedlist_t * usedlist) {
   char * start = strchr(line, '_');
   char * last = NULL;
   if (start == NULL) {
@@ -85,38 +83,40 @@ void replaceBlank(char * line, catarray_t * words, usedlist_t * usedlist) {
   cat[start - line] = '\0';
   printf("%s", cat);
 
-  while ((last = strchr(start + 1, '_')) != NULL) {
+  while ((last = strchr(start + 1, '_')) !=
+         NULL) {  //handle the remaining part of the story
     cat = realloc(cat, sizeof(*cat) * (last - start + 1));
     strncpy(cat, start, last - start);
     cat[last - start] = '\0';
-    size_t flag = 0;
+    size_t is_a_valid_category = 0;
     char * remain;
     long int previous = strtol(cat + 1, &remain, 10);
     if (previous > 0 && !*remain) {
-      assert(previous <= usedlist->n_words);
-      printf("%s", usedlist->wordlist[(usedlist->n_words) - previous]);  // here
-      handleUsedlist(usedlist, usedlist->wordlist[(usedlist->n_words) - previous]);
-      flag = 1;
+      if (previous <= usedlist->n_words) {
+        printf("Number refers past beginning of story.");
+        exit(EXIT_FAILURE);
+      }
+      replaceBlank(usedlist, usedlist->wordlist[(usedlist->n_words) - previous]);
+      is_a_valid_category = 1;
       start = last + 1;
     }
     else {
       for (int i = 0; i < words->n_cats; i++) {
         if (strcmp(cat + 1, words->catlist[i]->category) == 0) {
           size_t num = rand() % words->catlist[i]->n_words;
-          printf("%s", words->catlist[i]->wordlist[num]);
-          handleUsedlist(usedlist, words->catlist[i]->wordlist[num]);
-          flag = 1;
+          replaceBlank(usedlist, words->catlist[i]->wordlist[num]);
+          is_a_valid_category = 1;
           start = last + 1;
           break;
         }
       }
     }
-    if (!flag) {
+    if (!is_a_valid_category) {
       printf("%s", cat);
       start = last;
     }
   }
-  printf("%s", start);
+  printf("%s", start);  //print the last part
   free(cat);
 }
 
@@ -143,9 +143,8 @@ void readStory(FILE * f, catarray_t * words) {
   usedlist_t * usedlist = malloc(sizeof(*usedlist));
   usedlist->wordlist = NULL;
   usedlist->n_words = 0;
-  //  parseLine();
   while (getline(&line, &sz, f) >= 0) {
-    replaceBlank(line, words, usedlist);
+    parseLine(line, words, usedlist);
     free(line);
     line = NULL;
   }
