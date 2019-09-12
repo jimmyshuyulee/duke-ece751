@@ -87,14 +87,14 @@ IntMatrix IntMatrix::operator+(const IntMatrix & rhs) const {
 
 std::ostream & operator<<(std::ostream & s, const IntMatrix & rhs) {
   if (rhs.getRows() == 0) {
-    std::cout << "[]";
+    std::cout << "[  ]";
   }
   else {
-    std::cout << "[ " << rhs[0];
-    for (int i = 1; i < rhs.getRows(); i++) {
-      std::cout << std::endl << rhs[i];
+    std::cout << "[ ";
+    for (int i = 0; i < rhs.getRows() - 1; i++) {
+      std::cout << rhs[i] << "," << std::endl;
     }
-    std::cout << " ]";
+    std::cout << rhs[rhs.getRows() - 1] << " ]";
   }
   return s;
 }
