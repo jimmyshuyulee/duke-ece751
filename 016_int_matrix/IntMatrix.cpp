@@ -27,9 +27,7 @@ IntMatrix & IntMatrix::operator=(const IntMatrix & rhs) {
     IntArray ** temp = new IntArray *[rhs.numRows];
     for (int i = 0; i < rhs.numRows; i++) {
       temp[i] = new IntArray(rhs.numColumns);
-      for (int j = 0; j < rhs.numColumns; j++) {
-        (*temp[i])[j] = rhs[i][j];
-      }
+      *temp[i] = rhs[i];
     }
 
     for (int i = 0; i < numRows; i++) {
@@ -65,12 +63,11 @@ bool IntMatrix::operator==(const IntMatrix & rhs) const {
     return false;
   }
   for (int i = 0; i < numRows; i++) {
-    for (int j = 0; j < numColumns; j++) {
-      if (rhs[i][j] != (*this)[i][j]) {
-        return false;
-      }
+    if (rhs[i] != (*this)[i]) {
+      return false;
     }
   }
+
   return true;
 }
 
