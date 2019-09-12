@@ -1,6 +1,6 @@
-Grading at 09/12/2019:03:09:22.034848
-For commit ID 4961161945e377a1d09eded14eb168c9287fc751
-Grading at Wed Sep 11 23:09:05 EDT 2019
+Grading at 09/12/2019:03:23:18.861136
+For commit ID 4110eecf66f348f5e5c66d4510fcf76d45a97ba6
+Grading at Wed Sep 11 23:23:02 EDT 2019
 Attempting to compile:
 rm -f *.o  *~ intMatrixTest
 #################################################
@@ -30,26 +30,38 @@ valgrind was clean
 #################################################
 testcase5:
 rows=10 cols = 0
-Your output is incorrect
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 #################################################
 testcase6:
 rows=10 cols = 10
-Your output is incorrect
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 #################################################
 testcase7:
 rows=100 cols = 0
-Your output is incorrect
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 #################################################
 testcase8:
 rows=100 cols = 10
-Your output is incorrect
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 #################################################
 testcase9:
 rows=1000 cols = 0
-Your output is incorrect
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 #################################################
 testcase10:
 rows=1000 cols = 10
-Your output is incorrect
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 
-Overall Grade: F
+Overall Grade: A
