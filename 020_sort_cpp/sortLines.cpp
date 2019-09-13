@@ -21,7 +21,7 @@ void read_input(istream & stream) {
   }
 }
 
-void read_file(string filename) {
+int read_file(string filename) {
   ifstream ifs(filename);
   if (ifs.is_open()) {
     read_input(ifs);
@@ -29,8 +29,9 @@ void read_file(string filename) {
   }
   else {
     //    cout << "Cannot open the file." << endl;
-    exit(EXIT_FAILURE);
+    return 0;
   }
+  return 1;
 }
 
 int main(int argc, char ** argv) {
@@ -39,7 +40,10 @@ int main(int argc, char ** argv) {
   }
   else {
     for (int i = 1; i < argc; ++i) {
-      read_file(argv[i]);
+      int success = read_file(argv[i]);
+      if (!success) {
+        return EXIT_FAILURE;
+      }
     }
   }
   return EXIT_SUCCESS;
