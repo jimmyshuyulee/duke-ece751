@@ -7,10 +7,10 @@
 
 using namespace std;
 
-void read_input() {
+void read_input(istream & stream) {
   string line;
   vector<string> input_lines;
-  while (getline(cin, line)) {
+  while (getline(stream, line)) {
     input_lines.push_back(line);
   }
 
@@ -25,16 +25,7 @@ void read_file(string filename) {
   ifstream ifs(filename);
   vector<string> input_lines;
   if (ifs.is_open()) {
-    string line;
-    while (getline(ifs, line)) {
-      input_lines.push_back(line);
-    }
-
-    sort(input_lines.begin(), input_lines.end());
-
-    for (int i = 0; i < input_lines.size(); ++i) {
-      cout << input_lines[i] << endl;
-    }
+    read_input(ifs);
     ifs.close();
   }
   else {
@@ -45,7 +36,7 @@ void read_file(string filename) {
 
 int main(int argc, char ** argv) {
   if (argc == 1) {
-    read_input();
+    read_input(cin);
   }
   else {
     for (int i = 1; i < argc; ++i) {
