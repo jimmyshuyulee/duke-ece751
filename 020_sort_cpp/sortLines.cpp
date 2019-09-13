@@ -28,7 +28,7 @@ void read_file(string filename) {
     ifs.close();
   }
   else {
-    cout << "Cannot open the file." << endl;
+    //    cout << "Cannot open the file." << endl;
     exit(EXIT_FAILURE);
   }
 }
@@ -41,7 +41,6 @@ int main(int argc, char ** argv) {
     for (int i = 1; i < argc; ++i) {
       read_file(argv[i]);
     }
-    cout << "Processed all of the files" << endl;
   }
   return EXIT_SUCCESS;
 }
