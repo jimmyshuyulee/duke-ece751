@@ -23,13 +23,12 @@ void read_input(istream & stream) {
 
 void read_file(string filename) {
   ifstream ifs(filename);
-  vector<string> input_lines;
   if (ifs.is_open()) {
     read_input(ifs);
     ifs.close();
   }
   else {
-    cout << "Cannot open the file.";
+    cout << "Cannot open the file." << endl;
     exit(EXIT_FAILURE);
   }
 }
@@ -42,6 +41,7 @@ int main(int argc, char ** argv) {
     for (int i = 1; i < argc; ++i) {
       read_file(argv[i]);
     }
+    cout << "Processed all of the files" << endl;
   }
   return EXIT_SUCCESS;
 }
