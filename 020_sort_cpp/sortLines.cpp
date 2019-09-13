@@ -28,7 +28,7 @@ int read_file(string filename) {
     ifs.close();
   }
   else {
-    //    cout << "Cannot open the file." << endl;
+    cerr << "Cannot open the file." << endl;
     return 0;
   }
   return 1;
