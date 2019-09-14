@@ -1,49 +1,43 @@
-Grading at 09/14/2019:18:50:46.490482
-For commit ID ca28818566e94cea4378d89fa73a22f92452f930
-Grading at Sat Sep 14 14:50:39 EDT 2019
+Grading at 09/14/2019:18:55:13.455406
+For commit ID cc7b7c873fd5b056920dbbad273bfdf31754f72b
+Grading at Sat Sep 14 14:55:06 EDT 2019
 -----------------------------------------------
 testcase 1 : Testing with Matrix<int>
 ...compiling...
 The code compiled.
-  - Valgrind was clean (no errors, no memory leaks)
-Your file matched the expected output
-Testcase passed 
+  - Valgrind showed memory leaks
+Valgrind reported errors (test failed).
 -----------------------------------------------
 testcase 2 : Testing with Matrix<std::string>
 ...compiling...
 The code compiled.
-  - Valgrind was clean (no errors, no memory leaks)
-Your file matched the expected output
-Testcase passed 
+  - Valgrind showed memory leaks
+Valgrind reported errors (test failed).
 -----------------------------------------------
 testcase 3 : Testing with Matrix<(a custom class we wrote)>
 ...compiling...
 The code compiled.
-  - Valgrind was clean (no errors, no memory leaks)
-Your file matched the expected output
-Testcase passed 
+  - Valgrind showed memory leaks
+Valgrind reported errors (test failed).
 --------------------------------------------
 Preparing to test assert fails...
 Compiling assertion failure tester...
 Compiled.
 -----------------------------------------------
 testcase 4 :  operator[]: row number too high
-  - Valgrind was clean (no errors, no memory leaks)
-Your file matched the expected output
-Testcase passed
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
 -----------------------------------------------
 testcase 5 :  operator[]: row number too low
   - Valgrind reported errors
 Valgrind reported errors (test failed).
 -----------------------------------------------
 testcase 6 :  operator+: different number of rows
-  - Valgrind was clean (no errors, no memory leaks)
-Your file matched the expected output
-Testcase passed
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
 -----------------------------------------------
 testcase 7 :  operator+: different number of columns
-  - Valgrind was clean (no errors, no memory leaks)
-Your file matched the expected output
-Testcase passed
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
 
-Overall Grade: C
+Overall Grade: F
