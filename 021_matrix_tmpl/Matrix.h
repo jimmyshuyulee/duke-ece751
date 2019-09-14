@@ -40,12 +40,12 @@ class Matrix {
   int getColumns() const { return numColumns; }
   const vector<T> & operator[](int index) const {
     assert(index < numRows);
-    assert(index > 0);
+    assert(index >= 0);
     return rows[index];
   }
   vector<T> & operator[](int index) {
     assert(index < numRows);
-    assert(index > 0);
+    assert(index >= 0);
     return rows[index];
   }
 
