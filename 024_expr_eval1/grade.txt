@@ -1,0 +1,20 @@
+Grading at 09/16/2019:20:16:24.850651
+For commit ID fd0b68ba0f651bd043b31a5c2e36bf8924c0afee
+Grading at Mon Sep 16 16:16:22 EDT 2019
+Compiling code
+The code compiled.
+---------------------
+Test case 1
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
+---------------------
+Test case 2
+  - Valgrind reported errors
+Valgrind reported errors (test failed).
+---------------------
+Test case 3
+  - Valgrind was clean (no errors, no memory leaks)
+Your file matched the expected output
+Testcase passed 
+
+Overall Grade: F
