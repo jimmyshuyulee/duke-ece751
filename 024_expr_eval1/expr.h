@@ -3,6 +3,7 @@
 
 class Expression {
  public:
+  Expression() {}
   virtual std::string toString() const = 0;
   virtual ~Expression() {}
 };
@@ -31,7 +32,10 @@ class OperationExpression : public Expression {
       lOperand(lhs),
       rOperand(rhs) {}
   virtual std::string toString() const = 0;
-  virtual ~OperationExpression() {}
+  virtual ~OperationExpression() {
+    delete lOperand;
+    delete rOperand;
+  }
 };
 
 class PlusExpression : public OperationExpression {
