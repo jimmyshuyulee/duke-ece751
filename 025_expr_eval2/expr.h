@@ -28,11 +28,12 @@ class OperationExpression : public Expression {
   Expression * rOperand;
   std::string oper;
 
- public:
   OperationExpression(Expression * lhs, Expression * rhs, std::string op) :
       lOperand(lhs),
       rOperand(rhs),
       oper(op) {}
+
+ public:
   virtual std::string toString() const {
     std::stringstream ss;
     ss << "(" << lOperand->toString() << " " << oper << " " << rOperand->toString()
