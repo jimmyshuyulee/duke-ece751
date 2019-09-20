@@ -13,6 +13,6 @@ Something(99)
 Something(99)
 ~Something(99)
 ~Something(7)
-An exception (Division by zero) occured!
+A domain error (Division by zero) occured!
 At the end of main 
 ~Something(1)
