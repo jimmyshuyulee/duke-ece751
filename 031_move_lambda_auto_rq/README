@@ -1,0 +1,225 @@
+As always, read and understand Appendix E, Section 6.1-6.8
+then answer these questions in "answers.txt".
+
+For questions 1--2, consider the following code.
+
+void f(int i) {
+    cout << "invoke f(int)" << endl;
+}
+
+void f(int* i) {
+    cout << "invoke f(int*)" << endl;
+}
+
+int main() {
+    f(0);		// Line 1
+    f(NULL);		// Line 2
+    f((int*)0);		// Line 3
+    f(nullptr);		// Line 4
+}
+
+1. Which line will cause the compiler to produce an ambiguous function call error?
+
+A. Line 1
+B. Line 2
+C. Line 3
+D. Line 4
+E. None of the above (all compile ok)
+
+2. What is the execution result of line 4?
+
+A. Compile error
+B. Print out nothing
+C. Print out "invoke f(int)"
+D. Print out "invoke f(int*)"
+E. None of the above
+
+3. What does the key word "auto" mean in C++11?
+
+A. Automatically invoke the constructor.
+B. Automatically invoke the destructor.
+C. Automatically deduce the type of variable.
+D. Automatically make a reference to an rvalue.
+
+4. Which of the following uses "auto" correctly in C++11?
+   (Note: two are legal in C++14 and later, but only one in C++11).
+   
+A. int add(auto x, auto y) { return x + y; }
+B. auto add(int x, int y) { return x + y; }
+C. auto add(int x, int y) -> int { return x + y; }
+D. auto add(auto x, auto y) { return x + y; }
+E. auto sum;
+
+5. What is the output when we execute the following code?
+
+int main() {
+    std::vector<int> myVector = {1, 2, 3, 4, 5};
+    for (auto x: myVector) {
+    	x *= 10;
+    }
+    for (auto x: myVector) {
+    	std::cout << x << ' ';
+    }
+    return 0;
+}
+
+A. 1 2 3 4 5
+B. 10 20 30 40 50 
+C. 10 200 3000 40000 500000
+D. 0 0 0 0 0
+
+6. What is lambda expression?
+
+A. A formula used in programming language
+B. A comparator 
+C. An iterator used with polymorphic datatypes
+D. An anonymous function which (potentially) captures variables from the
+   frame it was invoked in.
+
+
+For questions 7--9, consider the following code.
+
+int main() {
+    std:: vector<int> myVector = {3, 1, 4, 6, 5, -1, 0, 9, 10, 8, 14};
+	
+    std::vector<int>::iterator it = find_if(myVector.begin(), myVector.end(), 
+    			       	    	[](int i) { return i < 2; });
+    std::cout << *it << std::endl;	       	// Line 1
+
+    auto f = [] (int i) { return i * i; };
+    std::cout << f(5) << std::endl;		// Line 2
+
+    int result = [](int m, int n) -> int { return m + n; } 
+    	       	        ([](int a) -> int { return a+1; }(5),
+                         [](int a) -> int { return -a; }(3));
+    cout << result << endl;	     	       // Line 3
+
+    return 0;
+}
+
+7. What is the output of line 1?
+
+A. -1
+B. 1
+C. 0
+D. 3
+
+8. What is the output of line 2?
+
+A. 0
+B. 5
+C. 10
+D. 25
+
+9. What is the output of line 3?
+
+A. 0
+B. 2
+C. 3
+D. 5
+
+10. Which of the following is accurate with regards to move semantics?
+
+A. Convert an rvalue to an lvalue.
+B. Convert an lvalue to an rvalue.
+C. Transfer the ownership of resources from one object to another instead of copying them.
+D. Move resources allocation from the heap to the stack.
+
+11. Which of the following describes conditions under which the use of move
+    semantics is appropriate?
+
+A. The source object will not be used before it is deallocated.
+B. The destination object is freshly allocated.
+C. The heap is full.
+D. None of the above are appropriate conditions to use move semantics.
+
+12. Which of the following is incorrect about copy constructor and move constructor?
+
+A. A move constructor makes a shallow copy.
+B. A copy constructor makes a deep copy.
+C. The source object (e.g., rhs) is in a valid state after a copy constructor.
+D. The source object (e.g., rhs) is in a valid state after a move contructor.
+
+
+For questions 12--16, consider the following code.
+
+// function foo(int)
+void foo(int i) {
+  std::cout << "no reference invoked: " << i << std::endl;
+}
+
+// function foo(int&)
+void foo(int & i) {
+  std::cout << "lvalue reference invoked: " << i << std::endl;
+}
+
+// function foo(int&&)
+void foo(int && i) {
+  std::cout << "rvalue reference invoked: " << i << std::endl;
+}
+
+int main() {
+  int a = 10;
+  foo(a);	  // Line 1
+  foo(10);  	  // Line 2
+  foo(a + 5);	  // Line 3
+  return 0;
+}
+
+13. What will happens with regards to Line 1?
+
+A. Print out "no reference invoked"
+B. Print out "lvalue reference invoked"
+C. Print out "rvalue reference invoked"
+D. The compiler will produce an error about the ambiguity between
+      foo(int) and  foo(int&)
+E. The compiler will produce an error about the ambiguity between
+      foo(int) and  foo(int&&)
+F. The compiler will produce an error about the ambiguity between
+      foo(int&) and  foo(int&&)
+
+
+14. What will happen with regards to Line 2?
+A. Print out "no reference invoked"
+B. Print out "lvalue reference invoked"
+C. Print out "rvalue reference invoked"
+D. The compiler will produce an error about the ambiguity between
+      foo(int) and  foo(int&)
+E. The compiler will produce an error about the ambiguity between
+      foo(int) and  foo(int&&)
+F. The compiler will produce an error about the ambiguity between
+      foo(int&) and  foo(int&&)
+
+15. What will happen with regards to Line 3?
+A. Print out "no reference invoked"
+B. Print out "lvalue reference invoked"
+C. Print out "rvalue reference invoked"
+D. The compiler will produce an error about the ambiguity between
+      foo(int) and  foo(int&)
+E. The compiler will produce an error about the ambiguity between
+      foo(int) and  foo(int&&)
+F. The compiler will produce an error about the ambiguity between
+      foo(int&) and  foo(int&&)
+
+
+16. Suppose you were to remove ONE of these three foo functions
+    from the code, and make no other changes.
+    Which function's removal would make the code legal?
+
+A. foo(int)
+B. foo(int &)
+C. foo(int &&)
+D. None of the above: more changes are needed than the removal of one function.
+
+For questions 17, consider the following code.
+
+void foo(T&& param) {
+     // do something with std::move(param)
+}
+
+17. Which of the following is correct about param?
+
+A. param is a lvalue
+B. param is a rvalue
+C. param is a lvalue reference
+D. param is a rvalue reference 
