@@ -1,0 +1,203 @@
+One of the complicated corners of C++ that AoP does not delve
+into in detail is "value categories."   In prior semesters,
+we only had an introductory coverage of C++11.  However,
+as you now are going to be doing C++11, and using move semantics,
+it is important to understand value categories, so you know when
+move semantics get used.
+
+There are three value categories in C++, and every expression has a
+value category.   The value category depends on the expression
+(e.g., function call, variable, arithmetic operation), and the types/value
+categories involved (e.g., the function's return type, the value category
+of x in x.y, etc).  The three value categories are:
+
+  (1) lvalues
+  (2) xvalues   (eXpiring values)
+  (3) prvalues  (pure rvalues)
+
+The union of (1) and (2) are "glvalues" (generalized lvalues).
+The combination of (2) and (3) are "rvalues."
+
+A reference that you are used to (T&) is an "lvalue reference"
+and, as you have recently read, C++11 introduces "rvalue references"
+(T&&).  This is important, since xvalues are closely related to rvalue
+references.
+
+To start with, let us look at the definition of an xvalue.
+An expression is an xvalue if it is any of the following:
+   (a) The result of calling a function, whose return type is
+       an rvalue reference.  For example,
+         int && f(int x) {...}
+
+          f(3)   //xvalue because f's return type is an rvalue reference
+   (b) A cast to an rvalue reference. Note that we generally don't want
+       to write an explicit cast.  Instead, we should use std::move,
+       which hides the cast behind the abstraction barrier of the
+       move function (which also makes clear what we are trying to do)
+   (c) Access to a member of an xvalue.
+       For example,
+           Point && g(int a, int b, int c) { ...}
+
+            g(1,2,3).x  //xvalue, because g(1,2,3) is an xvalue
+                        //and .x is a member inside an xvalue
+       Note that this also works with the pointer-to-member (.*) operator,
+       which we have not covered (see end of this document if you are curious). 
+
+       This does NOT however work with -> (or anything else that dereferences
+       a pointer).  So if you have
+         Point *&& h(int a) {...}
+
+             h(42)->x   //h(42) is an xvalue, h(42)->x is an lvalue
+   (d) Using the built-in subscript operator on an array, where that array
+       is not an lvalue.
+           For example:
+              ((int[]){1, 2, 3})[0]
+        Note that g++ does not actually handle this correctly, and
+        considers this to be an lvalue
+        ( https://gcc.gnu.org/bugzilla/show_bug.cgi?id=79832 )
+        
+Note that these make sense with the "expiring value" notion.  The first
+two are where we have said explicitly that the value is expiring.  The third and fourth
+are "something inside an expiring value" (which suggests it is expiring too).
+However, if we follow a pointer (out of the expiring value), we have no
+reason to be sure the thing we found at the end of the arrow is also expiring.
+
+Now that you know about xvalues, defining lvalues and prvalues is easy:
+
+ lvalues = (everything you thought of as an lvalue) - xvalues
+ prvalues = (everything you thought of as an rvalue) - xvalues
+
+That is, take your notion of lvalues (from C and C++03), subtract out xvalues,
+and you now have C++11's notion of lvalues.  Do the same for prvalues by
+taking your notion of rvalues and subtracting out xvalues.
+
+If you want to read more about lvalues, xvalues, and prvalues, see
+https://en.cppreference.com/w/cpp/language/value_category
+
+Now that you have an idea about the three value categories, let us look
+at how they interact with references:
+                     From value category...
+Assign to..    | lvalue             |  xvalue             | prvalue
+---------------+--------------------+---------------------+--------------
+  T            | lvalue-to-rvalue implicit conversion     | natural
+---------------+--------------------+---------------------+--------------  
+  T&           | natural            |  ILLEGAL            | ILLEGAL
+---------------+--------------------+---------------------+--------------
+const T&       | natural            |  legal              | unnamed temp                   
+---------------+--------------------+---------------------+--------------
+ T&&           | use std::move      |  natural            | unnamed temp                   
+---------------+--------------------+---------------------+--------------
+ const T&&     | use std::move      |  natural            | unnamed temp  
+---------------+--------------------+---------------------+--------------
+
+Here, we have a few entries in the table:
+   o natural:  this is the "natural" type of variable for that value category,
+               and nothing special needs to happen to bind it.
+   o legal:    this is also legal, and nothing special needs to happen.             
+   o lvalue-to-rvalue:   lvalues can be implicitly converted to prvalues,
+                         whenever their value needs to be read.  Note
+                         that this isn't really anything special happening,
+                         but does have a name.
+   o unnamed temp:  When you bind a prvalue to a const T&, T&&, or const T&&,
+                    the compiler will create an unnamed temp to hold the value.
+   o ILLEGAL:  You cannot bind this type of reference to this value category
+   o Use std::move:  Doing this directly is illegal, but whenever you are trying
+                     to do this, you should use std::move.
+   
+Note that const T&& is of limited (but non-zero) usefulness.   In general, when
+we want to use a T&&, we want to use move semantics, so we want to modify the
+object we reference (taking away what it owns, giving it to the destination object,
+and putting other state into the referenced object).   This requires a T&&, not
+a const T&&.
+
+So what use are const T&&?   Note that if you have a const xvalue, it could
+bind to either a const T& or a const T&&.  However, const T&& is the natural choice.
+If we have
+   f(xvalue)
+and f is defined on const T&, but not const T&&, then f(const T&) will be used.
+However, if f is defined on const(T&&), then that will be used instead.
+
+
+----------------------------------------------
+A quick note on pointer-to-member [OPTIONAL]:
+-----------------------------------------------
+We mentioned the pointer to member operator (.*) above for completeness. If you want
+to know more about it, we have a brief writeup here, but you don't need it for
+this class.    Suppose we want a variable which is a pointer to a member
+of a class, but we want it to point to that member without yet specifying the object
+in which that field lives.   You might think of this as being like
+ &(???.x)
+
+Where by ??? we mean "you dont know the object yet".  Note that if you do know
+the object, and want it on that particular object, you just use a "regular" pointer.
+
+For example, maybe we have a point with an x and a y, and you want to abstract
+out some computation over whether you are doing it to x or to y, and also the point
+you are doing it on.   You might write a function like this:
+
+void myFn(Point * p, int Point::* xory) {
+  ...
+    p->*xory += 3;
+  ...
+}
+
+Here, int Point::*  is the type of "pointer to an int inside of a Point".  Inside
+of the code, we can't do p->xory (since Point doesnt have an xory field), but
+we use the ->* (->* is to .* as -> is to .) to make use of our pointer-to-member
+variable xory.  Effectively, p->*xory fills in the ??? above with p.
+
+Here is a more complete example of use of .*
+
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+class Point {
+ public:
+  int x;
+  int y;
+  Point() : x(0), y(0) {}
+  Point(int ix, int iy) : x(ix), y(iy) {}
+};
+int main(void) {
+  std::vector<Point> v;
+  v.push_back(Point(3, 2));
+  v.push_back(Point(4, 5));
+  v.push_back(Point(10, 11));
+  std::vector<int Point::*> vptr;
+  vptr.push_back(&Point::x);
+  vptr.push_back(&Point::y);
+  for (const Point & p : v) {
+    std::cout << "next item:\n";
+    for (int Point::*ptr : vptr) {
+      std::cout << "  " << p.*ptr << "\n";
+    }
+  }
+  return EXIT_SUCCESS;
+}
+
+Here, vptr is a vector of <int Point::*>, that is, pointers to ints inside of Points.
+We put &Point::x and &Point::y into this vector (note: they are not on any particular
+object, but just the class::the field). Then in the innermost loop, we iterate
+over vptr, binding each element of the vector to ptr, and then do p.*ptr.
+On the first iteration of the loop, ptr is &Point::x, so we are doing p.x,
+and on the second it is &Point::y, so we are doing p.y.
+
+As another example, suppose we wanted to write this function:
+
+int sumThisCoord(const std::vector<Point> & vp, int Point::* whichCoord) {
+   int ans = 0;
+   for(const Point & p : vp) {
+       ans += p.*whichCoord;
+   }
+}
+
+which lets us pass in a vector a points, and a pointer-to-member
+for which coordinate we want to sum.  That is, we can sum the x coordinates
+with
+
+int xsum = sumThisCoord(ourVector, &Point::x);
+
+and sum the y coordinates with
+
+int ysum = sumThisCoord(ourVector, &Point::y);
+

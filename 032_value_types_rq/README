@@ -1,0 +1,151 @@
+For this assignment, you are going to delve into different categories
+of value. We strongly recommend you to read the supplementary material
+in "value_types.txt" before you finish these reading questions. As usual,
+answer these questions in "answers.txt".
+
+For questions 1--3, consider the following diagram about the relations
+of value categories.  In this diagram, a category above another indicates
+that the higher is a superset of the lower.
+
+    	     	    expression
+		     /	   \
+		   (1)	 rvalue
+		  /   \  /    \
+		(2)    (3)     prvalue
+
+1. What is the correct value type in position (1)?
+
+A. glvalue
+B. xvalue
+C. lvalue
+D. rvalue
+
+2. What is the correct value type in position (2)?
+
+A. glvalue
+B. xvalue
+C. lvalue
+D. rvalue
+
+3. What is the correct value type in position (3)?
+
+A. glvalue
+B. xvalue
+C. lvalue
+D. rvalue
+
+For the remaining questions, imagine that there is a macro
+print_value_category that takes anything and prints either "prvalue",
+"xvalue", or "lvalue" depending on the value category of its argument.
+
+For questions 4--7, consider the following code.
+
+struct Thing {
+    int m;
+    int * ptr;
+    Thing() : ... {...}
+    Thing operator+ (const Thing& rhs) const {...}
+};
+Thing&& foo() {...}
+Thing& bar() {...}
+
+int main(void) {
+  Thing thinga;
+  print_value_category(thinga); //Question 4
+  print_value_category(foo()); //Question 5
+  Thing&& thingb = foo();
+  print_value_category(thingb); //Question 6
+  print_value_category(foo().m); //Question 7
+  print_value_category(*foo().ptr); //Question 8
+  print_value_category(thinga+thinga); //Question 9
+  return EXIT_SUCCESS;
+}
+
+4. Given the above, what is the output of print_value_category(thinga) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. None of the above, or something illegal occurs
+
+5. Given the above, what is the output of print_value_category(foo()) ?
+
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. None of the above, or something illegal occurs
+
+6. Given the above, what is the output of print_value_category(thingb) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. None of the above, or something illegal occurs
+
+7. Given the above, what is the output of print_value_category(foo().m) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. None of the above, or something illegal occurs
+
+8. Given the above, what is the output of print_value_category(*foo().ptr) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. None of the above, or something illegal occurs
+
+9. Given the above, what is the output of print_value_category(thinga+thinga) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. None of the above, or something illegal occurs
+
+For questions 10--12, consider the following code.
+
+class Animal {
+    std::string name;
+
+public:
+    Animal(const std::string & iname): name(iname){}
+
+    std::string& get_name() {
+        return name;
+    }
+
+    std::string copy_name() const {
+        return name;
+    }
+};
+
+int main(void) {
+   Animal husky("husky");
+   print_value_category(husky.get_name()); //Question 10
+   print_value_category(husky.copy_name()); //Question 11
+   print_value_category(std::move(husky)); //Question 12
+   return EXIT_SUCCESS;
+}
+
+10. Given the above, what is the output of print_value_category(husky.get_name()) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. glvalue
+
+11. Given the above, what is the output of print_value_category(husky.copy_name()) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. glvalue
+
+12. Given the above, what is the output of print_value_category(std::move(husky))) ?
+
+A. xvalue
+B. lvalue
+C. prvalue
+D. glvalue
