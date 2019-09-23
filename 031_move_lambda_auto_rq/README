@@ -210,16 +210,3 @@ A. foo(int)
 B. foo(int &)
 C. foo(int &&)
 D. None of the above: more changes are needed than the removal of one function.
-
-For questions 17, consider the following code.
-
-void foo(T&& param) {
-     // do something with std::move(param)
-}
-
-17. Which of the following is correct about param?
-
-A. param is a lvalue
-B. param is a rvalue
-C. param is a lvalue reference
-D. param is a rvalue reference 
