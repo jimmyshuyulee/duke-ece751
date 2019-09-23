@@ -1,4 +1,4 @@
-E
+B
 D
 C
 B
@@ -7,9 +7,9 @@ D
 B
 D
 C
+C
 A
-D
-D
+A
 D
 E
 E
