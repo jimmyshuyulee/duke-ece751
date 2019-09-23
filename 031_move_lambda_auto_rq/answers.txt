@@ -1,8 +1,7 @@
 B
 D
 C
-C
-C
+Z
 B
 D
 B
