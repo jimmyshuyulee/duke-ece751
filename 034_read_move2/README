@@ -1,0 +1,12 @@
+Consider the code in the enclosed file, "code.cpp".
+
+In the file you will find 3 classes - IPAddress, Header
+and Packet. A header holds 2 IP's for the source and
+destination and each packet has a header.
+
+What would the output of the code be?
+Think carefully about what happens when the move 
+constructor is invoked.
+Put the output in a file called "answer.txt"
+
+
