@@ -1,0 +1,13 @@
+The following two assignments are intended to instroduce
+you to a new kind of reference available in C++11 called
+an rvalue reference. An rvalue reference allows you to bind
+a mutable reference to an rvalue but not an lvalue. This 
+is useful in indicating whether or not an object is temporary.
+
+Consider the code in the enclosed file, "code.cpp".
+This code is designed to illustrate the difference
+between a standard lvalue reference and an rvalue 
+reference.
+
+What would the output of the code be?
+Put the output in a file called "answer.txt"
