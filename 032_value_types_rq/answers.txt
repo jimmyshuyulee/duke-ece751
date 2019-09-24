@@ -7,6 +7,6 @@ C
 A
 Z
 C
-C
-C
-C
+Z
+Z
+Z
