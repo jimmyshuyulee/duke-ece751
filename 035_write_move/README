@@ -1,0 +1,10 @@
+In this assignment we will be expanding upon the
+IPAddress class you saw in read_move2. We have extended
+it to include two additional classes, Header and Packet.
+
+Implement the copy constructor, move constructor and move
+assignment operator for these two classes. The code in main
+should then compile and run if done correctly. Do not modify
+main.
+
+Submit your code.cpp for grading. 
