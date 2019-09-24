@@ -1,0 +1,6 @@
+Consider the code in the enclosed file, "code.cpp".
+This code uses a C++11 lambda function to accomplish
+a simple task a few different ways.
+
+What would the output of the code be?
+Put the output in a file called "answer.txt"
