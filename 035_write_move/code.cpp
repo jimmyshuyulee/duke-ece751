@@ -64,13 +64,24 @@ class Header {
   {}
 
   // TODO: Write copy constructor
-  Header(const Header & toCopy) : {}
+  Header(const Header & toCopy) :
+      length(toCopy.length),
+      src(toCopy.src),
+      dest(toCopy.dest) {}
 
   // TODO: Write move constructor
-  Header(Header && toMove) : {}
+  Header(Header && toMove) : length(toMove.length), src(0, 0, 0, 0), dest(0, 0, 0, 0) {
+    std::swap(src, toMove.src);
+    std::swap(dest, toMove.dest);
+  }
 
   // TODO: Write move assignment operator
-  Header & operator=(Header && other) {}
+  Header & operator=(Header && other) {
+    if (this != &other) {
+      std::swap(length, other.length), std::swap(src, other.src);
+      std::swap(dest, other.dest);
+    }
+  }
 
   void printSrcDest() const {
     src.printIP();
@@ -91,10 +102,20 @@ class Packet {
       data(&stream[8]) {}
 
   // TODO: write copy constructor
-  Packet(const Packet & toCopy) : {}
+  Packet(const Packet & toCopy) :
+      len(toCopy.len),
+      hdr(toCopy.hdr),
+      data(new unsigned char[toCopy.len]) {
+    for (int i = 0; i < toCopy.len; ++i) {
+      data[i] = toCopy.data[i];
+    }
+  }
 
   // TODO: write move constructor
-  Packet(Packet && toMove) : {}
+  Packet(Packet && toMove) : len(0), hdr(std::move(toMove.hdr)), data(nullptr) {
+    std::swap(len, toMove.len);
+    std::swap(data, toMove.data);
+  }
 
   void printInfo() const {
     hdr.printSrcDest();
