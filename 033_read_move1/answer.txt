@@ -1,0 +1,6 @@
+Called mutable rvalue reference: Hello World
+Called lvalue reference: foobar
+Called mutable rvalue reference: Hi World
+Called lvalue reference: Hi World
+Called lvalue reference: Hello World
+Called mutable rvalue reference: Hello World
