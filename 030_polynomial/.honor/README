@@ -1,0 +1,255 @@
+For this assignment, you will be writing a templated Polynomial class.
+In particular, your Polynomial should be templated over one type, Num,
+which is the type for its coefficients, "x" and its resulting value.
+Natural choices for Num might be int or double.  However, they could
+also be std::complex<double> (that is complex numbers), or even
+other more sophisticated types.  Could you have a Polynomial
+whose Num is IntMatrix?  Sure.  What about Polynomial<Polynomial<int>>?
+Also totally to doable (That is, a Polynomial whose coeffients are polynomials..).
+
+All we will require of Num is that it is:
+   - Default constructable
+   - Has Num+Num, Num-Num, -Num, Num * Num, Num == Num, and Num != Num defined
+   - Has ostream << Num defined
+   - If findZero is used, must also have std::abs<Num> defined, as well as inquality (> or <),
+     and division. (Sadly, this cannot be done easily on our more crazy Num types).
+
+NOTE: Your Polynomial will only have powers >=0.  You are not considering powers
+like x^-1, x^-2, etc.  Accordingly, division is not supported.
+
+
+========================
+Step 1:
+========================
+  Make a class
+
+template<typename Num>
+class Polynomial
+
+We will describe all the methods it needs (for now), and you should think
+about how you want to represent the data before proceeding.   Your Polynomial
+should have the following public methods:
+
+  o Polynomial()
+     Default construct the polynomial to be "0" (i.e., 0*x^0)
+  o Polynomial operator+(const Polynomial & rhs) const ;
+     Add this Polynomial to rhs, and return the resulting polynomial.  For
+     example if this is 2*x^2 + 3, and rhs is x^2+4*x, you should
+     return the Polynomial 3*x^2 + 4*x + 3.
+  o Polynomial operator-() const;
+    Return the negation of this Polynomial.  For example, if this Polynomial
+    is 4*x^3 - 2, return -4*x^3 +2
+  o Polynomial operator-(const Polynomial & rhs) const;
+    Subtract rhs from this Polynomial and return the result.
+  o Polynomial operator*(const Num & n) const;
+    Multiply this Polynomial by a scalar and return the result
+  o Polynomial operator*(const Polynomial & rhs) const;
+    Multiply this Polynomial by rhs, and return the result.  Remember
+    that if you have
+      this = 4*x^3 + 8*x^2 + 2*x + 3
+      rhs  =         2*x^2 + 3*x + 6
+     You have to multiply all pairs of terms, and add terms of the same exponent:
+       4*x^3 * 2*x^2  = 8*x^5
+       4*x^3 * 3*x    =        12*x^4
+       4*x^3 * 6      =                  24*x^3
+       8*x^2 * 2*x^2  =        16*x^4     
+       8*x^2 * 3*x    =                  24*x^3
+       8*x^2 * 6      =                           48*x^2
+       2*x   * 2*x^2  =                   4*x^3
+       2*x   * 3*x    =                            6*x^2
+       2*x   * 6      =                                    12*x
+       3     * 2*x^2  =                            6*x^2
+       3     * 3 *x   =                                    9*x
+    +  3     * 6      =                                           18
+    -------------------------------------------------------------------
+            answer    = 8*x^5 + 28*x^4 + 52*x^3 + 60*x^2 + 21*x + 18
+  o bool operator!=(const Polynomial & rhs) const;
+  o bool operator==(const Polynomial & rhs) const;
+     Compare two Polynomials for inequality/equality and return the result.
+      Two Polynomials are the same if they have exactly the same coefficients.
+  o void addTerm(const Num & c, int p);
+      Add (c*x^p) to this Polynomial, updatings its value.  For example,
+       Polynomial<int> p; //p is 0
+       p.addTerm(4,3);
+         //now p is 4*x^3
+       p.addTerm(2,2);
+         //now p is 4*x^3 + 2*x^2
+       p.addTerm(3,2);
+         //now p is 4*x^3 + 5*x^2
+  o Polynomial & operator+=(const Polynomial & rhs);
+  o Polynomial & operator-=(const Polynomial & rhs);
+  o Polynomial & operator*=(const Polynomial & rhs);
+  o Polynomial & operator*=(const Num & rhs);
+     Perform the apporiate operation (+,-,*) but update this Polynomial,
+     instead of returning a different Polynomial.  Return (*this).
+     Hint:  These should be two lines of code each, making use of operations
+     you already wrote!
+     
+You should also make the following "friend" function, which resides outside the class:
+
+  o template<typename N>
+    std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p);
+    This should write the Polynomial to "os" such that it looks like this:
+    "4*x^4 + 2*x^3 + -7*x^2 + 0*x^1 + -9*x^0"
+    Note the following constraints on the formatting of the resulting Polynomial:
+      o Each term should have no spaces inside it, unless they are produced by
+        Num's << operator.  E.g., "4*x^4".   If you had a complex type whose
+        << operator wrote, e.g., (3 + 2i) then you might produce a term like
+        "(3 + 2i)*x^3".
+        Put another way: use whatever Num's << operator gives you for
+        the coefficient, but don't add any spaces inside a term.
+      o Between each consecutive term, you should write " + ".
+        You should do this even if the next term is negative ("... + -9*x^0")
+        [which we note is simpler]
+      o Even though "*x^0" is 1, you should still write it.  E.g. "-9*x^0"
+        not "-9".  [Again, this is simpler than adding a special case to check
+        for x^0 and handle it differently.]
+      o For the Polynomial 0, you should produce the same output as
+         os << Num()
+        For Num = int, it should produce "0".
+      o You should not produce any terms with 0 coefficients.
+         For example
+            Polynomial<int> p1;
+            std::cout << p1 <<"\n"; //should print "0"
+            p1.addTerm(4,3);
+            std::cout << p1 <<"\n"; //should print 4*x^3
+            Polynomial<int> p2 = p1;
+            p1.addTerm(5,2);
+            std::cout << p1 <<"\n"; //should print 4*x^3 + 5*x^2
+            p1 -= p2;
+            std::cout << p1 <<"\n"; //should print 5*x^2
+   - If you need the rule of three methods, you should write them all.
+     If you do not need them, you should not write them.
+
+You may write any private methods you wish, and can have any private fields
+you find useful.  Take a moment to contemplate how you want to represent the data,
+and then implement the above class with the specified methods.
+
+Once you have done this, you should make use of the enclosed "test1.cpp"
+file which performs some *very basic* testing on your Step 1 code.
+It DOES NOT represent a comprehensive test suite.  Instead, it is just intended
+to make sure you have the basic formatting write for the output, etc.   The correct
+output is in "test1_out.txt".   You should diff cleanly against it, and
+TEST WELL before proceeding.
+
+You should commit, push, and grade at this point just to be safe.
+
+==================
+Step 2:
+==================
+For this step, you will add two operations to your Polynomial class:
+
+ o Num eval(const Num & x) const;
+   This evaluates the Polynomial at the given value of "x", and returns that answer.
+   If this Polynomial is 2*x^2 + 3*x^1 + 4*x^0, then eval(7) would return
+     2*7^2 - 3*7 + 4 = 2 * 49 -21 + 4 = 81.
+   
+ o Polynomial derivative() const;
+    This takes the derivative of this Polynomial, resulting in another Polynomial,
+    which it returns.   Recall that the derivative of a*x^n is (a*n)*x^(n-1).
+    That is, the derivative of 3*x^2 is 6*x, and the derivative of 5*x^7 is 35*x^6.
+    For multiple terms, you sum their derivatives to get the derivative of the whole
+    Polynomial.  That is the derivative of
+      5*x^7 + 3*x^2
+    is
+     35*x^6 + 6*x
+
+Again, we have provided test2.cpp and test2_out.txt to get you started with testing,
+but you should test more extensively.
+
+You should commit, push, and grade at this point just to be safe.
+============
+Step 3:
+============
+
+For the final step of this assignment, you will be writing
+
+  o Num findZero(Num x, unsigned maxSteps, double tolerance);
+
+which will use the Newton-Raphson method of numerically finding the zero
+of a Polynomial.
+
+In particular, this method computes
+
+   xnew = x - f(x)/f'(x)
+
+ then uses xnew as x to repeat the process, untill a suitable x can be found.
+ Ideally, we would like "x=0" but getting *exactly* 0 is a bit tricky.  Instead,
+ we want "close enough to 0 that we don't notice the difference."  This is where
+ the "tolerance " parameter comes in.
+
+ Whenever
+    std::abs(f(x)) <= tolerance
+ we declare "x" to be "sufficiently close to 0" and return it as our answer.
+
+ The maxSteps parameter limits the number of times we can try the process
+ before giving up.   We also will give up if f'(x) is ever 0, since
+ we would divide by 0 in that case.
+
+ Whenever you need to "give up" you will throw a convergence_failure
+ exception, which is a class you will create.  In particular,
+ convergence_failure should be a templated class, templated
+ over one type, Num.  It should have a public const field of type Num,
+ called value.
+ It should have a constructor which takes a const Num & and initialized value
+ from its parameter.  It should also override "what" as
+   virtual const char * what() const throw() { return "Convergence failure"; }
+ Your convergence_failure class should extend std::exception.
+ Note that it may seem a bit unusual to have a templated exception, but
+ there is nothing wrong with it, and everything works the way you would
+ expect (yay--composability!).
+ Whenever you "give up" and throw convergence_failure, you should pass
+ it the current value of x (then the code which catches it can examine
+ what value you reached before failing).
+
+As an example of how this works, suppose we did the following (as is in test3.cpp)
+  Polynomial<double> p1;
+  p1.addTerm(4, 4);
+  p1.addTerm(2, 3);
+  p1.addTerm(-7, 2);
+  p1.addTerm(-9, 0);
+  std::cout << "p1: " << p1 << "\n";
+  double z1 = p1.findZero(-1.5, 5, 0.0001);
+
+That is, we are looking for a zero of  "4*x^4 + 2*x^3 + -7*x^2 + -9*x^0"
+starting from -1.5, with a maximum of 5 steps, and a tolerance of 0.0001.
+This means that whenever p1.eval(x) <= 0.0001 we declare x as being "close
+enough" to the zero of p1.
+
+The computation might proceed as follows (i.e., this is my debug output):
+5 step remaining x= -1.5, f(x) = -11.25, f'(x) = -19.5
+4 step remaining x= -2.07692, f(x) = 17.3156, f'(x) = -88.386
+3 step remaining x= -1.88101, f(x) = 2.9975, f'(x) = -58.9235
+2 step remaining x= -1.83014, f(x) = 0.16876, f'(x) = -52.3603
+1 step remaining x= -1.82692, f(x) = 0.000647361, f'(x) = -51.9589
+0 step remaining x= -1.82691, f(x) = 9.64616e-09, f'(x) = -51.9573
+
+Note that since we found the answer with 0 steps remaining, we consider it to converge
+and return the answer.  If we had specified maxSteps<=4, this would have thrown
+convergence_failure(-1.82692)
+
+Also observe how the value of x changes.  Our initial value is -1.5,
+where f(-1.5) is -11.25 and f'(-1.5) [i.e., the derivative of our polynomial
+at -1.5] is -19.5.
+
+We compute the next x as
+   x - f(x) / f'(x)
+  =
+   -1.5 - -11.25/-19.5
+  =
+   -1.5 - .57692
+  = -2.07692
+
+Then we repeat the process with x= -2.07692
+
+Hint:
+  - You already have derivative() and eval(Num) from Step 2!  They do most of the work
+    here :)
+
+
+Again, we have provided test3.cpp and test3_out.txt to get you started on your testing.
+You should test more before you consider it done.
+
+Don't forget to commit, push, and grade!
+
+If you don't do these THREE things, then your assignment is NOT submitted.
