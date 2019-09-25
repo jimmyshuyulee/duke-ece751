@@ -1,0 +1,9 @@
+In lambda.cpp we've provided some function definitions
+for some tasks that are well suited to lambdas. We have told you
+which std::algorithm function is most appropriate for
+each TODO. Your job is to use that function with an
+associated lambda to accomplish this task. The code in
+main should run and do what you would expect.
+
+There are 4 TODOs, each specified in lambda.cpp. Complete
+all 4 and submit your code. Run 'make' to build the code.
