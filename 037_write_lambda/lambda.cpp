@@ -14,7 +14,9 @@
 // Preconditions is that std::abs is defined on T.
 template<typename T>
 void sortByAbsolute(std::vector<T> & toSort) {
-  std::sort(toSort.begin(), toSort.end());
+  std::sort(toSort.begin(), toSort.end(), [](T i, T j) -> bool {
+    return std::abs(i) < std::abs(j);
+  });
 }
 
 // TODO 2: Write a lambda function and use it with std::transform
@@ -52,14 +54,12 @@ std::vector<int> doublePlusOne(const std::vector<int> & src) {
 // because f turns a matrix into (width)x(height) as a string.
 template<typename T>
 void printFofVector(const std::vector<T> & src, std::function<std::string(const T &)> f) {
-  //typename std::vector<T> toPrint(src);
-  std::vector<std::string> toPrint;
-  for (int i = 0; i < src.size(); ++i) {
-    toPrint.push_back(f(src[i]));
-  }
-  //std::transform(toPrint.begin(), toPrint.end(), toPrint.begin(), f);
-  for (auto e : toPrint) {
-    std::cout << e;
+  //std::vector<std::string> toPrint;
+  //for (int i = 0; i < src.size(); ++i) {
+  //  toPrint.push_back(f(src[i]));
+  //}
+  for (auto e : src) {
+    std::cout << f(e);
   }
 }
 
