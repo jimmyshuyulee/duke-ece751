@@ -53,12 +53,12 @@ std::vector<int> doublePlusOne(const std::vector<int> & src) {
 template<typename T>
 void printFofVector(const std::vector<T> & src, std::function<std::string(const T &)> f) {
   //typename std::vector<T> toPrint(src);
-  std::vector<std::string> toPrint;
-  for (int i = 0; i < src.size(); ++i) {
-    toPrint.push_back(f(src[i]));
-  }
+  //std::vector<std::string> toPrint;
+  //for (int i = 0; i < src.size(); ++i) {
+  //  toPrint.push_back(f(src[i]));
+  //}
   //std::transform(toPrint.begin(), toPrint.end(), toPrint.begin(), f);
-  for (auto e : toPrint) {
+  for (auto e : src) {
     std::cout << e << std::endl;
   }
 }
