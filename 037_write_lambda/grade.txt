@@ -1,12 +1,8 @@
-Grading at 09/26/2019:19:02:21.423704
-For commit ID 9222847430b7032ca044978106136b242e70f1a1
-Grading at Thu Sep 26 15:02:20 EDT 2019
+Grading at 09/26/2019:19:18:42.241949
+For commit ID 68c5af92928a412ac0a3054f4cfa7c29e2bd1c41
+Grading at Thu Sep 26 15:18:41 EDT 2019
 g++ -std=c++11 -o main lambda.cpp
-Line_1_did_not_match
-Line_2_did_not_match
-Line_3_did_not_match
-Line_4_did_not_match
-Your file did not match the expected ouput
+Your file matched the expected output
 Your output matched what we expected
 
 Overall Grade: A
