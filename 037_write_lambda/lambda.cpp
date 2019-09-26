@@ -5,26 +5,33 @@
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
 
 // TODO 1: Write a lambda function and use it with std::sort
 // to sort the elements in the vector by absolute value.
 // Preconditions is that std::abs is defined on T.
 template<typename T>
 void sortByAbsolute(std::vector<T> & toSort) {
+  std::sort(toSort.begin(), toSort.end());
 }
 
 // TODO 2: Write a lambda function and use it with std::transform
 // to convert every other letter starting at 0 in a string to uppercase
 void everyOtherUpper(std::string & s) {
+  std::transform(
+      s.begin(), s.end(), s.begin(), [](char c) -> char { return std::toupper(c); });
 }
 
 // TODO 3: Write a lambda function and use it with std::transform
 // to multiply each element of the vector by 2 and add 1
 // storing the result in an answer vector and returning it.
 std::vector<int> doublePlusOne(const std::vector<int> & src) {
+  std::vector<int> ans(src);
+  std::transform(
+      ans.begin(), ans.end(), ans.begin(), [](int i) -> int { return i * 2 + 1; });
+  return ans;
 }
 
 // TODO 4: This function takes a vector of Ts, and a function that turns
@@ -45,6 +52,13 @@ std::vector<int> doublePlusOne(const std::vector<int> & src) {
 // because f turns a matrix into (width)x(height) as a string.
 template<typename T>
 void printFofVector(const std::vector<T> & src, std::function<std::string(const T &)> f) {
+  std::vector<std::string> toPrint;
+  for (int i = 0; i < src.size(); ++i) {
+    toPrint.push_back(f(src[i]));
+  }
+  for (auto e : src) {
+    std::cout << e << std::endl;
+  }
 }
 
 // an example function like the one above
