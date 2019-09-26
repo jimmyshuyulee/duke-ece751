@@ -1,6 +1,6 @@
-Grading at 09/26/2019:18:55:39.925756
-For commit ID dce4ff2fa0aae863c3a55e5db9af05b5d1f6caff
-Grading at Thu Sep 26 14:55:39 EDT 2019
+Grading at 09/26/2019:18:57:20.618075
+For commit ID 8fbafe9a302ff3dfd26f4c7cff34e99f2841b205
+Grading at Thu Sep 26 14:57:20 EDT 2019
 g++ -std=c++11 -o main lambda.cpp
 Line_1_did_not_match
 Line_2_did_not_match
@@ -10,10 +10,12 @@ Line_5_did_not_match
 Line_6_did_not_match
 Line_7_did_not_match
 Line_8_did_not_match
+Line_9_did_not_match
+Line_10_did_not_match
 Line_12_did_not_match
+Line_13_did_not_match
 Line_14_did_not_match
-Line_16_did_not_match
-Line_20_did_not_match
+Line_15_did_not_match
 Your file did not match the expected ouput
 Your output matched what we expected
 
