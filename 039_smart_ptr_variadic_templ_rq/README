@@ -1,0 +1,176 @@
+As always, read and understand Appendix E, Section 6.9-6.11
+then answer these questions in "answers.txt".
+
+1.  What is the most popular advantage of a smart pointer?
+    A.  It can recognize its pointer type automatically.
+    B.  It increases the privacy of the resource the pointer pointed
+        to. 
+    C.  It helps to manage memory and avoid memory leaks or other
+        resource ownership problems.
+    D.  None of the above
+
+2.  Which of the following is NOT accurate about std::auto_ptr?
+    A.  Its copy constructor and copy assignment operator do not
+        actually make a copy. 
+    B.  The memory it points to will be automatically deallocated when
+        its containing object is destroyed.
+    C.  We can store std::auto_ptr in STL containers, which manage
+        memory efficiently.
+    D.  All of the above are correct.
+
+3.  If we have two unique pointers of type int, say uptr1 and uptr2,
+    which of the following operations is invalid?
+    A.  uptr1 = uptr2
+    B.  uptr1 = std::move(uptr2)
+    C.  *uptr1 = *uptr2
+    D.  if (uptr1 == NULL) { std::cout << "uptr1 = NULL\n"; }
+
+4.  What will happen if we declare a shared pointer like this: 
+      std::shared_ptr<string> ptr = make_shared<string>(10, '9')
+    A.  Variable ptr will point to a string with the value of "9".
+    B.  Variable ptr will point to a string with the value of "9" with 
+        length 10. 
+    C.  Variable ptr will point to a string with the value of
+        "9999999999". 
+    D.  10 strings with value of '9' will be created on the heap and
+        ptr will point to the first of them.
+
+5.  Which of the following is correct with regards to the copy
+    assignment operator of std::shared_ptr? (Say we have shared_ptr p
+    and q, and we do p = q.) 
+    A.  p and q must have the same object type.
+    B.  The reference count of the object that p points to will
+        increment by 1. 
+    C.  The reference count of the object that q points to will
+        decrement by 1. 
+    D.  All of the above are correct.	
+
+Question 6 is based on the following code.
+
+std::shared_ptr<T> foo(T arg) {
+  // some code handling arg
+  return std::make_shared<T>(arg);
+}
+
+std::shared_ptr<T> bar(T arg) {
+  std::shared_ptr<T> p = foo(arg);
+  // some code handling p
+  return p;
+}
+
+6.  Which of the following is true of this code?
+    A.  bar() allocates space for a T in the heap.
+    B.  bar() allocates space for a T in the stack.
+    C.  foo() allocates space for a T in the heap.
+    D.  foo() allocates space for a T in the stack.
+
+7.  Which of the following is NOT a way to initialize a shared
+    pointer?  
+    A.  std::shared_ptr<int> p;
+    B.  std::shared_ptr<int> p(new int);
+    C.  std::shared_ptr<int> p(new int(10));
+    D.  std::shared_ptr<int> p = new int(10);
+
+Questions 8 and 9 are based on the following code.
+
+void do_something(shared_ptr<int> ptr) { // Line 1
+  *ptr -= 10;                            // Line 2
+}                                        // Line 3
+
+int main(void) {
+  std::shared_ptr<int> ptr(new int(45)); // Line 6
+  do_something(ptr);                     // Line 7
+  int i = *ptr;                          // Line 8
+}
+
+8.  What is the number of reference counts of the object that ptr
+    points to on Line 2?
+    A.  0
+    B.  1
+    C.  2
+    D.  3
+
+9.  What is the number of reference counts of the object that ptr
+    points to on Line 8? 
+    A.  0
+    B.  1
+    C.  2
+    D.  3
+
+10. If we declare a unique pointer like:
+      std::unique_ptr<string> ptr(new string("ECE751"));
+    How can we copy the value of this pointer to another unique
+    pointer? 
+    A.  std::unique_ptr<std::string> ptr_copy = ptr;
+    B.  std::unique_ptr<std::string> ptr_copy(ptr);
+    C.  std::unique_ptr<std::string> ptr_copy = ptr.release();
+    D.  std::unique_ptr<std::string> ptr_copy(ptr.release());
+
+11. Which of the following is correct about std::weak_ptr?
+    A.  std::weak_ptr holds a non-owning reference to an object that
+        is managed by std::shared_ptr. 
+    B.  When a new std::weak_ptr points to an object, the reference
+        count of this object will increment by 1. 
+    C.  When the reference count of an object is decremented to 0,
+        this object will not be destroyed if there still has a
+        std::weak_ptr pointing to it. 
+    D.  std::weak_ptr cannot be constructed using std::shared_ptr.
+
+12. Which of the following is INCORRECT about variadic templates and
+    variadic functions? 
+    A.  Variadic functions take an arbitrary number of arguments.
+    B.  The ellipsis operator (...) can be used to expand a whole
+        expression containing a parameter pack. 
+    C.  The ellipsis operator (...) can be used to "unpack" the
+        parameter packs. 
+    D.  No type deduction is performed when a variadic function is
+        executed. 
+
+Questions 13-15 are based on the following code.
+
+template<typename T>
+T square(T t) {
+  return t * t;
+}
+
+template<typename T, typename... Rest>
+T square(T t, Rest... rest) {
+  return t * t + square(rest...);
+}
+
+template<typename T>
+double power_sum(T t) {
+  return t;
+}
+
+template<typename T, typename... Rest>
+double power_sum(T t, Rest... rest) {
+  return t + power_sum(square(rest)...);
+}
+
+13. What is the value of the expression "square(1.0, 2.0, 3.0)"?
+    A.  6
+    B.  14
+    C.  144
+    D.  Expression cannot be evaluated
+
+14. What is the value of the expression "power_sum(2.0, 4.0, 6.0)"?
+    A.  12
+    B.  56
+    C.  1314
+    D.  Expression cannot be evaluated
+
+15. What is the correct unpack order when we want to get the value in
+    question 14? 
+
+    1)  2.0 + power_sum(square(4.0), square(6.0));
+    2)  2.0 + (square(4.0) + power_sum(square(square(6.0)));
+    3)  2.0 + (square(4.0) + (square(square(6.0))))
+    4)  2.0 + (square(4.0) + power_sum(square(rest)...))
+    5)  2.0 + power_sum(square(rest)...);
+
+    A.  1) 3) 4) 2) 5)
+    B.  3) 2) 1) 4) 5)
+    C.  2) 5) 3) 4) 1)
+    D.  4) 2) 3) 1) 5)
+    E.  5) 1) 4) 2) 3)
