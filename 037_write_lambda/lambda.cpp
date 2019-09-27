@@ -54,10 +54,6 @@ std::vector<int> doublePlusOne(const std::vector<int> & src) {
 // because f turns a matrix into (width)x(height) as a string.
 template<typename T>
 void printFofVector(const std::vector<T> & src, std::function<std::string(const T &)> f) {
-  //std::vector<std::string> toPrint;
-  //for (int i = 0; i < src.size(); ++i) {
-  //  toPrint.push_back(f(src[i]));
-  //}
   for (auto e : src) {
     std::cout << f(e);
   }
