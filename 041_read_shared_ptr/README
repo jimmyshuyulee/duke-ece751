@@ -1,0 +1,4 @@
+In this assignment, the code in code.cpp makes some basic use
+of std::shared_ptr, which will test your understanding of the
+smart pointer. Execute the code by hand and write the results
+in a file called "answer.txt".
