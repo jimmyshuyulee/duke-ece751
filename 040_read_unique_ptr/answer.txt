@@ -1,0 +1,17 @@
+Create a thing: A
+Create a thing: B
+p1 is A
+Delete a thing: B
+p1 is nullptr
+p2 is A
+p3 is nullptr
+p2 is nullptr
+p1 is nullptr
+p3 is nullptr
+Create a thing: C
+p2 is C
+other p2 is C
+Delete a thing: C
+p2 is nullptr
+done!
+Delete a thing: A
