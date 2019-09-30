@@ -1,0 +1,16 @@
+Create a thing: red
+sp& with red with count 1
+sp with red with count 2
+wp& has red with count 2
+wp has red fish with count 2
+sp& with red fish with count 2
+wp& has red fish with count 3
+Create a thing: blue
+sp with blue with count 2
+sp with red fish with count 2
+wp has red fish with count 2
+Create a thing: cat
+Delete a thing: red fish
+nothing there
+Delete a thing: cat
+Delete a thing: blue

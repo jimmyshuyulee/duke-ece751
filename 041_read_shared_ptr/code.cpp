@@ -3,8 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
-class Thing
-{
+class Thing {
   std::string name;
 
  public:
