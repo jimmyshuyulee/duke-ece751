@@ -1,0 +1,9 @@
+In this assignment you will write a new version
+of the standard library function 'printf' using a
+template parameter pack. The only difference is instead
+of using the '%' identifier to indicate a positional
+argument you will use '$'.
+
+We have provided definitions for the two functions you
+will need to implement. These definition serve as a 
+strong hint toward what you should be doing.
