@@ -1,0 +1,14 @@
+Grading at 09/30/2019:19:26:11.254305
+For commit ID 78188351a42d4d788706f7e7c2ac42713d5edc52
+Grading at Mon Sep 30 15:26:09 EDT 2019
+Thank you for submitting polynomial!
+This assignment is not yet due, so we aren't grading it yet.
+However, we will do some basic sanity checking ot avoid careless mistakes...
+Trying to compile test1.cpp
+Successfully made test1!
+Trying to compile test2.cpp
+Successfully made test2!
+Trying to compile test3.cpp
+Could not compile test3.cpp
+
+Overall Grade: NO GRADE YET
