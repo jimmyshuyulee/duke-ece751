@@ -134,6 +134,36 @@ class Polynomial {
     return (*this);
   }
 
+  //This evaluates the Polynomial at the given value of "x", and returns that answer.
+  Num eval(const Num & x) const {
+    Num ans = Num();
+    typename map<int, Num>::const_iterator itr = coeff.end();
+    while (--itr != coeff.begin()) {
+      Num term = itr->second;
+
+      // Avoid using +=, *= or pow() here since it is not guaranteed
+      // that Num will have these operators or functions.
+      for (int i = 0; i < itr->first; ++i) {
+        term = term * x;
+      }
+      ans = ans + term;
+    }
+    ans = ans + itr->second;
+    return ans;
+  }
+
+  Polynomial derivative() const {
+    Polynomial<Num> ans = Polynomial<Num>();
+    typename map<int, Num>::const_iterator itr = coeff.begin();
+    while (itr != coeff.end()) {
+      if (itr->first > 0) {
+        ans.addTerm(itr->second * itr->first, itr->first - 1);
+      }
+      ++itr;
+    }
+    return ans;
+  }
+
   template<typename N>
   friend std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p);
 };
@@ -143,11 +173,11 @@ template<typename N>
 // "4*x^4 + 2*x^3 + -7*x^2 + 0*x^1 + -9*x^0"
 std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p) {
   typename map<int, N>::const_iterator itr = p.coeff.end();
+  // Keys are sorted in ascending order, so start printing from the end
   while (--itr != p.coeff.begin()) {
     os << itr->second << "*x^" << itr->first;
     os << " + ";
   }
-  // No + sign after the last term
   os << itr->second << "*x^" << itr->first;
   return os;
 }

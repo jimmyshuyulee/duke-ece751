@@ -1,0 +1,6 @@
+p1: 4x^4 + 2x^3 + -7x^2 + -9x^0
+First zero: -1.82691
+Second zero: 1.44849
+Failed to converge. Last x was 0
+Failed to converge. Last x was -20.5315
+But will converge to -1.82691 with more steps
