@@ -1,0 +1,7 @@
+Grading at 10/01/2019:03:00:56.879238
+For commit ID 9a53939a05245dbcd86e3baf76f11348ae214109
+Grading at Mon Sep 30 23:00:56 EDT 2019
+g++ -std=c++14 -o main compose.cpp
+Your file matched the expected output
+
+Overall Grade: PASSED
