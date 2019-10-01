@@ -9,7 +9,7 @@ class Polynomial {
 
  public:
   // Default construct the polynomial to be "0" (i.e., 0*x^0)
-  Polynomial() : coeff() { coeff[0] = 0; }
+  Polynomial() : coeff() { coeff[0] = Num(); }
 
   // Add this Polynomial to rhs, and return the resulting polynomial.
   // For example if this is 2 * x ^ 2 + 3, and rhs is x ^ 2 + 4 * x,
