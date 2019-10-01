@@ -160,7 +160,6 @@ class Polynomial {
       ans = ans + term;
       ++itr;
     }
-    ans = ans + itr->second;
     return ans;
   }
 
@@ -192,16 +191,15 @@ class Polynomial {
       if (abs(fx.eval(x)) <= tolerance) {
         return x;
       }
-
       if (fx.derivative().eval(x) == Num()) {
-        throw convergence_failure<Num>(Num());
+        throw convergence_failure<Num>(x);
       }
       x = x - (fx.eval(x) / fx.derivative().eval(x));
     }
 
     cout << 0 << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
          << ", f'(x) = " << fx.derivative().eval(x) << endl;
-    if (fx.eval(x) > tolerance) {
+    if (abs(fx.eval(x)) > tolerance) {
       throw convergence_failure<Num>(x);
     }
     return x;
