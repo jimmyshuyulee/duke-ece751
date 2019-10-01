@@ -1,0 +1,17 @@
+In this assignment you will be utilizing C++14 type deduction features to implement
+a different type of variadic template than the print you have done in the previous
+assignment. The idea is that you can compose multiple functions together, like in the
+example below
+
+function_1: x = x * 2
+function_2: x = x + 10
+function_3: x = x - 5
+
+compose(function_1, function_2)(5)
+--> function_1: 5 * 2 = 10
+--> function_2: 10 + 10 = 20
+--> function_3: 20 - 5 = 15
+--> result: 15
+
+In compose.cpp you will see two functions that must be filled in to implement this, along
+with a main method to test. As with the previous assignment, the first function is the 'base case'.
