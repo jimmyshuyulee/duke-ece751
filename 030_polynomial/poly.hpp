@@ -1,7 +1,17 @@
 #include <cstdlib>
+#include <exception>
 #include <iostream>
 #include <map>
 using namespace std;
+
+template<typename Num>
+class convergence_failure : public exception {
+ public:
+  const Num value;
+
+  explicit convergence_failure(const Num & v) : value(v){};
+  virtual const char * what() const throw() { return "Convergence failure"; }
+};
 
 template<typename Num>
 class Polynomial {
@@ -15,7 +25,7 @@ class Polynomial {
   // For example if this is 2 * x ^ 2 + 3, and rhs is x ^ 2 + 4 * x,
   // you should return the Polynomial 3 * x ^ 2 + 4 * x + 3.
   Polynomial operator+(const Polynomial & rhs) const {
-    Polynomial<Num> ans = Polynomial<Num>(*this);
+    Polynomial<Num> ans(*this);
 
     typename map<int, Num>::const_iterator itr = rhs.coeff.begin();
     while (itr != rhs.coeff.end()) {
@@ -35,7 +45,7 @@ class Polynomial {
   // Return the negation of this Polynomial.
   // For example, if this Polynomial is 4 * x ^ 3 - 2, return -4 * x ^ 3 + 2
   Polynomial operator-() const {
-    Polynomial<Num> ans = Polynomial<Num>(*this);
+    Polynomial<Num> ans(*this);
     typename map<int, Num>::iterator itr = ans.coeff.begin();
     while (itr != ans.coeff.end()) {
       itr->second = -(itr->second);
@@ -46,13 +56,13 @@ class Polynomial {
 
   // Subtract rhs from this Polynomial and return the result
   Polynomial operator-(const Polynomial & rhs) const {
-    Polynomial<Num> ans = Polynomial<Num>(rhs);
+    Polynomial<Num> ans(rhs);
     return *this + (-ans);
   }
 
   // Multiply this Polynomial by a scalar and return the result
   Polynomial operator*(const Num & n) const {
-    Polynomial<Num> ans = Polynomial<Num>(*this);
+    Polynomial<Num> ans(*this);
     typename map<int, Num>::iterator itr = ans.coeff.begin();
     while (itr != ans.coeff.end()) {
       itr->second = n * itr->second;
@@ -63,7 +73,7 @@ class Polynomial {
 
   // Multiply this Polynomial by rhs, and return the result.
   Polynomial operator*(const Polynomial & rhs) const {
-    Polynomial<Num> ans = Polynomial<Num>();
+    Polynomial<Num> ans;
     typename map<int, Num>::const_iterator itr1 = coeff.begin();
     while (itr1 != coeff.end()) {
       typename map<int, Num>::const_iterator itr2 = rhs.coeff.begin();
@@ -152,8 +162,15 @@ class Polynomial {
     return ans;
   }
 
+  // This takes the derivative of this Polynomial, resulting in another Polynomial.
   Polynomial derivative() const {
-    Polynomial<Num> ans = Polynomial<Num>();
+    // Polynomial always keeps the x^0 term even it has its coefficient==0,
+    // so coeff.size() == 1 means it only has x^0 term and its derivative is 0.
+    if (coeff.size() == 1) {
+      return Polynomial();
+    }
+
+    Polynomial<Num> ans;
     typename map<int, Num>::const_iterator itr = coeff.begin();
     while (itr != coeff.end()) {
       if (itr->first > 0) {
@@ -164,14 +181,45 @@ class Polynomial {
     return ans;
   }
 
+  //Use the Newton-Raphson method of numerically finding the zero of a Polynomial.
+  Num findZero(Num x,
+               unsigned maxSteps,
+               double tolerance) {  // throw(convergence_failure) {
+    Polynomial<Num> fx(*this);
+    for (int i = maxSteps; i > 0; --i) {
+      cout << i << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
+           << ", f'(x) = " << fx.derivative().eval(x) << endl;
+      if (abs(fx.eval(x)) <= tolerance) {
+        return x;
+      }
+
+      if (fx.derivative().eval(x) == Num()) {
+        throw convergence_failure<Num>(Num());
+      }
+      x = x - (fx.eval(x) / fx.derivative().eval(x));
+    }
+
+    cout << 0 << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
+         << ", f'(x) = " << fx.derivative().eval(x) << endl;
+    if (fx.eval(x) > tolerance) {
+      throw convergence_failure<Num>(x);
+    }
+    return x;
+  }
+
   template<typename N>
   friend std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p);
 };
 
-template<typename N>
-// This should write the Polynomial to "os" such that it looks like this:
+// Write the Polynomial to "os" such that it looks like this:
 // "4*x^4 + 2*x^3 + -7*x^2 + 0*x^1 + -9*x^0"
+template<typename N>
 std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p) {
+  if (p == Polynomial<N>()) {
+    os << N();
+    return os;
+  }
+
   typename map<int, N>::const_iterator itr = p.coeff.end();
   // Keys are sorted in ascending order, so start printing from the end
   while (--itr != p.coeff.begin()) {

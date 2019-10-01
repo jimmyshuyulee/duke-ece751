@@ -1,6 +1,75 @@
-p1: 4x^4 + 2x^3 + -7x^2 + -9x^0
+p1: 4*x^4 + 2*x^3 + -7*x^2 + -9*x^0
+5 step remaining x= -1.5, f(x) = -11.25, f'(x) = -19.5
+4 step remaining x= -2.07692, f(x) = 17.3156, f'(x) = -88.386
+3 step remaining x= -1.88101, f(x) = 2.9975, f'(x) = -58.9235
+2 step remaining x= -1.83014, f(x) = 0.16876, f'(x) = -52.3603
+1 step remaining x= -1.82692, f(x) = 0.000647361, f'(x) = -51.9589
+0 step remaining x= -1.82691, f(x) = 9.64616e-09, f'(x) = -51.9573
 First zero: -1.82691
+10 step remaining x= 2, f(x) = 43, f'(x) = 124
+9 step remaining x= 1.65323, f(x) = 10.7855, f'(x) = 65.5501
+8 step remaining x= 1.48869, f(x) = 1.73109, f'(x) = 45.2429
+7 step remaining x= 1.45043, f(x) = 0.0792587, f'(x) = 41.1374
+6 step remaining x= 1.4485, f(x) = 0.000193563, f'(x) = 40.9365
+5 step remaining x= 1.44849, f(x) = 1.16362e-09, f'(x) = 40.936
 Second zero: 1.44849
+20 step remaining x= 0, f(x) = -9, f'(x) = 0
 Failed to converge. Last x was 0
-Failed to converge. Last x was -20.5315
+20 step remaining x= 0.0001, f(x) = -9, f'(x) = -0.00139994
+19 step remaining x= -6428.85, f(x) = 6.83217e+15, f'(x) = -4.25103e+12
+18 step remaining x= -4821.67, f(x) = 2.16174e+15, f'(x) = -1.7934e+12
+17 step remaining x= -3616.28, f(x) = 6.83988e+14, f'(x) = -7.56592e+11
+16 step remaining x= -2712.24, f(x) = 2.16418e+14, f'(x) = -3.19187e+11
+15 step remaining x= -2034.21, f(x) = 6.84761e+13, f'(x) = -1.34657e+11
+14 step remaining x= -1525.69, f(x) = 2.16663e+13, f'(x) = -5.68084e+10
+13 step remaining x= -1144.3, f(x) = 6.85534e+12, f'(x) = -2.39661e+10
+12 step remaining x= -858.256, f(x) = 2.16907e+12, f'(x) = -1.01107e+10
+11 step remaining x= -643.724, f(x) = 6.86307e+11, f'(x) = -4.26545e+09
+10 step remaining x= -482.824, f(x) = 2.17152e+11, f'(x) = -1.79949e+09
+9 step remaining x= -362.15, f(x) = 6.87081e+10, f'(x) = -7.59159e+08
+8 step remaining x= -271.644, f(x) = 2.17397e+10, f'(x) = -3.20271e+08
+7 step remaining x= -203.765, f(x) = 6.87854e+09, f'(x) = -1.35115e+08
+6 step remaining x= -152.856, f(x) = 2.1764e+09, f'(x) = -5.70017e+07
+5 step remaining x= -114.675, f(x) = 6.88621e+08, f'(x) = -2.40478e+07
+4 step remaining x= -86.0396, f(x) = 2.17881e+08, f'(x) = -1.01453e+07
+3 step remaining x= -64.5636, f(x) = 6.89369e+07, f'(x) = -4.28018e+06
+2 step remaining x= -48.4576, f(x) = 2.1811e+07, f'(x) = -1.80579e+06
+1 step remaining x= -36.3792, f(x) = 6.90051e+06, f'(x) = -761887
+0 step remaining x= -27.3221, f(x) = 2.18301e+06, f'(x) = -321473
+Failed to converge. Last x was -27.3221
+35 step remaining x= 0.0001, f(x) = -9, f'(x) = -0.00139994
+34 step remaining x= -6428.85, f(x) = 6.83217e+15, f'(x) = -4.25103e+12
+33 step remaining x= -4821.67, f(x) = 2.16174e+15, f'(x) = -1.7934e+12
+32 step remaining x= -3616.28, f(x) = 6.83988e+14, f'(x) = -7.56592e+11
+31 step remaining x= -2712.24, f(x) = 2.16418e+14, f'(x) = -3.19187e+11
+30 step remaining x= -2034.21, f(x) = 6.84761e+13, f'(x) = -1.34657e+11
+29 step remaining x= -1525.69, f(x) = 2.16663e+13, f'(x) = -5.68084e+10
+28 step remaining x= -1144.3, f(x) = 6.85534e+12, f'(x) = -2.39661e+10
+27 step remaining x= -858.256, f(x) = 2.16907e+12, f'(x) = -1.01107e+10
+26 step remaining x= -643.724, f(x) = 6.86307e+11, f'(x) = -4.26545e+09
+25 step remaining x= -482.824, f(x) = 2.17152e+11, f'(x) = -1.79949e+09
+24 step remaining x= -362.15, f(x) = 6.87081e+10, f'(x) = -7.59159e+08
+23 step remaining x= -271.644, f(x) = 2.17397e+10, f'(x) = -3.20271e+08
+22 step remaining x= -203.765, f(x) = 6.87854e+09, f'(x) = -1.35115e+08
+21 step remaining x= -152.856, f(x) = 2.1764e+09, f'(x) = -5.70017e+07
+20 step remaining x= -114.675, f(x) = 6.88621e+08, f'(x) = -2.40478e+07
+19 step remaining x= -86.0396, f(x) = 2.17881e+08, f'(x) = -1.01453e+07
+18 step remaining x= -64.5636, f(x) = 6.89369e+07, f'(x) = -4.28018e+06
+17 step remaining x= -48.4576, f(x) = 2.1811e+07, f'(x) = -1.80579e+06
+16 step remaining x= -36.3792, f(x) = 6.90051e+06, f'(x) = -761887
+15 step remaining x= -27.3221, f(x) = 2.18301e+06, f'(x) = -321473
+14 step remaining x= -20.5315, f(x) = 690518, f'(x) = -135661
+13 step remaining x= -15.4414, f(x) = 218369, f'(x) = -57262.5
+12 step remaining x= -11.628, f(x) = 69026.5, f'(x) = -24181.3
+11 step remaining x= -8.77342, f(x) = 21800.9, f'(x) = -10220.4
+10 step remaining x= -6.64034, f(x) = 6873.92, f'(x) = -4327.28
+9 step remaining x= -5.05183, f(x) = 2159.79, f'(x) = -1839
+8 step remaining x= -3.8774, f(x) = 673.282, f'(x) = -788.208
+7 step remaining x= -3.0232, f(x) = 205.899, f'(x) = -344.938
+6 step remaining x= -2.42628, f(x) = 59.846, f'(x) = -159.242
+5 step remaining x= -2.05047, f(x) = 15.0355, f'(x) = -84.0032
+4 step remaining x= -1.87148, f(x) = 2.44172, f'(x) = -57.6605
+3 step remaining x= -1.82913, f(x) = 0.115938, f'(x) = -52.2343
+2 step remaining x= -1.82691, f(x) = 0.000306736, f'(x) = -51.9581
+1 step remaining x= -1.82691, f(x) = 2.16573e-09, f'(x) = -51.9573
 But will converge to -1.82691 with more steps
