@@ -148,8 +148,8 @@ class Polynomial {
   //This evaluates the Polynomial at the given value of "x", and returns that answer.
   Num eval(const Num & x) const {
     Num ans = Num();
-    typename map<int, Num>::const_iterator itr = coeff.end();
-    while (--itr != coeff.begin()) {
+    typename map<int, Num>::const_iterator itr = coeff.begin();
+    while (itr != coeff.end()) {
       Num term = itr->second;
 
       // Avoid using +=, *= or pow() here since it is not guaranteed
@@ -158,6 +158,7 @@ class Polynomial {
         term = term * x;
       }
       ans = ans + term;
+      ++itr;
     }
     ans = ans + itr->second;
     return ans;
