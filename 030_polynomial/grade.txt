@@ -1,6 +1,6 @@
-Grading at 10/01/2019:18:06:37.902372
-For commit ID 4b3db0a19b24b45e3580d0121ac1386083c23e51
-Grading at Tue Oct  1 14:06:36 EDT 2019
+Grading at 10/01/2019:18:25:49.800936
+For commit ID ec137728f3e3824261ebd6f5702e86801c112700
+Grading at Tue Oct  1 14:25:48 EDT 2019
 Thank you for submitting polynomial!
 This assignment is not yet due, so we aren't grading it yet.
 However, we will do some basic sanity checking ot avoid careless mistakes...
@@ -13,8 +13,7 @@ Successfully made test3!
 Now, comparing your outputs
 Your file matched the expected output
 Your file matched the expected output
-Line_17_did_not_match
-Your file did not match the expected ouput
-Your output for test3 did not match!
+Your file matched the expected output
+All tests pass, you should still test more
 
 Overall Grade: NO GRADE YET
