@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <exception>
+#include <functional>
 #include <iostream>
 #include <map>
 using namespace std;
@@ -15,7 +16,7 @@ class convergence_failure : public exception {
 
 template<typename Num>
 class Polynomial {
-  map<int, Num> coeff;
+  map<int, Num, greater<int> > coeff;  // Sort the keys in decending order
 
  public:
   // Default construct the polynomial to be "0" (i.e., 0*x^0)
@@ -182,9 +183,7 @@ class Polynomial {
   }
 
   //Use the Newton-Raphson method of numerically finding the zero of a Polynomial.
-  Num findZero(Num x,
-               unsigned maxSteps,
-               double tolerance) {  // throw(convergence_failure) {
+  Num findZero(Num x, unsigned maxSteps, double tolerance) {
     Polynomial<Num> fx(*this);
     for (int i = maxSteps; i > 0; --i) {
       cout << i << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
@@ -220,12 +219,15 @@ std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p) {
     return os;
   }
 
-  typename map<int, N>::const_iterator itr = p.coeff.end();
-  // Keys are sorted in ascending order, so start printing from the end
-  while (--itr != p.coeff.begin()) {
-    os << itr->second << "*x^" << itr->first;
-    os << " + ";
-  }
+  typename map<int, N>::const_iterator itr = p.coeff.begin();
   os << itr->second << "*x^" << itr->first;
+  itr++;
+  while (itr != p.coeff.end()) {
+    if (itr->second != N()) {
+      os << " + ";
+      os << itr->second << "*x^" << itr->first;
+    }
+    ++itr;
+  }
   return os;
 }
