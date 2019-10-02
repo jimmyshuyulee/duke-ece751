@@ -58,7 +58,14 @@ class Polynomial {
   // Subtract rhs from this Polynomial and return the result
   Polynomial operator-(const Polynomial & rhs) const {
     Polynomial<Num> ans(rhs);
-    return *this + (-ans);
+    ans = *this + (-ans);
+    typename map<int, Num>::iterator itr = ans.coeff.begin();
+    while (itr != ans.coeff.end()) {
+      if (it->second == Num() && itr->first != 0) {
+      }
+      itr->second = -(itr->second);
+      ++itr;
+    }
   }
 
   // Multiply this Polynomial by a scalar and return the result

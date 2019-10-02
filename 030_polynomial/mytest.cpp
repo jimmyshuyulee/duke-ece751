@@ -11,9 +11,10 @@ int main(void) {
   p1.addTerm(-9, 0);
   std::cout << "p1: " << p1 << "\n";
   std::cout << "-p1: " << -p1 << "\n";
-  Polynomial<float> p2;
+  Polynomial<int> p2;
   p2.addTerm(6, 6);
   p2.addTerm(-3, 3);
+  p2.addTerm(-7, 2);
   p2.addTerm(4, 0);
   std::cout << "p2: " << p2 << "\n";
   std::cout << "p1 + p2: " << p1 + p2 << "\n";
