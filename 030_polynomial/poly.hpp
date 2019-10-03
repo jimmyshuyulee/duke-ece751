@@ -3,6 +3,8 @@
 #include <functional>
 #include <iostream>
 #include <map>
+#include <vector>
+
 using namespace std;
 
 template<typename Num>
@@ -29,17 +31,20 @@ class Polynomial {
   // of lhs by an iterator.
   Polynomial operator+(const Polynomial & rhs) const {
     Polynomial<Num> ans(*this);
+    typename map<int, Num>::iterator ans_itr = ans.coeff.begin();
     typename map<int, Num>::const_iterator itr;
-    typename map<int, Num>::iterator ans_itr;
 
     for (itr = rhs.coeff.begin(); itr != rhs.coeff.end(); ++itr) {
+      while (ans_itr->first > itr->first) {
+        ++ans_itr;
+      }
       // Add the coefficients in rhs to ans if the term exist.
       // Otherwise, insert it into ans.
-      if (ans.coeff.find(itr->first) == ans.coeff.end()) {
-        ans.coeff.insert(*itr);
+      if (itr->first == ans_itr->first) {
+        ans_itr->second = ans_itr->second + itr->second;
       }
       else {
-        ans.coeff[itr->first] = ans.coeff[itr->first] + itr->second;
+        ans.coeff.insert(*itr);
       }
     }
     return ans;
@@ -58,23 +63,25 @@ class Polynomial {
 
   // Subtract rhs from this Polynomial and return the result
   Polynomial operator-(const Polynomial & rhs) const {
-    Polynomial<Num> ans(*this);
+    Polynomial<Num> ans(*this + (-rhs));
     typename map<int, Num>::iterator itr;
-    for (ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
+    vector<int> toBeRemove;
+    for (itr = ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
       if (itr->second == Num() && itr->first != 0) {
-        ans.coeff
+        toBeRemove.push_back(itr->first);
       }
-      itr->second = -(itr->second);
+    }
+    for (int i = 0; i < toBeRemove.size(); ++i) {
+      ans.coeff.erase(toBeRemove[i]);
     }
   }
 
   // Multiply this Polynomial by a scalar and return the result
   Polynomial operator*(const Num & n) const {
     Polynomial<Num> ans(*this);
-    typename map<int, Num>::iterator itr = ans.coeff.begin();
-    while (itr != ans.coeff.end()) {
+    typename map<int, Num>::iterator itr;
+    for (itr = ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
       itr->second = n * itr->second;
-      ++itr;
     }
     return ans;
   }
@@ -96,8 +103,8 @@ class Polynomial {
 
   // Compare two Polynomials for equality and return the result.
   bool operator==(const Polynomial & rhs) const {
-    typename map<int, Num>::const_iterator itr = coeff.begin();
-    while (itr != coeff.end()) {
+    typename map<int, Num>::const_iterator itr;
+    for (itr = coeff.begin(); itr != coeff.end(); ++itr) {
       if (rhs.coeff.find(itr->first) == rhs.coeff.end()) {
         return false;
       }
@@ -106,7 +113,6 @@ class Polynomial {
       if (rhs.coeff.at(itr->first) != itr->second) {
         return false;
       }
-      ++itr;
     }
     return true;
   }
@@ -155,8 +161,8 @@ class Polynomial {
   //This evaluates the Polynomial at the given value of "x", and returns that answer.
   Num eval(const Num & x) const {
     Num ans = Num();
-    typename map<int, Num>::const_iterator itr = coeff.begin();
-    while (itr != coeff.end()) {
+    typename map<int, Num>::const_iterator itr;
+    for (itr = coeff.begin(); itr != coeff.end(); ++itr) {
       Num term = itr->second;
 
       // Avoid using +=, *= or pow() here since it is not guaranteed
@@ -165,7 +171,6 @@ class Polynomial {
         term = term * x;
       }
       ans = ans + term;
-      ++itr;
     }
     return ans;
   }
@@ -179,12 +184,11 @@ class Polynomial {
     }
 
     Polynomial<Num> ans;
-    typename map<int, Num>::const_iterator itr = coeff.begin();
-    while (itr != coeff.end()) {
+    typename map<int, Num>::const_iterator itr;
+    for (itr = coeff.begin(); itr != coeff.end(); ++itr) {
       if (itr->first > 0) {
         ans.addTerm(itr->second * itr->first, itr->first - 1);
       }
-      ++itr;
     }
     return ans;
   }
