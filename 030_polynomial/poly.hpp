@@ -23,13 +23,16 @@ class Polynomial {
   Polynomial() : coeff() { coeff[0] = Num(); }
 
   // Add this Polynomial to rhs, and return the resulting polynomial.
-  // For example if this is 2 * x ^ 2 + 3, and rhs is x ^ 2 + 4 * x,
-  // you should return the Polynomial 3 * x ^ 2 + 4 * x + 3.
+  // This can be done elegantly by using .find() fuction to access terms in lhs,
+  // but the overall time complexity will become O(nlogn) since searching in
+  // map takes O(logn) time. I choose this O(n) approach which access the terms
+  // of lhs by an iterator.
   Polynomial operator+(const Polynomial & rhs) const {
     Polynomial<Num> ans(*this);
+    typename map<int, Num>::const_iterator itr;
+    typename map<int, Num>::iterator ans_itr;
 
-    typename map<int, Num>::const_iterator itr = rhs.coeff.begin();
-    while (itr != rhs.coeff.end()) {
+    for (itr = rhs.coeff.begin(); itr != rhs.coeff.end(); ++itr) {
       // Add the coefficients in rhs to ans if the term exist.
       // Otherwise, insert it into ans.
       if (ans.coeff.find(itr->first) == ans.coeff.end()) {
@@ -38,7 +41,6 @@ class Polynomial {
       else {
         ans.coeff[itr->first] = ans.coeff[itr->first] + itr->second;
       }
-      ++itr;
     }
     return ans;
   }
@@ -47,24 +49,22 @@ class Polynomial {
   // For example, if this Polynomial is 4 * x ^ 3 - 2, return -4 * x ^ 3 + 2
   Polynomial operator-() const {
     Polynomial<Num> ans(*this);
-    typename map<int, Num>::iterator itr = ans.coeff.begin();
-    while (itr != ans.coeff.end()) {
+    typename map<int, Num>::iterator itr;
+    for (itr = ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
       itr->second = -(itr->second);
-      ++itr;
     }
     return ans;
   }
 
   // Subtract rhs from this Polynomial and return the result
   Polynomial operator-(const Polynomial & rhs) const {
-    Polynomial<Num> ans(rhs);
-    ans = *this + (-ans);
-    typename map<int, Num>::iterator itr = ans.coeff.begin();
-    while (itr != ans.coeff.end()) {
-      if (it->second == Num() && itr->first != 0) {
+    Polynomial<Num> ans(*this);
+    typename map<int, Num>::iterator itr;
+    for (ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
+      if (itr->second == Num() && itr->first != 0) {
+        ans.coeff
       }
       itr->second = -(itr->second);
-      ++itr;
     }
   }
 
@@ -193,8 +193,8 @@ class Polynomial {
   Num findZero(Num x, unsigned maxSteps, double tolerance) {
     Polynomial<Num> fx(*this);
     for (int i = maxSteps; i > 0; --i) {
-      cout << i << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
-           << ", f'(x) = " << fx.derivative().eval(x) << endl;
+      //cout << i << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
+      //     << ", f'(x) = " << fx.derivative().eval(x) << endl;
       if (abs(fx.eval(x)) <= tolerance) {
         return x;
       }
@@ -204,8 +204,8 @@ class Polynomial {
       x = x - (fx.eval(x) / fx.derivative().eval(x));
     }
 
-    cout << 0 << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
-         << ", f'(x) = " << fx.derivative().eval(x) << endl;
+    //cout << 0 << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
+    //     << ", f'(x) = " << fx.derivative().eval(x) << endl;
     if (abs(fx.eval(x)) > tolerance) {
       throw convergence_failure<Num>(x);
     }
