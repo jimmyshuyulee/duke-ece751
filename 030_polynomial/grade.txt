@@ -1,6 +1,6 @@
-Grading at 10/03/2019:20:02:04.873322
-For commit ID 0ce9c44b1a6ae3bf90e2a6d599ce8bf11aa955a0
-Grading at Thu Oct  3 16:01:58 EDT 2019
+Grading at 10/04/2019:15:10:30.591262
+For commit ID 64dca57c9a6a90f8e8f6ca72c11e64952b56c0bf
+Grading at Fri Oct  4 11:10:28 EDT 2019
 Thank you for submitting polynomial!
 This assignment is not yet due, so we aren't grading it yet.
 However, we will do some basic sanity checking to avoid careless mistakes...
@@ -11,25 +11,9 @@ Successfully made test2!
 Trying to compile test3.cpp
 Successfully made test3!
 Now, comparing your outputs
-Line_1_did_not_match
-Line_2_did_not_match
-Line_3_did_not_match
-Line_4_did_not_match
-Line_5_did_not_match
-Line_6_did_not_match
-Line_7_did_not_match
-Line_8_did_not_match
-Line_9_did_not_match
-Line_10_did_not_match
-Line_11_did_not_match
-Line_12_did_not_match
-Line_13_did_not_match
-Line_14_did_not_match
-Line_15_did_not_match
-Line_16_did_not_match
-Line_17_did_not_match
-Line_18_did_not_match
-Your file did not match the expected ouput
-Your output for test1 did not match!
+Your file matched the expected output
+Your file matched the expected output
+Your file matched the expected output
+All tests pass, you should still test more
 
 Overall Grade: NO GRADE YET
