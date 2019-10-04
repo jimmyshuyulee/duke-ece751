@@ -1,3 +1,5 @@
+all:mytest test1 test2 test3
+
 mytest:poly.hpp mytest.cpp
 	g++ -o mytest poly.hpp mytest.cpp
 

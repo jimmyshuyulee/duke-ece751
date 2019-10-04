@@ -5,6 +5,7 @@
 int main(void) {
   Polynomial<int> p1;
   std::cout << "default poly: " << p1 << "\n";
+  p1.addTerm(0, 1);
   p1.addTerm(4, 4);
   p1.addTerm(2, 3);
   p1.addTerm(-7, 2);

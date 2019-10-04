@@ -5,6 +5,7 @@
 #include <map>
 using namespace std;
 
+// Whenever the program needs to "give up", it throws a convergence_failure
 template<typename Num>
 class convergence_failure : public exception {
  public:
@@ -14,6 +15,7 @@ class convergence_failure : public exception {
   virtual const char * what() const throw() { return "Convergence failure"; }
 };
 
+// A class represents the Polynomial which has its coefficient with type "Num"
 template<typename Num>
 class Polynomial {
   map<int, Num, greater<int> > coeff;  // Sort the keys in decending order
@@ -22,25 +24,28 @@ class Polynomial {
   // Default construct the polynomial to be "0" (i.e., 0*x^0)
   Polynomial() : coeff() { coeff[0] = Num(); }
 
+  // Add (c*x^p) to this Polynomial, updatings its value.
+  // Add the coefficients to ans if the term exist. Otherwise, insert it.
+  // This approach uses [] operator of map to access terms in lhs, which so
+  // the overall time complexity is O(logn)
+  void addTerm(const Num & c, int p) {
+    // There is no need to check whether p is in coeff. The [] operator checks
+    // it and construct a new element in the map if p does not exist.
+    // Only need to check c to avoid adding terms with 0 coefficient.
+    if (c != Num()) {
+      coeff[p] = coeff[p] + c;
+    }
+  }
+
   // Add this Polynomial to rhs, and return the resulting polynomial.
-  // This can be done elegantly by using .find() fuction to access terms in lhs,
-  // but the overall time complexity will become O(nlogn) since searching in
-  // map takes O(logn) time. I choose this O(n) approach which access the terms
-  // of lhs by an iterator.
+  // I use addTrem() to simplify the implementation here, but there should be
+  // an O(n) approach for this function if I use iterator. I will try it after
+  // this assignment get graded
   Polynomial operator+(const Polynomial & rhs) const {
     Polynomial<Num> ans(*this);
     typename map<int, Num>::const_iterator itr;
-    typename map<int, Num>::iterator ans_itr;
-
     for (itr = rhs.coeff.begin(); itr != rhs.coeff.end(); ++itr) {
-      // Add the coefficients in rhs to ans if the term exist.
-      // Otherwise, insert it into ans.
-      if (ans.coeff.find(itr->first) == ans.coeff.end()) {
-        ans.coeff.insert(*itr);
-      }
-      else {
-        ans.coeff[itr->first] = ans.coeff[itr->first] + itr->second;
-      }
+      ans.addTerm(itr->second, itr->first);
     }
     return ans;
   }
@@ -58,23 +63,23 @@ class Polynomial {
 
   // Subtract rhs from this Polynomial and return the result
   Polynomial operator-(const Polynomial & rhs) const {
-    Polynomial<Num> ans(*this);
+    Polynomial<Num> ansWithZero(*this + (-rhs));
     typename map<int, Num>::iterator itr;
-    for (ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
-      if (itr->second == Num() && itr->first != 0) {
-        ans.coeff
+    Polynomial<Num> ans;
+    for (itr = ansWithZero.coeff.begin(); itr != ansWithZero.coeff.end(); ++itr) {
+      if (itr->second != Num() || itr->first == 0) {
+        ans.addTerm(itr->second, itr->first);
       }
-      itr->second = -(itr->second);
     }
+    return ans;
   }
 
   // Multiply this Polynomial by a scalar and return the result
   Polynomial operator*(const Num & n) const {
     Polynomial<Num> ans(*this);
-    typename map<int, Num>::iterator itr = ans.coeff.begin();
-    while (itr != ans.coeff.end()) {
+    typename map<int, Num>::iterator itr;
+    for (itr = ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
       itr->second = n * itr->second;
-      ++itr;
     }
     return ans;
   }
@@ -96,8 +101,8 @@ class Polynomial {
 
   // Compare two Polynomials for equality and return the result.
   bool operator==(const Polynomial & rhs) const {
-    typename map<int, Num>::const_iterator itr = coeff.begin();
-    while (itr != coeff.end()) {
+    typename map<int, Num>::const_iterator itr;
+    for (itr = coeff.begin(); itr != coeff.end(); ++itr) {
       if (rhs.coeff.find(itr->first) == rhs.coeff.end()) {
         return false;
       }
@@ -106,23 +111,12 @@ class Polynomial {
       if (rhs.coeff.at(itr->first) != itr->second) {
         return false;
       }
-      ++itr;
     }
     return true;
   }
 
   // Compare two Polynomials for inequality and return the result.
   bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
-
-  // Add (c*x^p) to this Polynomial, updatings its value.  For example,
-  void addTerm(const Num & c, int p) {
-    if (coeff.find(p) != coeff.end()) {
-      coeff[p] = coeff[p] + c;
-    }
-    else {
-      coeff[p] = c;
-    }
-  }
 
   // Perform the + operation but update this Polynomial,
   // instead of returning a different Polynomial.
@@ -155,8 +149,8 @@ class Polynomial {
   //This evaluates the Polynomial at the given value of "x", and returns that answer.
   Num eval(const Num & x) const {
     Num ans = Num();
-    typename map<int, Num>::const_iterator itr = coeff.begin();
-    while (itr != coeff.end()) {
+    typename map<int, Num>::const_iterator itr;
+    for (itr = coeff.begin(); itr != coeff.end(); ++itr) {
       Num term = itr->second;
 
       // Avoid using +=, *= or pow() here since it is not guaranteed
@@ -165,7 +159,6 @@ class Polynomial {
         term = term * x;
       }
       ans = ans + term;
-      ++itr;
     }
     return ans;
   }
@@ -179,12 +172,11 @@ class Polynomial {
     }
 
     Polynomial<Num> ans;
-    typename map<int, Num>::const_iterator itr = coeff.begin();
-    while (itr != coeff.end()) {
+    typename map<int, Num>::const_iterator itr;
+    for (itr = coeff.begin(); itr != coeff.end(); ++itr) {
       if (itr->first > 0) {
         ans.addTerm(itr->second * itr->first, itr->first - 1);
       }
-      ++itr;
     }
     return ans;
   }
@@ -227,13 +219,11 @@ std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p) {
 
   typename map<int, N>::const_iterator itr = p.coeff.begin();
   os << itr->second << "*x^" << itr->first;
-  itr++;
-  while (itr != p.coeff.end()) {
+  for (itr = ++p.coeff.begin(); itr != p.coeff.end(); ++itr) {
     if (itr->second != N()) {
       os << " + ";
       os << itr->second << "*x^" << itr->first;
     }
-    ++itr;
   }
   return os;
 }
