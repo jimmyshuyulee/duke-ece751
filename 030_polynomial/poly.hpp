@@ -3,7 +3,6 @@
 #include <functional>
 #include <iostream>
 #include <map>
-#include <vector>
 
 using namespace std;
 
@@ -65,9 +64,12 @@ class Polynomial {
   }
 
   // Subtract rhs from this Polynomial and return the result
+  // Achieved by summing *this and (-rhs)
   Polynomial operator-(const Polynomial & rhs) const {
     Polynomial<Num> ansWithZero(*this + (-rhs));
     typename map<int, Num>::iterator itr;
+    // The sum of *this and (-rhs) may contain terms with 0 coefficients.
+    // Only add non-zero terms to ans.
     Polynomial<Num> ans;
     for (itr = ansWithZero.coeff.begin(); itr != ansWithZero.coeff.end(); ++itr) {
       if (itr->second != Num() || itr->first == 0) {
