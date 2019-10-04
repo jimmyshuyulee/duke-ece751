@@ -21,6 +21,7 @@ int main(void) {
   std::cout << "p1 + p2: " << p1 + p2 << "\n";
   std::cout << "p1 * p2: " << p1 * p2 << "\n";
   std::cout << "p1 - p2: " << p1 - p2 << "\n";
+  std::cout << "p2*p1*0: " << p2 * Polynomial<int>() << "\n";
   Polynomial<Polynomial<int> > p3;
   p3.addTerm(p1, 0);
   p3.addTerm(p2, 1);

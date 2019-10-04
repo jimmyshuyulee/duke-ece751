@@ -80,7 +80,11 @@ class Polynomial {
   }
 
   // Multiply this Polynomial by a scalar and return the result
+  // Return default constructed Polynomial if n is 0
   Polynomial operator*(const Num & n) const {
+    if (n == Num()) {
+      return Polynomial<Num>();
+    }
     Polynomial<Num> ans(*this);
     typename map<int, Num>::iterator itr;
     for (itr = ans.coeff.begin(); itr != ans.coeff.end(); ++itr) {
@@ -90,6 +94,8 @@ class Polynomial {
   }
 
   // Multiply this Polynomial by rhs, and return the result.
+  // No need to handle the multiply by 0 case explicitly since addTerm() will
+  // not add 0 coefficient terms
   Polynomial operator*(const Polynomial & rhs) const {
     Polynomial<Num> ans;
     typename map<int, Num>::const_iterator itr1 = coeff.begin();
@@ -190,20 +196,16 @@ class Polynomial {
   Num findZero(Num x, unsigned maxSteps, double tolerance) {
     Polynomial<Num> fx(*this);
     for (int i = maxSteps; i > 0; --i) {
-      //cout << i << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
-      //     << ", f'(x) = " << fx.derivative().eval(x) << endl;
-      if (abs(fx.eval(x)) <= tolerance) {
+      if (abs(fx.eval(x)) <= tolerance) {  // If already converge
         return x;
       }
-      if (fx.derivative().eval(x) == Num()) {
+      if (fx.derivative().eval(x) == Num()) {  // If f(x)' is 0
         throw convergence_failure<Num>(x);
       }
       x = x - (fx.eval(x) / fx.derivative().eval(x));
     }
 
-    //cout << 0 << " step remaining x= " << x << ", f(x) = " << fx.eval(x)
-    //     << ", f'(x) = " << fx.derivative().eval(x) << endl;
-    if (abs(fx.eval(x)) > tolerance) {
+    if (abs(fx.eval(x)) > tolerance) {  // If it does not converge
       throw convergence_failure<Num>(x);
     }
     return x;
