@@ -1,6 +1,6 @@
-Grading at 10/04/2019:15:10:30.591262
+Grading at 10/04/2019:15:10:32.413799
 For commit ID 64dca57c9a6a90f8e8f6ca72c11e64952b56c0bf
-Grading at Fri Oct  4 11:10:28 EDT 2019
+Grading at Fri Oct  4 11:10:30 EDT 2019
 Thank you for submitting polynomial!
 This assignment is not yet due, so we aren't grading it yet.
 However, we will do some basic sanity checking to avoid careless mistakes...
