@@ -3,6 +3,8 @@
 #include <functional>
 #include <iostream>
 #include <map>
+#include <vector>
+
 using namespace std;
 
 // Whenever the program needs to "give up", it throws a convergence_failure
@@ -43,6 +45,7 @@ class Polynomial {
   // this assignment get graded
   Polynomial operator+(const Polynomial & rhs) const {
     Polynomial<Num> ans(*this);
+    typename map<int, Num>::iterator ans_itr = ans.coeff.begin();
     typename map<int, Num>::const_iterator itr;
     for (itr = rhs.coeff.begin(); itr != rhs.coeff.end(); ++itr) {
       ans.addTerm(itr->second, itr->first);
