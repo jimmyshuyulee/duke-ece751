@@ -1,13 +1,76 @@
-Grading at 10/03/2019:03:40:02.928980
-For commit ID f8dc431aece068ef7e8abcb6fd356f2262384912
-Grading at Wed Oct  2 23:40:00 EDT 2019
+Grading at 10/05/2019:18:45:08.841379
+For commit ID 701923066eacc531e1892d35c8259860079ee7ed
+Grading at Sat Oct  5 14:44:45 EDT 2019
 **Testing correct implementation **
 -----------------------------------
   - Valgrind was clean (no errors, no memory leaks)
 
 **Testing broken implementation 10**
 -----------------------------------
-  - Valgrind was clean (no errors, no memory leaks)
-Your test program did not identify /usr/local/ece551/lls/il10.o as broken!
 
-Overall Grade: FAILED
+**Testing broken implementation 11**
+-----------------------------------
+
+**Testing broken implementation 12**
+-----------------------------------
+  - Valgrind reported errors
+
+**Testing broken implementation 13**
+-----------------------------------
+
+**Testing broken implementation 14**
+-----------------------------------
+  - Valgrind reported errors
+
+**Testing broken implementation 15**
+-----------------------------------
+
+**Testing broken implementation 16**
+-----------------------------------
+
+**Testing broken implementation 17**
+-----------------------------------
+
+**Testing broken implementation 18**
+-----------------------------------
+
+**Testing broken implementation 19**
+-----------------------------------
+
+**Testing broken implementation 1**
+-----------------------------------
+
+**Testing broken implementation 20**
+-----------------------------------
+
+**Testing broken implementation 21**
+-----------------------------------
+  - Valgrind reported errors
+
+**Testing broken implementation 2**
+-----------------------------------
+
+**Testing broken implementation 3**
+-----------------------------------
+
+**Testing broken implementation 4**
+-----------------------------------
+
+**Testing broken implementation 5**
+-----------------------------------
+
+**Testing broken implementation 6**
+-----------------------------------
+
+**Testing broken implementation 7**
+-----------------------------------
+
+**Testing broken implementation 8**
+-----------------------------------
+
+**Testing broken implementation 9**
+-----------------------------------
+
+Your tests identified the problems with all broken programs
+
+Overall Grade: PASSED
