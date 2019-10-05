@@ -4,157 +4,99 @@
 #include "il.h"
 
 using namespace std;
-void testList(void) {
-  // assignment
-  IntList assigned;
-  assigned.addFront(20);
-  assigned.addFront(10);
-  assigned.addBack(30);
-  assigned.addBack(40);
 
-  IntList assignee;
-  assigned = assignee;
-  assert(assigned.size == 0);
-  assert(assigned.getSize() == 0);
-  assert(assigned.head == NULL);
-  assert(assigned.tail == NULL);
+void testList() {
+  // add elements, default constructor
+  IntList a = IntList();
+  assert(a.head == NULL && a.tail == NULL && a.size == 0);
 
-  // copy assignment test
-  IntList l1;
-  IntList cagL = l1;
-  assert(cagL.head == NULL);
-  assert(cagL.tail == NULL);
-  assert(cagL.size == 0);
-  assert(cagL.getSize() == 0);
+  // add head to empty
+  a.addFront(20);
+  assert(a.head == a.tail && a.head != NULL);
+  assert(a.head->prev == NULL && a.head->next == NULL);
+  assert(a[0] == 20);
 
-  // copy ctor test
-  IntList cpyL(l1);
-  assert(cpyL.head == NULL);
-  assert(cpyL.tail == NULL);
-  assert(cpyL.size == 0);
-  assert(cpyL.getSize() == 0);
+  a.addFront(10);
+  a.addBack(30);
+  a.addBack(40);
+  assert(a.tail != NULL && a.head != NULL);
+  assert(a.size == 4 && a.getSize() == 4);
+  assert(a.tail->data == 40 && a.head->data == 10);
 
-  // test addFront()
-  l1.addFront(10);  // [10]
-  assert(l1.head != NULL);
-  assert(l1.tail != NULL);
-  assert(l1.head->prev == NULL);
-  assert(l1.tail->next == NULL);
-  assert(l1.head == l1.tail);
-  assert(l1.size == 1);
-  assert(l1.getSize() == 1);
-  assert(l1[0] == 10);
+  // remove from head
+  assert(a.remove(10) == true && a.remove(100) == false);
+  assert(a.head->data == 20 && a.tail->data == 40);
+  assert(a.head->prev == NULL);
+  assert(a.size == 3 && a.getSize() == 3);
 
-  // remove only one
-  bool rmvOneTrue = l1.remove(10);
-  bool rmvOneFalse = l1.remove(20);
-  assert(rmvOneTrue == true);
-  assert(rmvOneFalse == false);
-  assert(l1.size == 0);
-  assert(l1.getSize() == 0);
-  assert(l1.head == NULL);
-  assert(l1.tail == NULL);
-  l1.addFront(10);
+  //remove from middle
+  assert(a.remove(30) == true);
+  assert(a.head->next->data == 40 && a.tail->prev->data == 20);
+  assert(a.size == 2 && a.getSize() == 2);
 
-  // test setter
-  l1[0] = 100;
-  assert(l1[0] == 100);  // [100]
-  assert(l1.size == 1);
-  assert(l1.getSize() == 1);
+  // remove from tail
+  assert(a.remove(40) == true);
+  assert(a.head->data == 20 && a.tail == a.head);
+  assert(a.tail->next == NULL);
+  assert(a.size == 1 && a.getSize() == 1);
 
-  // test pointer relation
-  assert(l1.head->next == NULL);
-  assert(l1.tail->prev == NULL);
-  assert(l1.head->prev == NULL);
-  assert(l1.tail->next == NULL);
-  // assert(l1.head->next->prev == l1.head);
-  // assert(l1.tail->prev->next == l1.tail);
+  // remove head from single node
+  assert(a.remove(20));
+  assert(a.head == NULL && a.tail == NULL);
+  // add back to empty
+  a.addBack(200);
+  assert(a.tail == a.head && a.tail->data == 200);
+  assert(a.tail->prev == NULL && a.tail->next == NULL);
+  // remove tail from single node
+  assert(a.remove(200));
+  assert(a.head == NULL && a.tail == NULL);
 
-  // test addBack()
-  l1.addBack(20);  // [100, 20]
-  assert(l1.size == 2);
-  assert(l1.getSize() == 2);
-  assert(l1[1] == 20);
+  a.addFront(20);
+  a.addFront(10);
+  a.addBack(30);
+  a.addBack(40);
 
-  // test pointer relation
-  assert(l1.head->next == l1.tail);
-  assert(l1.tail->prev == l1.head);
-  assert(l1.head->next->next == NULL);
-  assert(l1.tail->prev->prev == NULL);
-  assert(l1.head->next->prev == l1.head);
-  assert(l1.tail->prev->next == l1.tail);
+  // initialize d as a copy of a
+  IntList d(a);
+  assert(d.head != a.head && d.tail != a.tail);
+  assert(d.head->data == a.head->data && d.tail->data == a.tail->data);
+  assert(d.head->next != a.head->next && d.head->next->data == a.head->next->data);
+  assert(d.tail->prev != a.tail->prev && d.tail->prev->data == a.tail->prev->data);
 
-  // test remove()
-  l1.addBack(30);
-  l1.addBack(40);
-  l1.addBack(50);  // [100, 20, 30, 40, 50]
-  assert(l1.size == 5);
-  assert(l1.getSize() == 5);
-  assert(l1[2] == 30);
-  assert(l1[3] == 40);
-  assert(l1[4] == 50);
-  bool rmvX = l1.remove(30);    // [100, 20, 40, 50]
-  bool rmvY = l1.remove(1000);  // [100, 20, 40, 50]
-  assert(rmvX == true);
-  assert(rmvY == false);
-  assert(l1.size == 4);
-  assert(l1.getSize() == 4);
-  assert(l1[2] == 40);
-  assert(l1[3] == 50);
+  // deep copy
+  d = a;
+  assert(d.head != a.head && d.tail != a.tail);
+  assert(d.head->data == a.head->data && d.tail->data == a.tail->data);
+  assert(d.head->next != a.head->next && d.head->next->data == a.head->next->data);
+  assert(d.tail->prev != a.tail->prev && d.tail->prev->data == a.tail->prev->data);
 
-  // test remove() with same element
-  l1.addFront(100);  // [100, 100, 20, 40, 50]
-  l1.addBack(50);    // [100, 100, 20, 40, 50, 50]
-  bool rmvA = l1.remove(100);
-  bool rmvB = l1.remove(50);  // [100, 20, 40, 50]
-  assert(rmvA == true);
-  assert(rmvB == true);
-  assert(l1.size == 4);
-  assert(l1.getSize() == 4);
-  assert(l1[0] == 100);
-  assert(l1[1] == 20);
-  assert(l1[2] == 40);
-  assert(l1[3] == 50);
+  // assign empty to a
+  IntList b;
+  a = b;
+  // 10 copy assignment
+  // 13 not clear
+  assert(a.head == NULL && a.tail == NULL);
+  assert(a.size == 0 && a.getSize() == 0);
 
-  // remove head and tail
-  bool rmvHead = l1.remove(100);
-  assert(rmvHead == true);
-  l1.addFront(100);
+  // initialize c from empty b
+  // 11 copy constructor
+  IntList c(b);
+  assert(c.head == NULL && c.tail == NULL);
+  assert(c.size == 0 && c.getSize() == 0);
 
-  bool rmvTail = l1.remove(50);
-  assert(rmvTail == true);
-  l1.addBack(50);
-  // test copy constructor
-  IntList l3(l1);
-  assert(l1.size == l3.size);
-  assert(l1.getSize() == l3.getSize());
-  assert(l1[0] == l3[0]);
-  assert(l1[1] == l3[1]);
-  assert(l1[2] == l3[2]);
-  assert(l1[3] == l3[3]);
-  assert(l3.head != NULL);
-  assert(l3.tail != NULL);
+  int alen = a.getSize();
+  assert(a.size == alen);
+  cout << "The length of a is: " << alen << endl;
+  for (int i = 0; i < alen; i++) {
+    cout << a[i] << " ";
+  }
+  cout << endl;
 
-  // test assignment
-  IntList l4;
-  l4 = l1;
-  assert(l1.size == l4.size);
-  assert(l1.getSize() == l4.getSize());
-  assert(l1[0] == l4[0]);
-  assert(l1[1] == l4[1]);
-  assert(l1[2] == l4[2]);
-  assert(l1[3] == l4[3]);
-
-  // remove middle
-  bool rmvMid1 = l1.remove(20);  // [100, 40, 50]
-  assert(rmvMid1 == true);
-  bool rmvMid2 = l1.remove(40);  // [100, 50]
-  assert(rmvMid2 == true);
-  bool rmvMid3 = l1.remove(9);
-  assert(rmvMid3 == false);
+  return;
 }
 
-int main(void) {
+int main() {
   testList();
   return EXIT_SUCCESS;
 }
+
