@@ -1,20 +1,18 @@
-#include "ll.h"
-#include <iostream>
 #include <stdio.h>
+
+#include <iostream>
+
+#include "ll.h"
 
 template<typename T>
 class Counted_OrdItem {
-public:
+ public:
   T item;
   unsigned int count;
-  Counted_OrdItem(): item(), count(0) {}
-  Counted_OrdItem(const T& _item): item(_item), count(1) {}
-  bool operator==(const Counted_OrdItem & rhs) const {
-    return item == rhs.item;
-  }
-  bool operator!=(const Counted_OrdItem & rhs) const {
-    return item != rhs.item;
-  }
+  Counted_OrdItem() : item(), count(0) {}
+  Counted_OrdItem(const T & _item) : item(_item), count(1) {}
+  bool operator==(const Counted_OrdItem & rhs) const { return item == rhs.item; }
+  bool operator!=(const Counted_OrdItem & rhs) const { return item != rhs.item; }
   Counted_OrdItem & operator++() {
     count++;
     return *this;
@@ -23,17 +21,13 @@ public:
 
 template<typename T>
 class Counted_OrdCount {
-public:
+ public:
   T item;
   unsigned int count;
-  Counted_OrdCount(): item(), count(0){}
-  Counted_OrdCount(const Counted_OrdItem<T> & rhs): item(rhs.item), count(rhs.count) {}
-  bool operator < (const Counted_OrdCount & rhs) const {
-    return count < rhs.count;
-  }
-  
+  Counted_OrdCount() : item(), count(0) {}
+  Counted_OrdCount(const Counted_OrdItem<T> & rhs) : item(rhs.item), count(rhs.count) {}
+  bool operator<(const Counted_OrdCount & rhs) const { return count < rhs.count; }
 };
-
 
 template<typename T>
 void sort(LinkedList<T> & ll) {
@@ -41,12 +35,12 @@ void sort(LinkedList<T> & ll) {
   int sz = ll.getSize();
   while (!sorted) {
     sorted = true;
-    for (int i =0; i < sz - 1; i++) {
-      if (ll[i+1] < ll[i]) {
-	T temp = ll[i];
-	ll[i] = ll[i+1];
-	ll[i+1] = temp;
-	sorted = false;
+    for (int i = 0; i < sz - 1; i++) {
+      if (ll[i + 1] < ll[i]) {
+        T temp = ll[i];
+        ll[i] = ll[i + 1];
+        ll[i + 1] = temp;
+        sorted = false;
       }
     }
   }
@@ -77,23 +71,21 @@ LinkedList<Counted_OrdCount<T> > convertTypes(LinkedList<Counted_OrdItem<T> > ll
     ll.remove(curr);
   }
   return ans;
-
 }
 int isidchar(char c) {
   return isalnum(c) || c == '_';
 }
-void addInput (LinkedList<std::string> * list, char * line) {
+void addInput(LinkedList<std::string> * list, char * line) {
   if (*line == '\0') {
     return;
   }
   char * start = line;
   while (*start != '\0') {
-    while(isspace(*line) == isspace(*start) &&
-	  isidchar(*line) == isidchar(*start)) {
+    while (isspace(*line) == isspace(*start) && isidchar(*line) == isidchar(*start)) {
       line++;
     }
     if (!isspace(*start)) {
-      list->addFront(std::string(start,line));
+      list->addFront(std::string(start, line));
     }
     start = line;
   }
@@ -108,10 +100,10 @@ LinkedList<std::string> * readInput(const char * fname) {
   char * line = NULL;
   size_t sz;
   while (getline(&line, &sz, f) != -1) {
-    addInput (ans, line);
+    addInput(ans, line);
   }
   free(line);
-  if(fclose(f) != 0) {
+  if (fclose(f) != 0) {
     std::cerr << "Warning: Cannot close" << fname << "\n";
   }
   return ans;
@@ -133,15 +125,17 @@ int main(int argc, char ** argv) {
   }
   LinkedList<Counted_OrdItem<std::string> > counts = count(*items);
   int sz = toRemove->getSize();
-  while (sz > 0){
-    std::string s = (*toRemove)[sz-1];
+  while (sz > 0) {
+    std::string s = (*toRemove)[sz - 1];
     if (counts.remove(Counted_OrdItem<std::string>(s))) {
       std::cout << "Removed " << s << "\n";
     }
     else {
       std::cout << "Did not find " << s << "\n";
     }
-    while(toRemove->remove(s)) { sz--; }
+    while (toRemove->remove(s)) {
+      sz--;
+    }
   }
   LinkedList<Counted_OrdCount<std::string> > converted = convertTypes(counts);
   sort(converted);
