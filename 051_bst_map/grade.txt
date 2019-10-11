@@ -1,0 +1,2273 @@
+Grading at 10/11/2019:02:46:17.981556
+For commit ID 2db44c59904ae9af934d549802172b296c6e4c33
+Grading at Thu Oct 10 22:46:16 EDT 2019
+-----------------------------------------------
+testcase 1 : Testing with BstMap<int,int>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<int, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<int, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<int, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = int; V = int]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: passing ‘const BstMap<int, int>’ as ‘this’ argument discards qualifiers [-fpermissive]
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note:   in call to ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = int; V = int]’
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:64:17: error: ‘int BstMap<int, int>::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = int; V = int]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = int; V = int]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘int BstMap<int, int>::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = int; V = int]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘int BstMap<int, int>::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = int; V = int]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:17: error: lvalue required as unary ‘&’ operand
+     Node ** n = &search(key);
+                 ^~~~~~~~~~~~
+bstmap.h:71:17: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<int, int>::Node* BstMap<int, int>::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 2 : Testing with BstMap<int,std::string>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<int, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<int, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<int, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = int; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: passing ‘const BstMap<int, std::__cxx11::basic_string<char> >’ as ‘this’ argument discards qualifiers [-fpermissive]
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note:   in call to ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = int; V = std::__cxx11::basic_string<char>]’
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:64:17: error: ‘std::__cxx11::basic_string<char> BstMap<int, std::__cxx11::basic_string<char> >::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = int; V = std::__cxx11::basic_string<char>]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = int; V = std::__cxx11::basic_string<char>]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘int BstMap<int, std::__cxx11::basic_string<char> >::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = int; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘std::__cxx11::basic_string<char> BstMap<int, std::__cxx11::basic_string<char> >::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = int; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:17: error: lvalue required as unary ‘&’ operand
+     Node ** n = &search(key);
+                 ^~~~~~~~~~~~
+bstmap.h:71:17: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<int, std::__cxx11::basic_string<char> >::Node* BstMap<int, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 3 : Testing with BstMap<int,(a custom class we wrote)>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<int, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<int, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<int, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = int; V = Tester]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: passing ‘const BstMap<int, Tester>’ as ‘this’ argument discards qualifiers [-fpermissive]
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note:   in call to ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = int; V = Tester]’
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:64:17: error: ‘Tester BstMap<int, Tester>::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = int; V = Tester]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = int; V = Tester]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘int BstMap<int, Tester>::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = int; V = Tester]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘Tester BstMap<int, Tester>::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<int, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = int; V = Tester]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:17: error: lvalue required as unary ‘&’ operand
+     Node ** n = &search(key);
+                 ^~~~~~~~~~~~
+bstmap.h:71:17: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<int, Tester>::Node* BstMap<int, Tester>::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 4 : Testing with BstMap<std::string,int>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = std::__cxx11::basic_string<char>; V = int]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: no matching function for call to ‘BstMap<std::__cxx11::basic_string<char>, int>::search(const std::__cxx11::basic_string<char>&) const’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = int]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const std::__cxx11::basic_string<char>’ to ‘const int&’
+bstmap.h:64:17: error: ‘int BstMap<std::__cxx11::basic_string<char>, int>::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = int]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = std::__cxx11::basic_string<char>; V = int]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘std::__cxx11::basic_string<char> BstMap<std::__cxx11::basic_string<char>, int>::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:21:27: error: no match for ‘operator==’ (operand types are ‘std::__cxx11::basic_string<char>’ and ‘const int’)
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/7/bits/basic_ios.h:37,
+                 from /usr/include/c++/7/ios:44,
+                 from /usr/include/c++/7/ostream:38,
+                 from /usr/include/c++/7/iostream:39,
+                 from 89-tester.cpp:3:
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note: candidate: template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^~~~~~~~
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6043:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6043:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const _CharT*’ and ‘int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6031:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const _CharT* __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6031:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const _CharT*’ and ‘std::__cxx11::basic_string<char>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6017:5: note: candidate: template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::__cxx11::basic_string<_CharT>&, const std::__cxx11::basic_string<_CharT>&)
+     operator==(const basic_string<_CharT>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6017:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const std::__cxx11::basic_string<_CharT>’ and ‘const int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6009:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6009:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’ and ‘const int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:41:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/allocator.h:152:5: note: candidate: template<class _Tp> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_CharT>&)
+     operator==(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:152:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_CharT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:41:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/allocator.h:146:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_T2>&)
+     operator==(const allocator<_T1>&, const allocator<_T2>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:146:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_CharT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/char_traits.h:40:0,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/postypes.h:216:5: note: candidate: template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^~~~~~~~
+/usr/include/c++/7/bits/postypes.h:216:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::fpos<_StateT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:340:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator==(const reverse_iterator<_IteratorL>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:340:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:302:5: note: candidate: template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator==(const reverse_iterator<_Iterator>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:302:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:64:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_pair.h:448:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_pair.h:448:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::pair<_T1, _T2>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/7/bits/c++allocator.h:33:0,
+                 from /usr/include/c++/7/bits/allocator.h:46,
+                 from /usr/include/c++/7/string:41,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/ext/new_allocator.h:155:5: note: candidate: template<class _Tp> bool __gnu_cxx::operator==(const __gnu_cxx::new_allocator<_Tp>&, const __gnu_cxx::new_allocator<_Tp>&)
+     operator==(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/ext/new_allocator.h:155:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::new_allocator<_Tp>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:869:5: note: candidate: template<class _Iterator, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&)
+     operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:869:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_Iterator, _Container>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:862:5: note: candidate: template<class _IteratorL, class _IteratorR, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_IteratorL, _Container>&, const __gnu_cxx::__normal_iterator<_IteratorR, _Container>&)
+     operator==(const __normal_iterator<_IteratorL, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:862:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_IteratorL, _Container>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = std::__cxx11::basic_string<char>; V = int]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘int BstMap<std::__cxx11::basic_string<char>, int>::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = std::__cxx11::basic_string<char>; V = int]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:24: error: no matching function for call to ‘BstMap<std::__cxx11::basic_string<char>, int>::search(const std::__cxx11::basic_string<char>&)’
+     Node ** n = &search(key);
+                  ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = int]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const std::__cxx11::basic_string<char>’ to ‘const int&’
+bstmap.h:71:17: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<std::__cxx11::basic_string<char>, int>::Node* BstMap<std::__cxx11::basic_string<char>, int>::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 5 : Testing with BstMap<std::string,std::string>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = std::__cxx11::basic_string<char>; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: no matching function for call to ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::search(const std::__cxx11::basic_string<char>&) const’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = std::__cxx11::basic_string<char>]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const std::__cxx11::basic_string<char>’ to ‘const int&’
+bstmap.h:64:17: error: ‘std::__cxx11::basic_string<char> BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = std::__cxx11::basic_string<char>]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = std::__cxx11::basic_string<char>; V = std::__cxx11::basic_string<char>]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘std::__cxx11::basic_string<char> BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:21:27: error: no match for ‘operator==’ (operand types are ‘std::__cxx11::basic_string<char>’ and ‘const int’)
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/7/bits/basic_ios.h:37,
+                 from /usr/include/c++/7/ios:44,
+                 from /usr/include/c++/7/ostream:38,
+                 from /usr/include/c++/7/iostream:39,
+                 from 89-tester.cpp:3:
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note: candidate: template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^~~~~~~~
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6043:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6043:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const _CharT*’ and ‘int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6031:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const _CharT* __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6031:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const _CharT*’ and ‘std::__cxx11::basic_string<char>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6017:5: note: candidate: template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::__cxx11::basic_string<_CharT>&, const std::__cxx11::basic_string<_CharT>&)
+     operator==(const basic_string<_CharT>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6017:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const std::__cxx11::basic_string<_CharT>’ and ‘const int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6009:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6009:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’ and ‘const int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:41:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/allocator.h:152:5: note: candidate: template<class _Tp> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_CharT>&)
+     operator==(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:152:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_CharT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:41:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/allocator.h:146:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_T2>&)
+     operator==(const allocator<_T1>&, const allocator<_T2>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:146:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_CharT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/char_traits.h:40:0,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/postypes.h:216:5: note: candidate: template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^~~~~~~~
+/usr/include/c++/7/bits/postypes.h:216:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::fpos<_StateT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:340:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator==(const reverse_iterator<_IteratorL>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:340:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:302:5: note: candidate: template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator==(const reverse_iterator<_Iterator>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:302:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:64:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_pair.h:448:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_pair.h:448:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::pair<_T1, _T2>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/7/bits/c++allocator.h:33:0,
+                 from /usr/include/c++/7/bits/allocator.h:46,
+                 from /usr/include/c++/7/string:41,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/ext/new_allocator.h:155:5: note: candidate: template<class _Tp> bool __gnu_cxx::operator==(const __gnu_cxx::new_allocator<_Tp>&, const __gnu_cxx::new_allocator<_Tp>&)
+     operator==(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/ext/new_allocator.h:155:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::new_allocator<_Tp>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:869:5: note: candidate: template<class _Iterator, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&)
+     operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:869:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_Iterator, _Container>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:862:5: note: candidate: template<class _IteratorL, class _IteratorR, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_IteratorL, _Container>&, const __gnu_cxx::__normal_iterator<_IteratorR, _Container>&)
+     operator==(const __normal_iterator<_IteratorL, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:862:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_IteratorL, _Container>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = std::__cxx11::basic_string<char>; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘std::__cxx11::basic_string<char> BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = std::__cxx11::basic_string<char>; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:24: error: no matching function for call to ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::search(const std::__cxx11::basic_string<char>&)’
+     Node ** n = &search(key);
+                  ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = std::__cxx11::basic_string<char>]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const std::__cxx11::basic_string<char>’ to ‘const int&’
+bstmap.h:71:17: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node* BstMap<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 6 : Testing with BstMap<std::string,(a custom class we wrote)>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<std::__cxx11::basic_string<char>, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = std::__cxx11::basic_string<char>; V = Tester]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: no matching function for call to ‘BstMap<std::__cxx11::basic_string<char>, Tester>::search(const std::__cxx11::basic_string<char>&) const’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = Tester]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const std::__cxx11::basic_string<char>’ to ‘const int&’
+bstmap.h:64:17: error: ‘Tester BstMap<std::__cxx11::basic_string<char>, Tester>::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = Tester]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = std::__cxx11::basic_string<char>; V = Tester]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘std::__cxx11::basic_string<char> BstMap<std::__cxx11::basic_string<char>, Tester>::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:21:27: error: no match for ‘operator==’ (operand types are ‘std::__cxx11::basic_string<char>’ and ‘const int’)
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/7/bits/basic_ios.h:37,
+                 from /usr/include/c++/7/ios:44,
+                 from /usr/include/c++/7/ostream:38,
+                 from /usr/include/c++/7/iostream:39,
+                 from 89-tester.cpp:3:
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note: candidate: template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^~~~~~~~
+/usr/include/c++/7/bits/streambuf_iterator.h:204:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6043:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6043:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const _CharT*’ and ‘int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6031:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const _CharT* __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6031:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const _CharT*’ and ‘std::__cxx11::basic_string<char>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6017:5: note: candidate: template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::__cxx11::basic_string<_CharT>&, const std::__cxx11::basic_string<_CharT>&)
+     operator==(const basic_string<_CharT>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6017:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const std::__cxx11::basic_string<_CharT>’ and ‘const int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/basic_string.h:6009:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:6009:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   mismatched types ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’ and ‘const int’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:41:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/allocator.h:152:5: note: candidate: template<class _Tp> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_CharT>&)
+     operator==(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:152:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_CharT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/string:41:0,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/allocator.h:146:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_T2>&)
+     operator==(const allocator<_T1>&, const allocator<_T2>&)
+     ^~~~~~~~
+/usr/include/c++/7/bits/allocator.h:146:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::allocator<_CharT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/char_traits.h:40:0,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/postypes.h:216:5: note: candidate: template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^~~~~~~~
+/usr/include/c++/7/bits/postypes.h:216:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::fpos<_StateT>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:340:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator==(const reverse_iterator<_IteratorL>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:340:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:302:5: note: candidate: template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator==(const reverse_iterator<_Iterator>& __x,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:302:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:64:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_pair.h:448:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_pair.h:448:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const std::pair<_T1, _T2>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/7/bits/c++allocator.h:33:0,
+                 from /usr/include/c++/7/bits/allocator.h:46,
+                 from /usr/include/c++/7/string:41,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/ext/new_allocator.h:155:5: note: candidate: template<class _Tp> bool __gnu_cxx::operator==(const __gnu_cxx::new_allocator<_Tp>&, const __gnu_cxx::new_allocator<_Tp>&)
+     operator==(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+     ^~~~~~~~
+/usr/include/c++/7/ext/new_allocator.h:155:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::new_allocator<_Tp>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:869:5: note: candidate: template<class _Iterator, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&)
+     operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:869:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_Iterator, _Container>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+In file included from /usr/include/c++/7/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/7/bits/char_traits.h:39,
+                 from /usr/include/c++/7/string:40,
+                 from /usr/include/c++/7/stdexcept:39,
+                 from bstmap.h:3,
+                 from 89-tester.cpp:1:
+/usr/include/c++/7/bits/stl_iterator.h:862:5: note: candidate: template<class _IteratorL, class _IteratorR, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_IteratorL, _Container>&, const __gnu_cxx::__normal_iterator<_IteratorR, _Container>&)
+     operator==(const __normal_iterator<_IteratorL, _Container>& __lhs,
+     ^~~~~~~~
+/usr/include/c++/7/bits/stl_iterator.h:862:5: note:   template argument deduction/substitution failed:
+In file included from 89-tester.cpp:1:0:
+bstmap.h:21:27: note:   ‘std::__cxx11::basic_string<char>’ is not derived from ‘const __gnu_cxx::__normal_iterator<_IteratorL, _Container>’
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = std::__cxx11::basic_string<char>; V = Tester]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘Tester BstMap<std::__cxx11::basic_string<char>, Tester>::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = std::__cxx11::basic_string<char>; V = Tester]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:24: error: no matching function for call to ‘BstMap<std::__cxx11::basic_string<char>, Tester>::search(const std::__cxx11::basic_string<char>&)’
+     Node ** n = &search(key);
+                  ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = std::__cxx11::basic_string<char>; V = Tester]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const std::__cxx11::basic_string<char>’ to ‘const int&’
+bstmap.h:71:17: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<std::__cxx11::basic_string<char>, Tester>::Node* BstMap<std::__cxx11::basic_string<char>, Tester>::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 7 : Testing with BstMap<(a custom class we wrote),int>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<Tester, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<Tester, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<Tester, int>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = Tester; V = int]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: no matching function for call to ‘BstMap<Tester, int>::search(const Tester&) const’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = int]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const Tester’ to ‘const int&’
+bstmap.h:64:17: error: ‘int BstMap<Tester, int>::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = int]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = Tester; V = int]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘Tester BstMap<Tester, int>::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:21:27: error: no match for ‘operator==’ (operand types are ‘Tester’ and ‘const int’)
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+89-tester.cpp:17:8: note: candidate: bool Tester::operator==(const Tester&) const
+   bool operator==(const Tester & rhs) const{
+        ^~~~~~~~
+89-tester.cpp:17:8: note:   no known conversion for argument 1 from ‘const int’ to ‘const Tester&’
+In file included from 89-tester.cpp:1:0:
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = Tester; V = int]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘int BstMap<Tester, int>::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, int>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = Tester; V = int]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:24: error: no matching function for call to ‘BstMap<Tester, int>::search(const Tester&)’
+     Node ** n = &search(key);
+                  ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = int]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const Tester’ to ‘const int&’
+bstmap.h:71:17: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<Tester, int>::Node* BstMap<Tester, int>::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 8 : Testing with BstMap<(a custom class we wrote),std::string>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<Tester, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<Tester, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<Tester, std::__cxx11::basic_string<char> >’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = Tester; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: no matching function for call to ‘BstMap<Tester, std::__cxx11::basic_string<char> >::search(const Tester&) const’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = std::__cxx11::basic_string<char>]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const Tester’ to ‘const int&’
+bstmap.h:64:17: error: ‘std::__cxx11::basic_string<char> BstMap<Tester, std::__cxx11::basic_string<char> >::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = std::__cxx11::basic_string<char>]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = Tester; V = std::__cxx11::basic_string<char>]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘Tester BstMap<Tester, std::__cxx11::basic_string<char> >::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:21:27: error: no match for ‘operator==’ (operand types are ‘Tester’ and ‘const int’)
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+89-tester.cpp:17:8: note: candidate: bool Tester::operator==(const Tester&) const
+   bool operator==(const Tester & rhs) const{
+        ^~~~~~~~
+89-tester.cpp:17:8: note:   no known conversion for argument 1 from ‘const int’ to ‘const Tester&’
+In file included from 89-tester.cpp:1:0:
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = Tester; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘std::__cxx11::basic_string<char> BstMap<Tester, std::__cxx11::basic_string<char> >::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = Tester; V = std::__cxx11::basic_string<char>]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:24: error: no matching function for call to ‘BstMap<Tester, std::__cxx11::basic_string<char> >::search(const Tester&)’
+     Node ** n = &search(key);
+                  ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = std::__cxx11::basic_string<char>]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const Tester’ to ‘const int&’
+bstmap.h:71:17: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<Tester, std::__cxx11::basic_string<char> >::Node* BstMap<Tester, std::__cxx11::basic_string<char> >::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 9 : Testing with BstMap<(a custom class we wrote),(a custom class we wrote)>
+...compiling...
+In file included from 89-tester.cpp:1:0:
+bstmap.h:6:27: error: expected class-name before ‘{’ token
+ class BstMap : public Map {
+                           ^
+bstmap.h:18:25: error: ISO C++ forbids declaration of ‘key’ with no type [-fpermissive]
+   Node * search(const & key) {
+                         ^~~
+bstmap.h:87:12: error: declaration of ‘~Map’ as non-function
+   virtual ~Map<K, V>() { removeAll(root); }
+            ^~~
+bstmap.h:87:12: error: expected ‘;’ at end of member declaration
+bstmap.h:87:15: error: expected unqualified-id before ‘<’ token
+   virtual ~Map<K, V>() { removeAll(root); }
+               ^
+bstmap.h: In constructor ‘BstMap<K, V>::Node::Node()’:
+bstmap.h:14:14: error: class ‘BstMap<K, V>::Node’ does not have any field named ‘data’
+     Node() : data(0), left(NULL), right(NULL) {}
+              ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::add(const K&, const V&)’:
+bstmap.h:59:3: error: expected ‘;’ before ‘}’ token
+   }
+   ^
+bstmap.h: In member function ‘virtual const V& BstMap<K, V>::lookup(const K&) const’:
+bstmap.h:62:28: error: expected ‘,’ or ‘;’ before ‘if’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                            ^~
+bstmap.h:63:5: error: ‘else’ without a previous ‘if’
+     else {
+     ^~~~
+bstmap.h: In member function ‘virtual void BstMap<K, V>::remove(const K&)’:
+bstmap.h:81:9: error: expected ‘;’ before ‘}’ token
+         }
+         ^
+89-tester.cpp: At global scope:
+89-tester.cpp:55:9: error: ‘Map’ does not name a type
+ typedef Map<KEYTYPE,VALTYPE> MapTy;
+         ^~~
+89-tester.cpp: In function ‘int main()’:
+89-tester.cpp:71:3: error: ‘MapTy’ was not declared in this scope
+   MapTy * m = bmt;
+   ^~~~~
+89-tester.cpp:71:3: note: suggested alternative: ‘BSTMapTy’
+   MapTy * m = bmt;
+   ^~~~~
+   BSTMapTy
+89-tester.cpp:71:11: error: ‘m’ was not declared in this scope
+   MapTy * m = bmt;
+           ^
+89-tester.cpp:71:11: note: suggested alternative: ‘tm’
+   MapTy * m = bmt;
+           ^
+           tm
+89-tester.cpp:99:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:134:14: error: ‘ptr’ was not declared in this scope
+       MapTy* ptr = (((i+j)&1)==0)? m : m2;
+              ^~~
+89-tester.cpp:164:10: error: deleting object of polymorphic class type ‘BstMap<Tester, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:194:10: error: deleting object of polymorphic class type ‘BstMap<Tester, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete bmt;
+          ^~~
+89-tester.cpp:195:10: error: deleting object of polymorphic class type ‘BstMap<Tester, Tester>’ which has non-virtual destructor might cause undefined behavior [-Werror=delete-non-virtual-dtor]
+   delete m2;
+          ^~
+In file included from 89-tester.cpp:1:0:
+bstmap.h: In instantiation of ‘const V& BstMap<K, V>::lookup(const K&) const [with K = Tester; V = Tester]’:
+89-tester.cpp:119:26:   required from here
+bstmap.h:62:22: error: no matching function for call to ‘BstMap<Tester, Tester>::search(const Tester&) const’
+     Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+                ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = Tester]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const Tester’ to ‘const int&’
+bstmap.h:64:17: error: ‘Tester BstMap<Tester, Tester>::Node::value’ is private within this context
+       return n->value;
+              ~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h: In instantiation of ‘BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = Tester]’:
+bstmap.h:62:22:   required from ‘const V& BstMap<K, V>::lookup(const K&) const [with K = Tester; V = Tester]’
+89-tester.cpp:119:26:   required from here
+bstmap.h:21:23: error: ‘Tester BstMap<Tester, Tester>::Node::key’ is private within this context
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~^~~
+bstmap.h:8:7: note: declared private here
+     K key;
+       ^~~
+bstmap.h:21:27: error: no match for ‘operator==’ (operand types are ‘Tester’ and ‘const int’)
+       if ((*current)->key == key) {
+           ~~~~~~~~~~~~~~~~^~~~~~
+89-tester.cpp:17:8: note: candidate: bool Tester::operator==(const Tester&) const
+   bool operator==(const Tester & rhs) const{
+        ^~~~~~~~
+89-tester.cpp:17:8: note:   no known conversion for argument 1 from ‘const int’ to ‘const Tester&’
+In file included from 89-tester.cpp:1:0:
+bstmap.h:24:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:25:32: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:28:32: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::add(const K&, const V&) [with K = Tester; V = Tester]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:47:28: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       if (key == *current->value) {
+                   ~~~~~~~~~^~~~~
+bstmap.h:48:21: error: ‘Tester BstMap<Tester, Tester>::Node::value’ is private within this context
+         (*current)->value = value;
+         ~~~~~~~~~~~~^~~~~
+bstmap.h:9:7: note: declared private here
+     V value;
+       ^~~~~
+bstmap.h:51:32: error: request for member ‘value’ in ‘* current’, which is of pointer type ‘BstMap<Tester, Tester>::Node*’ (maybe you meant to use ‘->’ ?)
+       else if (key < *current->value) {
+                       ~~~~~~~~~^~~~~
+bstmap.h:52:32: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::left’ is private within this context
+         *current = (*current)->left;
+                    ~~~~~~~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:55:32: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::right’ is private within this context
+         *current = (*current)->right;
+                    ~~~~~~~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h: In instantiation of ‘void BstMap<K, V>::remove(const K&) [with K = Tester; V = Tester]’:
+89-tester.cpp:197:1:   required from here
+bstmap.h:69:24: error: no matching function for call to ‘BstMap<Tester, Tester>::search(const Tester&)’
+     Node ** n = &search(key);
+                  ~~~~~~^~~~~
+bstmap.h:18:10: note: candidate: BstMap<K, V>::Node* BstMap<K, V>::search(const int&) [with K = Tester; V = Tester]
+   Node * search(const & key) {
+          ^~~~~~
+bstmap.h:18:10: note:   no known conversion for argument 1 from ‘const Tester’ to ‘const int&’
+bstmap.h:71:17: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::left’ is private within this context
+       if ((*n)->left == NULL) {
+           ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:72:29: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::right’ is private within this context
+         std::swap(*n, (*n)->right);
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:74:22: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::right’ is private within this context
+       else if ((*n)->right == NULL) {
+                ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:75:29: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::left’ is private within this context
+         std::swap(*n, (*n)->left);
+                       ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:78:29: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::right’ is private within this context
+         Node * temp = (*n)->right;
+                       ~~~~~~^~~~~
+bstmap.h:11:12: note: declared private here
+     Node * right;
+            ^~~~~
+bstmap.h:79:22: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::left’ is private within this context
+         while (temp->left != NULL) {
+                ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+bstmap.h:80:24: error: ‘BstMap<Tester, Tester>::Node* BstMap<Tester, Tester>::Node::left’ is private within this context
+           temp = temp->left
+                  ~~~~~~^~~~
+bstmap.h:10:12: note: declared private here
+     Node * left;
+            ^~~~
+cc1plus: all warnings being treated as errors
+The code did not compile.  This test failed.
+
+Overall Grade: F
