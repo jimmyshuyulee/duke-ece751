@@ -1,89 +1,104 @@
 #ifndef __BSTMAP_H__
 #define __BSTMAP_H__
+#include <iostream>
 #include <stdexcept>
 
+#include "map.h"
 template<typename K, typename V>
-class BstMap : public Map {
+class BstMap : public Map<K, V> {
   class Node {
+   public:
     K key;
     V value;
     Node * left;
     Node * right;
-
-   public:
-    Node() : data(0), left(NULL), right(NULL) {}
+    Node() : key(K()), value(V()), left(NULL), right(NULL) {}
     Node(K k, V v) : key(k), value(v), left(NULL), right(NULL) {}
   };
   Node * root;
-  Node * search(const & key) {
-    Node ** current = &root;
+
+  Node ** search(const K & key) const {
+    Node ** current = const_cast<Node **>(&root);
     while (*current != NULL) {
       if ((*current)->key == key) {
-        return *current;
+        break;
       }
-      else if (key < *current->value) {
-        *current = (*current)->left;
+      else if (key < (*current)->key) {
+        current = &(*current)->left;
       }
       else {
-        *current = (*current)->right;
+        current = &(*current)->right;
       }
     }
-    return NULL;
+    return current;
   }
+
   void removeAll(Node * current) {
     if (current == NULL) {
       return;
     }
-    remove(current->left);
-    remove(current->right);
+    removeAll(current->left);
+    removeAll(current->right);
     delete (current);
   }
 
  public:
   BstMap() : root(NULL) {}
   virtual void add(const K & key, const V & value) {
-    Node ** current = &root;
-    while (*current != NULL) {
-      if (key == *current->value) {
-        (*current)->value = value;
-        return;
-      }
-      else if (key < *current->value) {
-        *current = (*current)->left;
-      }
-      else {
-        *current = (*current)->right;
-      }
+    Node ** p = search(key);
+    if (*p == NULL) {
+      *p = new Node(key, value);
     }
-    *current = new Node(key, value)
+    else {
+      (*p)->value = value;
+    }
   }
 
   virtual const V & lookup(const K & key) const throw(std::invalid_argument) {
-    Node * n = search(key) if (n == NULL) { throw std::invalid_argument; }
+    Node ** n = search(key);
+    if (*n == NULL) {
+      throw std::invalid_argument("Invalid Argument");
+    }
     else {
-      return n->value;
+      return (*n)->value;
     }
   }
 
   virtual void remove(const K & key) {
-    Node ** n = &search(key);
+    Node ** n = search(key);
+    Node ** p = n;
     if (*n != NULL) {
       if ((*n)->left == NULL) {
-        std::swap(*n, (*n)->right);
+        p = &(*p)->right;
+        std::swap(*n, *p);
       }
       else if ((*n)->right == NULL) {
-        std::swap(*n, (*n)->left);
+        p = &(*p)->left;
+        std::swap(*n, *p);
       }
       else {
-        Node * temp = (*n)->right;
-        while (temp->left != NULL) {
-          temp = temp->left
+        p = &(*p)->right;
+        while ((*p)->left != NULL) {
+          p = &(*p)->left;
         }
-        std::swap(temp, *n);
+        std::swap((*n)->key, (*p)->key);
+        std::swap((*n)->value, (*p)->value);
+        n = p;
+        p = &(*p)->right;
+        std::swap(*n, *p);
       }
-      delete *n;
+      delete *p;
     }
   }
-  virtual ~Map<K, V>() { removeAll(root); }
+
+  virtual ~BstMap<K, V>() { removeAll(root); }
+  void printInorder() { printInorder(root); }
+  void printInorder(Node * n) {
+    if (n != NULL) {
+      printInorder(n->left);
+      std::cout << "(" << n->key << ", " << n->value << ") ";
+      printInorder(n->right);
+    }
+  }
 };
 #endif
