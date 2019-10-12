@@ -66,28 +66,26 @@ class BstMap : public Map<K, V> {
 
   virtual void remove(const K & key) {
     Node ** n = search(key);
-    Node ** p = n;
+    Node * p = *n;
     if (*n != NULL) {
       if ((*n)->left == NULL) {
-        p = &(*p)->right;
-        std::swap(*n, *p);
+        *n = p->right;
       }
       else if ((*n)->right == NULL) {
-        p = &(*p)->left;
-        std::swap(*n, *p);
+        *n = p->left;
       }
       else {
-        p = &(*p)->right;
-        while ((*p)->left != NULL) {
-          p = &(*p)->left;
+        Node ** to_delete = n;
+        to_delete = &(*to_delete)->right;
+        while ((*to_delete)->left != NULL) {
+          to_delete = &(*to_delete)->left;
         }
-        std::swap((*n)->key, (*p)->key);
-        std::swap((*n)->value, (*p)->value);
-        n = p;
-        p = &(*p)->right;
-        std::swap(*n, *p);
+        p = *to_delete;
+        std::swap((*n)->key, p->key);
+        std::swap((*n)->value, p->value);
+        *to_delete = p->right;
       }
-      delete *p;
+      delete p;
     }
   }
 

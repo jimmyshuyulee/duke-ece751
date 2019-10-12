@@ -5,13 +5,13 @@
 int main() {
   BstMap<int, int> m;
   m.printInorder();
+  m.add(10, 10);
   for (int i = 0; i < 20; ++i) {
     m.add(i, i);
   }
   m.remove(20);
   m.remove(17);
   m.add(17, 17);
-  m.remove(18);
   m.printInorder();
   for (int i = 5; i < 15; ++i) {
     m.remove(i);
