@@ -42,6 +42,15 @@ class BstMap : public Map<K, V> {
     delete (current);
   }
 
+  void copyAll(Node * tree, Node * c) {
+    if (c == NULL) {
+      return;
+    }
+    tree = new Node(c->key, c->value);
+    copyTree(tree->left, c->left);
+    copyTree(tree->right, c->right);
+  }
+
   Node * removeNode(Node * root, K key) {
     if (root == NULL) {
       return root;
@@ -76,6 +85,15 @@ class BstMap : public Map<K, V> {
 
  public:
   BstMap() : root(NULL) {}
+  BstMap(const BstMap & rhs) : root(NULL) { copyAll(root, rhs.root); }
+  const BstMap & operator=(const BstMap & rhs) {
+    if (&rhs != this) {
+      BstMap temp(rhs);
+      std::swap(root, temp.root);
+    }
+    return *this;
+  }
+
   virtual void add(const K & key, const V & value) {
     Node ** p = search(key);
     if (*p == NULL) {
