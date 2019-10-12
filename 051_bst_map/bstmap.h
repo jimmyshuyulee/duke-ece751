@@ -75,14 +75,14 @@ class BstMap : public Map<K, V> {
         *n = p->left;
       }
       else {
-        Node ** to_delete = &(p->right);
-        while ((*to_delete)->left != NULL) {
-          to_delete = &(*to_delete)->left;
+        Node ** temp = &(*n)->right;
+        while ((*temp)->left != NULL) {
+          temp = &(*temp)->left;
         }
-        *n = *to_delete;
-        *to_delete = (*to_delete)->right;
-        (*n)->left = p->left;
-        (*n)->right = p->right;
+        (*n)->key = (*temp)->key;
+        (*n)->value = (*temp)->value;
+        p = *temp;
+        *temp = p->right;
       }
       delete p;
     }
