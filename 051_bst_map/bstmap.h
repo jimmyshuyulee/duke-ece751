@@ -115,8 +115,8 @@ class BstMap : public Map<K, V> {
   }
 
   virtual void remove(const K & key) {
-    root = removeNode(root, key);
-    /*
+    //root = removeNode(root, key);
+
     Node ** n = search(key);
     Node * p = *n;
     if (*n != NULL) {
@@ -138,7 +138,6 @@ class BstMap : public Map<K, V> {
       }
       delete p;
     }
-*/
   }
 
   virtual ~BstMap<K, V>() { removeAll(root); }

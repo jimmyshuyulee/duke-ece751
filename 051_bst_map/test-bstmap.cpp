@@ -9,9 +9,9 @@ int main() {
   for (int i = 0; i < 20; ++i) {
     m.add(i, i);
   }
-  m.remove(20);
-  m.remove(17);
-  m.add(17, 17);
+  m.remove(19);
+  m.remove(16);
+  m.add(16, 16);
   m.printInorder();
   for (int i = 5; i < 15; ++i) {
     m.remove(i);
