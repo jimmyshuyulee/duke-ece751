@@ -42,6 +42,38 @@ class BstMap : public Map<K, V> {
     delete (current);
   }
 
+  Node * removeNode(Node * root, K key) {
+    if (root == NULL) {
+      return root;
+    }
+
+    if (key < root->key) {
+      root->left = removeNode(root->left, key);
+    }
+    else if (key > root->key) {
+      root->right = removeNode(root->right, key);
+    }
+    else {
+      if (root->left == NULL) {
+        Node * temp = root->right;
+        delete root;
+        return temp;
+      }
+      else if (root->right == NULL) {
+        Node * temp = root->left;
+        delete root;
+        return temp;
+      }
+      Node * temp = root->right;
+      while (temp->left != NULL) {
+        temp = temp->left;
+      }
+      root->key = temp->key;
+      root->right = removeNode(root->right, temp->key);
+    }
+    return root;
+  }
+
  public:
   BstMap() : root(NULL) {}
   virtual void add(const K & key, const V & value) {
@@ -65,6 +97,8 @@ class BstMap : public Map<K, V> {
   }
 
   virtual void remove(const K & key) {
+    root = removeNode(root, key);
+    /*
     Node ** n = search(key);
     Node * p = *n;
     if (*n != NULL) {
@@ -86,6 +120,7 @@ class BstMap : public Map<K, V> {
       }
       delete p;
     }
+*/
   }
 
   virtual ~BstMap<K, V>() { removeAll(root); }
