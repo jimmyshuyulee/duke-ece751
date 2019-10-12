@@ -42,13 +42,13 @@ class BstMap : public Map<K, V> {
     delete (current);
   }
 
-  void copyAll(Node * tree, Node * c) {
+  void copyAll(Node ** tree, Node * c) {
     if (c == NULL) {
       return;
     }
-    tree = new Node(c->key, c->value);
-    copyAll(tree->left, c->left);
-    copyAll(tree->right, c->right);
+    *tree = new Node(c->key, c->value);
+    copyAll(&(*tree)->left, c->left);
+    copyAll(&(*tree)->right, c->right);
   }
 
   Node * removeNode(Node * root, K key) {
@@ -85,7 +85,7 @@ class BstMap : public Map<K, V> {
 
  public:
   BstMap() : root(NULL) {}
-  BstMap(const BstMap & rhs) : root(NULL) { copyAll(root, rhs.root); }
+  BstMap(const BstMap & rhs) : root(NULL) { copyAll(&root, rhs.root); }
   const BstMap & operator=(const BstMap & rhs) {
     if (&rhs != this) {
       BstMap temp(rhs);
