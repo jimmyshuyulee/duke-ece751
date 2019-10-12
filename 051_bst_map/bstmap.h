@@ -47,8 +47,8 @@ class BstMap : public Map<K, V> {
       return;
     }
     tree = new Node(c->key, c->value);
-    copyTree(tree->left, c->left);
-    copyTree(tree->right, c->right);
+    copyAll(tree->left, c->left);
+    copyAll(tree->right, c->right);
   }
 
   Node * removeNode(Node * root, K key) {
