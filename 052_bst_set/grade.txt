@@ -1,0 +1,32 @@
+Grading at 10/13/2019:04:36:30.428696
+For commit ID 82fa5590ddf5dd9132f9c4c21e5639174e7dd563
+Grading at Sun Oct 13 00:36:30 EDT 2019
+-----------------------------------------------
+testcase 1 : Testing with BstSet<int>
+...compiling...
+In file included from 90-tester.cpp:1:0:
+bstset.h:6:10: fatal error: map.h: No such file or directory
+ #include "map.h"
+          ^~~~~~~
+compilation terminated.
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 2 : Testing with BstSet<std::string>
+...compiling...
+In file included from 90-tester.cpp:1:0:
+bstset.h:6:10: fatal error: map.h: No such file or directory
+ #include "map.h"
+          ^~~~~~~
+compilation terminated.
+The code did not compile.  This test failed.
+-----------------------------------------------
+testcase 3 : Testing with BstSet<(a custom class we wrote)>
+...compiling...
+In file included from 90-tester.cpp:1:0:
+bstset.h:6:10: fatal error: map.h: No such file or directory
+ #include "map.h"
+          ^~~~~~~
+compilation terminated.
+The code did not compile.  This test failed.
+
+Overall Grade: F
