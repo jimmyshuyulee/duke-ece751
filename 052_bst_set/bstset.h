@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "map.h"
+#include "set.h"
 template<typename T>
 class BstSet : public Set<T> {
   class Node {
@@ -45,7 +45,7 @@ class BstSet : public Set<T> {
     if (c == NULL) {
       return;
     }
-    *tree = new Node(c->key, c->value);
+    *tree = new Node(c->key);
     copyAll(&(*tree)->left, c->left);
     copyAll(&(*tree)->right, c->right);
   }
@@ -64,15 +64,13 @@ class BstSet : public Set<T> {
   virtual void add(const T & key) {
     Node ** p = search(key);
     if (*p == NULL) {
-      *p = new Node(key, value);
-    }
-    else {
-      (*p)->value = value;
+      *p = new Node(key);
     }
   }
 
-  virtual bool & contains(const T & key) const {
-    return (*search(key) == NULL) ? False : True;
+  virtual bool contains(const T & key) const {
+    Node ** n = search(key);
+    return (*n == NULL);
   }
 
   virtual void remove(const T & key) {
@@ -91,7 +89,6 @@ class BstSet : public Set<T> {
           temp = &(*temp)->left;
         }
         (*n)->key = (*temp)->key;
-        (*n)->value = (*temp)->value;
         p = *temp;
         *temp = p->right;
       }
@@ -104,7 +101,7 @@ class BstSet : public Set<T> {
   void printInorder(Node * n) {
     if (n != NULL) {
       printInorder(n->left);
-      std::cout << "(" << n->key << ", " << n->value << ") ";
+      std::cout << "(" << n->key << ") ";
       printInorder(n->right);
     }
   }
