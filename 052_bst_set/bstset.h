@@ -70,7 +70,7 @@ class BstSet : public Set<T> {
 
   virtual bool contains(const T & key) const {
     Node ** n = search(key);
-    return (*n == NULL);
+    return (*n != NULL);
   }
 
   virtual void remove(const T & key) {
@@ -101,7 +101,7 @@ class BstSet : public Set<T> {
   void printInorder(Node * n) {
     if (n != NULL) {
       printInorder(n->left);
-      std::cout << "(" << n->key << ") ";
+      std::cout << n->key << " ";
       printInorder(n->right);
     }
   }
