@@ -1,0 +1,59 @@
+For this assignment, you will write a fully-functional AVL tree class.
+Remember what we discussed in the chaper 27, the AVL tree is a self-balanced
+BST. In an AVL tree, the heights of the two child substrees of any node
+differ by at most one. If any time they differ by more than one, rebalancing
+is done to restore this property.
+
+Your AVL tree class should support the basic operations like insertion,
+deletion and an interesting function as suggested in avl_tree.hpp.
+For the node insertion, we would highly recommand you to write a helper function,
+which would be much easier for you to implement the insertion. A suggested helper
+function is like:
+
+    AVLNode * insertHelper(AVLNode * curr, int val);
+
+For example, when you try to insert 3 into your AVL tree
+
+    	     1	      	     	    2
+	      \		->	   / \
+	       2		  1   3
+	       
+where 1's node is passed in, and it returns 2's node.
+A helper function also helps a lot for the deletion, and it is like:
+
+    AVLNode * deleteHelper(AVLNode * curr, int val);
+
+For example, when you try to delete 2 from your AVL tree
+
+    	     2	      	     	    3
+	    / \		-> 	   / 
+	   1   3		  1
+	   
+where 2's node is passed in, and it returns 3's node.
+One thing needs the attention. If the node we want to delete have two children,
+we here try to find the minimum node in its right subtree, which is 3 in the
+above example.
+
+Do not forget the four different types of self-balancing rotations,
+which are left rotation, right rotation, left-right rotation and right-left
+rotation. Make sure your rotation functions works well before you move on to
+implement the insert or delete operation. You should also remember to update
+the height of nodes when you do the operations like rotation, insertion and
+deletion.
+
+One more interesting function is the preOrderFold function, which actually is a
+templated function. It takes a generic function as a parameter to achieve
+different purposes based on the pass-in functions. For example, if i want to
+implement an adder in this AVL tree, then i just need to invoke this function
+by passing in a adder function, which is as simple as the following: 
+
+  preOrderFold<int>([](const int & sum, int data) -> int { return sum + data; }, 0);
+
+Then, the returned value will be the total sum of all nodes value in this AVL tree.
+
+Add any other helper functions in AVLTree class if necessary and implment all
+methods along with your helper functions in avl_tree.cpp file. Also, remember
+the rule of three and make some abstraction to avoid the duplicate code when
+you are implementing you AVL tree class. Your distructor should make sure you
+have deleted all nodes in the current AVL tree. Submit your code and make sure
+it is valgrind clean.
