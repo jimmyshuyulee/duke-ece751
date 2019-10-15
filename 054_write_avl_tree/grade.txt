@@ -1,0 +1,27 @@
+Grading at 10/15/2019:17:00:33.384268
+For commit ID a4623f511ef3215994065e50a33b168837651dc4
+Grading at Tue Oct 15 13:00:31 EDT 2019
+================= Comiling =================
+cat avl_tree.hpp | sed -e 's/\bprivate:/public:/' | sed -e 's/\bclass\b/struct/' > avl_tree_pub.hpp
+cat avl_tree.cpp | sed -e 's/\bavl_tree.hpp\b/avl_tree_pub.hpp/' > avl_tree_pub.cpp
+g++ -std=gnu++11 -pedantic -Wall -Werror -ggdb3 -c grader.cpp
+g++ -std=gnu++11 -pedantic -Wall -Werror -ggdb3 -c our_avl_tree.cpp
+g++ -std=gnu++11 -pedantic -Wall -Werror -ggdb3 -c avl_tree_pub.cpp
+g++ -std=gnu++11 -pedantic -Wall -Werror -ggdb3 -o grader grader.o our_avl_tree.o avl_tree_pub.o
+Your code compiled successfully.
+test case 1: test left rotate [5 points possible]
+You got 5
+test case 2: test right rotate [5 points possible]
+You got 5
+test case 3: test left-right rotate [5 points possible]
+You got 5
+test case 4: test right-left rotate [5 points possible]
+You got 5
+Test case 5: test insert operation 1 [10 points possible]
+A node was found with incorrect value. Expected node value: 2, but we found: -1
+Your tree is not correct after insert operation!
+You got 0
+Tests failed!
+[31mTest cases failed, your AVL Tree does not work well!
+
+Overall Grade: F
