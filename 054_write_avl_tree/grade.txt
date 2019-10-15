@@ -1,6 +1,6 @@
-Grading at 10/15/2019:17:29:17.192218
-For commit ID 2e027dac087ce8455ff47f27888201ccb6b448b8
-Grading at Tue Oct 15 13:29:15 EDT 2019
+Grading at 10/15/2019:17:46:20.063033
+For commit ID 96b4c0330fd8de7457ae27c170ba50805624a54b
+Grading at Tue Oct 15 13:46:17 EDT 2019
 ================= Comiling =================
 cat avl_tree.hpp | sed -e 's/\bprivate:/public:/' | sed -e 's/\bclass\b/struct/' > avl_tree_pub.hpp
 cat avl_tree.cpp | sed -e 's/\bavl_tree.hpp\b/avl_tree_pub.hpp/' > avl_tree_pub.cpp
@@ -18,10 +18,25 @@ You got 5
 test case 4: test right-left rotate [5 points possible]
 You got 5
 Test case 5: test insert operation 1 [10 points possible]
-A node was found with incorrect value. Expected node value: 2, but we found: -1
-Your tree is not correct after insert operation!
-You got 0
-Tests failed!
-[31mTest cases failed, your AVL Tree does not work well!
+You got 10
+Test case 6: test insert operation 3 [10 points possible]
+You got 10
+Test case 7: test insert operation 4 [10 points possible]
+You got 10
+Test case 8: test delete opreation 1 [10 points possible]
+You got 10
+Test case 9: test delete opreation 2 [10 points possible]
+You got 10
+Test case 10: test delete opreation 3 [10 points possible]
+You got 10
+Test case 11: test preOrderfold 1 [10 points possible]
+You got 10
+Test case 12: test preorderfold 2 [10 points possible]
+You got 10
+Your final score is 100 for all test cases.
+[32mAll test cases passed!
+[0m================= valgrind check =================
+  - Valgrind was clean (no errors, no memory leaks)
+[32m
 
-Overall Grade: F
+Overall Grade: A
