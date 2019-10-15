@@ -1,6 +1,6 @@
-Grading at 10/15/2019:17:00:33.384268
-For commit ID a4623f511ef3215994065e50a33b168837651dc4
-Grading at Tue Oct 15 13:00:31 EDT 2019
+Grading at 10/15/2019:17:04:25.237388
+For commit ID 5721a8f5810dc034bb008611db443a5982fe2e65
+Grading at Tue Oct 15 13:04:23 EDT 2019
 ================= Comiling =================
 cat avl_tree.hpp | sed -e 's/\bprivate:/public:/' | sed -e 's/\bclass\b/struct/' > avl_tree_pub.hpp
 cat avl_tree.cpp | sed -e 's/\bavl_tree.hpp\b/avl_tree_pub.hpp/' > avl_tree_pub.cpp
