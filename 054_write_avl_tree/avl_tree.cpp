@@ -76,21 +76,21 @@ AVLTree::AVLNode * AVLTree::insertHelper(AVLNode * curr, int val) {
 
   if (val < curr->value) {
     curr->left = insertHelper(curr->left, val);
-    curr->updateHeight();
-    if (curr->getLeftChildHeight() - curr->getRightChildHeight() > 1) {
-      curr = (curr->getLeftChildHeight() > curr->getRightChildHeight())
-                 ? rightRotate(curr)
-                 : rightLeftRotate(curr);
-    }
   }
   else if (val > curr->value) {
     curr->right = insertHelper(curr->right, val);
-    curr->updateHeight();
-    if (curr->getRightChildHeight() - curr->getLeftChildHeight() > 1) {
-      curr = (curr->getRightChildHeight() > curr->getLeftChildHeight())
-                 ? leftRotate(curr)
-                 : leftRightRotate(curr);
-    }
+  }
+  curr->updateHeight();
+
+  if (curr->getLeftChildHeight() - curr->getRightChildHeight() > 1) {
+    curr = (curr->getLeftChildHeight() > curr->getRightChildHeight())
+               ? rightRotate(curr)
+               : rightLeftRotate(curr);
+  }
+  else if (curr->getRightChildHeight() - curr->getLeftChildHeight() > 1) {
+    curr = (curr->getRightChildHeight() > curr->getLeftChildHeight())
+               ? leftRotate(curr)
+               : leftRightRotate(curr);
   }
   curr->updateHeight();
   return curr;
