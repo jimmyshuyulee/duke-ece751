@@ -11,7 +11,7 @@ int main(void) {
   a.insertNode(7);
   a.insertNode(4);
   a.insertNode(2);
-  a.deleteNode(3);
+  //a.deleteNode(3);
   int i = a.preOrderFold<int>(
       [](const int & sum, int data) -> int {
         std::cout << data << std::endl;

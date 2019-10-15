@@ -83,14 +83,10 @@ AVLTree::AVLNode * AVLTree::insertHelper(AVLNode * curr, int val) {
   curr->updateHeight();
 
   if (curr->getLeftChildHeight() - curr->getRightChildHeight() > 1) {
-    curr = (curr->getLeftChildHeight() > curr->getRightChildHeight())
-               ? rightRotate(curr)
-               : leftRightRotate(curr);
+    curr = (val < curr->left->value) ? rightRotate(curr) : leftRightRotate(curr);
   }
   else if (curr->getRightChildHeight() - curr->getLeftChildHeight() > 1) {
-    curr = (curr->getRightChildHeight() > curr->getLeftChildHeight())
-               ? leftRotate(curr)
-               : rightLeftRotate(curr);
+    curr = (val > curr->right->value) ? leftRotate(curr) : rightLeftRotate(curr);
   }
   curr->updateHeight();
   return curr;
