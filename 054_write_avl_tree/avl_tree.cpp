@@ -85,12 +85,12 @@ AVLTree::AVLNode * AVLTree::insertHelper(AVLNode * curr, int val) {
   if (curr->getLeftChildHeight() - curr->getRightChildHeight() > 1) {
     curr = (curr->getLeftChildHeight() > curr->getRightChildHeight())
                ? rightRotate(curr)
-               : rightLeftRotate(curr);
+               : leftRightRotate(curr);
   }
   else if (curr->getRightChildHeight() - curr->getLeftChildHeight() > 1) {
     curr = (curr->getRightChildHeight() > curr->getLeftChildHeight())
                ? leftRotate(curr)
-               : leftRightRotate(curr);
+               : rightLeftRotate(curr);
   }
   curr->updateHeight();
   return curr;
@@ -128,12 +128,12 @@ AVLTree::AVLNode * AVLTree::deleteHelper(AVLNode * curr, int val) {
     if (curr->getLeftChildHeight() - curr->getRightChildHeight() > 1) {
       curr = (curr->left->getLeftChildHeight() > curr->left->getRightChildHeight())
                  ? rightRotate(curr)
-                 : rightLeftRotate(curr);
+                 : leftRightRotate(curr);
     }
     else if (curr->getRightChildHeight() - curr->getLeftChildHeight() > 1) {
       curr = (curr->right->getRightChildHeight() > curr->right->getLeftChildHeight())
                  ? leftRotate(curr)
-                 : leftRightRotate(curr);
+                 : rightLeftRotate(curr);
     }
     curr->updateHeight();
   }
