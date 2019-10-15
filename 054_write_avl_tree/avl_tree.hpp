@@ -5,11 +5,9 @@
 #include <functional>
 #include <iostream>
 
-class AVLTree
-{
+class AVLTree {
  private:
-  class AVLNode
-  {
+  class AVLNode {
    public:
     int value;
     int height;
@@ -17,7 +15,9 @@ class AVLTree
     AVLNode * right;
     int getLeftChildHeight() const { return left == nullptr ? -1 : left->height; }
     int getRightChildHeight() const { return right == nullptr ? -1 : right->height; }
-    void updateHeight() { height = 1 + std::max(getLeftChildHeight(), getRightChildHeight()); }
+    void updateHeight() {
+      height = 1 + std::max(getLeftChildHeight(), getRightChildHeight());
+    }
     AVLNode(int ivalue) : value(ivalue), height(0), left(nullptr), right(nullptr) {}
     AVLNode(int ivalue, AVLNode * ileft, AVLNode * iright) :
         value(ivalue),
@@ -67,11 +67,32 @@ class AVLTree
 
  public:
   AVLTree() : root(nullptr) {}
+  AVLTree(const AVLTree & rhs) : root(nullptr) { copyTree(&root, rhs.root); }
+  const AVLTree & operator=(const AVLTree & rhs) {
+    if (&rhs != this) {
+      AVLTree temp(rhs);
+      std::swap(root, temp.root);
+    }
+    return *this;
+  }
   void insertNode(int val);
   void deleteNode(int val);
   template<typename R>
+  R preOrderFoldHelper(std::function<R(const R &, int)> const & f,
+                       const R & initial,
+                       AVLNode * root) {
+    R ans = initial;
+    if (root != NULL) {
+      ans = f(ans, root->value);
+      ans = preOrderFoldHelper<R>(f, ans, root->left);
+      ans = preOrderFoldHelper<R>(f, ans, root->right);
+    }
+    return ans;
+  }
+  template<typename R>
   R preOrderFold(std::function<R(const R &, int)> const & f, const R & initial) {
     // Write your code here
+    return preOrderFoldHelper(f, initial, root);
   }
   ~AVLTree() { deleteTree(root); }
 
@@ -79,5 +100,6 @@ class AVLTree
   AVLNode * insertHelper(AVLNode * curr, int val);
   AVLNode * deleteHelper(AVLNode * curr, int val);
   void deleteTree(AVLNode * root);
+  void copyTree(AVLNode ** root, AVLNode * c);
 };
 #endif
