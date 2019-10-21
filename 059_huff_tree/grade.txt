@@ -1,19 +1,32 @@
-Grading at 10/21/2019:20:44:02.827416
-For commit ID ddd8a94eefb101d7284e6d5c5972b6896edf27b0
-Grading at Mon Oct 21 16:44:01 EDT 2019
+Grading at 10/21/2019:20:44:57.556945
+For commit ID bf09eed41e1e7c568dee10cd953934c28d9b9071
+Grading at Mon Oct 21 16:44:53 EDT 2019
 compiling
 g++ -ggdb3 -Wall -Werror -pedantic -o testTree testTree.cpp readFreq.cpp buildTree.cpp
-buildTree.cpp: In function ‘Node* buildTree(uint64_t*)’:
-buildTree.cpp:7:9: error: ‘count’ was not declared in this scope
-     if (count[i] > 0) {
-         ^~~~~
-buildTree.cpp:7:9: note: suggested alternative: ‘counts’
-     if (count[i] > 0) {
-         ^~~~~
-         counts
-Makefile:2: recipe for target 'testTree' failed
-make: *** [testTree] Error 1
-make failed
-Make succeeded, but testTree does not exist (did you change the targets?)
+Make succeed, testTree created
+Testcase 1
+-----------------------
+  - Valgrind was clean (no errors, no memory leaks)
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 2
+-----------------------
+  - Valgrind was clean (no errors, no memory leaks)
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 3
+-----------------------
+  - Valgrind was clean (no errors, no memory leaks)
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 4
+-----------------------
+  - Valgrind was clean (no errors, no memory leaks)
+Checking output:
+Your file matched the expected output
+Testcase passed 
 
-Overall Grade: F
+Overall Grade: A
