@@ -4,7 +4,7 @@ Node * buildTree(uint64_t * counts) {
   //WRITE ME!
   priority_queue_t pq;
   for (unsigned i = 0; i < 257; ++i) {
-    if (count[i] > 0) {
+    if (counts[i] > 0) {
       pq.push(new Node(i, counts[i]));
     }
   }
