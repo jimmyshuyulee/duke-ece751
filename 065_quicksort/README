@@ -1,0 +1,36 @@
+In this assignment you will be implementing the quicksort
+algorithm. A basic Makefile along with quicksort.cpp has 
+been provided, but you will only be evaluated by your 
+quicksort function. You are welcome to make use of the swap
+function so long as it's definition is the same as that 
+which we have provided.
+
+Quicksort is a sorting algorithm that achieves an average
+run-time of O(n*log(n)). It runs in two steps - first a 
+partition step and a re-arrangement step. First you must 
+select a pivot, usually around the midpoint of the array.
+You then swap all elements <= the pivot to the left and 
+those > the pivot to the right. You then recursively perform 
+the same procedure on each sub-part. A partial example
+is shown below.
+
+arr = [3, 9, 2, 5, 11, 4, 17, 21]
+Pass 1 - Partition step
+Select pivot --> index 3, value 5
+Pass 1 - re-arrangement step
+arr --> [3, 2, 4, 5, 9, 11, 17, 21]
+Pass 2 - recursive partition step
+subarr1 = [3, 2, 4, 5]
+Select pivot --> index 1, value 2
+Pass 2 - re-arrangement step
+subarr1 = [2, 3, 4, 5]
+Pass 2 - recursive partition step 2
+subarr2 = [9, 11, 17, 21]
+...
+Since the array is sorted we could end here - but in absence
+of that information we would recurse further, subdividing the 
+array once again until we are down to just two elements that 
+can be swapped if they are out of order.
+
+You must implement this function in place (ie: modify
+the input array such that the original version is sorted).
