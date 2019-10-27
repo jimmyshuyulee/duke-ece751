@@ -1,0 +1,321 @@
+For this assignment, you are going to be implementing Dijkstra's algorithm to route
+cars through a city.  This assignment has an initial graded portion,
+and an ungraded competition portion.
+
+To make sure the competition part works smoothly, we have provided libcars.a,
+which contains the compiled compeition simulator.  You will do the graded
+part of this assignment in the same framework.  Note that what we provide includes
+main, so unlike most programs, you will NOT write main yourself.
+
+Instead, you will write four functions (all prototyped in studentinterface.hpp).  We will
+give an overview here, then delve into what you need to do a bit more:
+
+
+ 1. Graph * readGraph(std::string fname);
+    This function reads in a graph from the specified file.  You should make your own Graph data
+    structure.
+    The file format is one "road" per line with the following format
+
+id source destination length maxcars maxspeed  [carsN speedN ...] 
+
+    All of these are integers.   So for example
+
+2 4 3 9800 100 200
+
+    Means that road id 2 goes from intersection (node) 4 to intersection 3.
+    The road is 9990 units long.  It can hold 100 cars at a time, and the fastest
+    that cars can drive on it is 200 units/tick.  On this road, cars always drive
+    200 units/tick.
+
+    However, if we see another road, such as
+
+3 3 4 9800 100 200 30 150 50 100 80 50 90 10
+
+    the extra numbers at the end indicate how the traffic slows down as more
+    cars are on the road.  Note that this road is from 3 to 4, so it is the
+    opposite direction of the first example (all roads are represented as
+    directed edges---a two way road will have two edges).
+    Here these extra numbers say
+
+    30 150:  if there are at least 30 cars on the road, the speed drops to 150
+    50 100:  if there are at least 50 cars on the road, the speed drops to 100
+    80 50 :  if there are at least 80 cars on the road, the speed drops to 50
+    90 10 : if there are at least 90 cars on the road, the speed drops to 10
+
+   You may represent your graph however you want.  The simulation infrastructure will never
+   "look inside" it.  It will take the pointer you return, and pass it to your
+   other functions.  The only requirement is that we must be able to "delete" it
+   at the end of the simulation.  That is
+
+   Graph * g = readGraph(filename);
+   //simulation
+   delete g;
+
+2. std::vector<PerCarInfo *> startPlanning(Graph * graph,
+                                           const std::vector<start_info_t> & departing_cars);
+3. std::vector<intersection_id_t> getNextStep(Graph * graph,
+                                              const std::vector<arrival_info_t> & arriving_cars);
+
+   These two functions work together to let you plan your cars' trips.
+   The first of these (startPlanning) is called whenever a new car
+   enters the simulation.   You get information about all cars that depart
+   at the same time (simulation tick), and can do any planning you want.
+
+   The second of these lets you make decisions whenever a car reaches an intersection
+   (other than its final destination).   You get information for all cars that
+   arrived at any intersection all at once (one call per simulation tick).
+
+   Note that either of these may be called on an empty vector.
+
+   The startPlanning function will create a PerCarInfo * for each
+   departing car.   What is in PerCarInfo is up to you, and
+   may be null if you wish.   However, there MUST be
+   one element in the result vector for each element in the
+   dpearting_cars vector.  The simulation model will
+   match these up with cars in the order they appear in the vector.
+   As with Graph, the simulation will not look into the PerCarInfo,
+   but will pass it back to you later on.
+
+   Whenever a car arrives, the simulation infrastructure will use
+   getNextStep to find out the next intersection it should drive to.
+   When this is called, you get the arrival_info_t for each
+   arriving car, which includes the PerCarInfo * you made
+   for that car, as well as the intersection it just arrived at.
+   You should return a vector which has one element per arriving
+   car (in the same order), and gives the next intersection to
+   drive to.  That intersection must be adjacent to this one.
+
+
+4. void carArrived(PerCarInfo * finished_cars);
+   When a car arrives at its destination, we will call
+   this function, and pass the PerCarInfo *
+   that you created for that car.  You should do
+   whatever book-keeping and resource freeing you want/need.
+   If you dynamically allocated the PerCarInfo*,
+   you may safely free it here, unless you use
+   its elsewhere in your code.
+
+
+We will now explain a few things that may seem odd before we move on:
+  (a) Why do you get a vector of all things that happen in one cycle,
+      rather than just being called for each one separately?
+
+      The reason for this is so that, if you want, you can parallelize
+      over all the things that happen in a cycle if you want
+      for the competition.
+
+  (b) Why do we need both startPlanning and getNextStep?
+ 
+      For the graded portion, you are going to do two versions
+      of the assignment.  In one, you will do all planning
+      when the car departs.  In the other, you will
+      do all planning at each intersection.
+
+      However, in the competition, how make use of these
+      is entirely up to you.  You may wish to use
+      some precomputation in startPlanning, and
+      make updates in getNextStep based on changing conditions.
+
+
+
+
+Now, on to what you need to do:
+
+
+Step 0: read your graph
+
+  You should start by writing readGraph.
+  We strongly encourage you to test this before proceeding.
+
+Step 1: Dijkstras at start.
+
+  In startPlanning, you should run Dijkstras for each car, to get a
+  path from its start to its destination under the current traffic conditions.
+  You should record this entire path in your PerCarInfo.
+
+  Then in getNextStep, you should take the next node out of the
+  path in the PerCarInfo that you have already computed,
+  and put it in the answer vector.
+
+  You should create a Makefile which builds this into a program called
+
+  sim-dijkstra-start
+
+  Note that you will need to link with libcars.a  by adding
+
+    -L . -lcars
+
+  to your command line.
+
+  You should be able to run
+
+   ./sim-dijkstra-start graphfile departurefile
+
+   for any provided graph file and departures file.  The simulation
+   should run a while and print your total travel time (how many
+   ticks the cars took to get through the graph), as well as
+   your total compute time.
+
+   We have provided the total travel time for a few combinations
+   to help you test.
+
+   Note that you can add "v" "vv" or "vvv" as another command
+   line argument to get "verbose "very verbose" or "very very verbose" output
+   form our simulation infrastructure.
+
+Step 2: Dijkstras at each intersection.
+
+   The above works great if traffic doesn't change much, but what
+   happens if a bunch of cars come onto the path you were planning
+   to use while you are getting there?
+   That is, if your path was A->B->C->D->E  and then
+   a traffic jam pops up at C->D while you are driving
+   from A->B, maybe you should go to
+   A->Q->M->N->E
+   even if it was not as good when you left A.
+
+   What you are now going to do is implement this
+   by running Dijkstra's algorithm for each car,
+   at each intersection, using the current road conditions.
+
+   To do this, you will need to make a different
+   version of startPlanning and getNextStep,
+   as well as adjusting your Makefile.
+   Your Makefile should build
+
+     sim-dijkstra-each
+
+   for this step.  Whether you want to
+   make seaprate files for this step from
+   the previous one (and link different ones
+   in different targets), use #ifdef MACRO around different
+   versions of the code, and pass -DMACRO in the command
+   line of different targets, or some other solution
+   is up to you.
+
+   However you do this, much of your work should already
+   be done, in that you already have a tested implementation
+   of Dijkstra's algorithm (from the previous step)
+   and should be able to just make calls to it.
+
+   As before, we have provided a few sample outputs for you.
+
+
+--------------------------------------------------------------------
+End of graded evaluative assignment:
+
+This concludes the graded evaluative assignment.
+Be sure to turn it in (and grade) before the deadline!
+
+What follows is an open-ended problem for you to do as a competition.
+---------------------------------------------------------------------
+
+
+Welcome to the 751 car routing competition!
+
+You did some basic planning by running Dijkstra's but can you do better?
+
+
+Well, almost certainly---if you couldn't, it would not be much of a competition!
+
+This part is completely open ended.  We want you to go and think
+about clever ways to route the cars more efficiently and/or parallelize
+your code.   You can do pretty much anything, as long as
+its in the spirit of the rules.... and if its not, well
+we have a place for you to enter that submission to!
+
+
+The competiion has three divisions, which will be scored separately
+and independently.  You can try for one, two, or three divisions as
+you wish.
+
+       
+  1.  Single threaded division:
+        Score = total travel time.
+        Low score wins.
+        Must follow the "FAIR PLAY" rules.
+        Makefile target:  compete-st
+  2.  Multi-threaded division:
+        Score = (total travel time) ^2 * (compute time)
+        Low score wins.
+        We will run this on 8 cores, so you may wish to use up to 8 threads.
+        Must follow the "FAIR PLAY" rules.
+        Makefile target: compete-mt
+  3.  l33t Hacker Division:
+        Score = (total travel time) ^2 * (compute time)
+        Low score wins.
+        We will run this on 8 cores, so you may wish to use up to 8 threads.
+        You may violate any of the rules in FAIR PLAY.
+        Makefile target: compete-hacker
+
+For each division, you enter by having a Makefile target which builds
+the corresponding binary (compete-st, compete-mt, or compete-hacker). 
+We will run your binary on a variety of inputs, and combine the scores
+by taking:
+
+                 your score
+          Si=   -----------
+                  ref score
+ 
+  for each input, and multiplying together all Si.  Ref score
+  will not change across the competition (it is the score
+  of one particular implementation we wrote). 
+
+
+For division 1+2, you must follow these FAIR PLAY rules:
+ 1. You may NOT attempt to alter or inspect the state of our code in any way.
+    This includes, but is not limited to:
+         - Attempting to inspect the stack frames of functions that called you
+         - Attempting to modify any variable that is not your own (i.e., is part
+           of our simulation code).
+ 2. You may NOT try to in any way find out future car departures that you 
+    have not yet been notified about.
+ 3. You may NOT performa any computation outside of the times that we expect
+    you to, or in any other way trying to fool our notion of how long your code takes.
+ 4. Your code MUST valgrind cleanly.
+
+ Any violation of these will completely disqualify your submission.
+
+Note that the spirit of the fair play rules are that you are going to legit compete,
+and not try to game the system.  If you are thinking of something that you think may
+or may not be ok, please ask us.  If it violates these rules, you may put it in
+the hacker division.
+  
+
+
+For division 3, anything goes.  If you think you have a cool way to game
+the system, be our guest.   However, please be aware of the following
+pitfalls to your cunning schemes:
+   - The version of libcars.a that we run the compeition
+     with will not be exactly the same as the one you have
+     (among other things, we will strip out verbose info support,
+      since its not needed and just slows things down).
+     The consequences of this is that while you are welcome to try
+     some wild and crazy things that depend on the specifics of our
+     code, don't be surprised or angry if they don't work out.
+
+  - Your do not need to valgrind cleanly.  However, if your code
+    crashes, that submission loses (you can try resubmitting
+    the next night).
+
+Of course, you still may NOT do anything that attempts to prevent
+other students from completing their work.
+
+
+ 
+Competition mechanics:
+ 
+  - You may submit as many times as you want until the end of the competition.
+  - We will periodically run the competition submissions and post the current
+    score card. Note that we will not do instant scoring, as scoring this requires
+    exclusive use of an 8 core machine for a long time.
+  - You will get a unique identifier for how you appear on the score board.
+    This will not be your name, netid, or anything else easily matchable
+    to you. 
+  - Only student submissions count towards the final rankings.  We may
+    run other submissions in the scoring, subject to availability of
+    computational resources, however, they will be removed from the final
+    rankings.   E.g., if your TA wants to submit something, we 
+    will run it if we have time, and post it on the scoreboard, but
+    it won't count in the final rankings.  Non-counting submissions
+    will be identified as from "---" on the score board.
