@@ -1,0 +1,17 @@
+Grading at 10/28/2019:05:05:14.331183
+For commit ID 030e43b3055c18f197357ad1830eabdd2c3f1104
+Grading at Mon Oct 28 01:05:04 EDT 2019
+Compiling quicksort
+g++ -std=c++11 -o quick quicksort.cpp
+Compiling Grader
+g++ -std=c++11 -o grader grader.cpp quicksort.cpp
+Running correctness tests
+Running performance tests
+g++ -std=c++11 -o select selection_sort.cpp
+Passed!
+Passed!
+Passed!
+Passed!
+Passed!
+
+Overall Grade: A
