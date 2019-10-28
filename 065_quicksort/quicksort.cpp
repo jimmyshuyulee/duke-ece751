@@ -9,6 +9,18 @@
  */
 template<typename T>
 void quicksort(std::vector<T> & vec, int L, int R) {
+  if (R - L < 1) {
+    return;
+  }
+  int pivot = L;
+  for (int i = L; i <= R; i++) {
+    if (vec[i] < vec[pivot]) {
+      std::swap(vec[i], vec[pivot]);
+      std::swap(vec[i], vec[++pivot]);
+    }
+  }
+  quicksort(vec, L, pivot - 1);
+  quicksort(vec, pivot + 1, R);
 }
 
 /*
@@ -17,7 +29,15 @@ void quicksort(std::vector<T> & vec, int L, int R) {
  */
 template<typename T>
 bool checkSorting(std::vector<T> & vec, T sum) {
-  return false;
+  T arraySum(vec[0]);
+  for (int i = 1; i < vec.size(); i++) {
+    if (vec[i] < vec[i - 1]) {
+      return false;
+    }
+    arraySum = arraySum + vec[i];
+  }
+
+  return (arraySum == sum) ? true : false;
 }
 
 // tests a large vector of random ints
