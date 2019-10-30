@@ -1,0 +1,51 @@
+In this assignment you will be implementing an 
+synchronization primitive called a barrier. A barrier prevents 
+threads from proceeding past a certain point until all threads
+have reached that point. 
+
+We have provided three student files, a Makefile and a header 
+that contains a function we use in the grader. Modify the barrier
+class in barrier.hpp to contain the class fields you believe
+to be necessary. Implement the constructor, which should take in a
+number of threads, then move onto the Barrier::enter() function in 
+barrier.cpp. This function should take no more than 50 lines of code.
+
+In main, you will find some definitions along with a wrapper function.
+Do not modify these definitions. The function test1 illustrates a basic 
+test case. You should probably write more any way that you can. The most
+effective means of ascertaining if your code is correct is to execute it 
+by hand for a few different thread interleavings, as many of these potential
+bad cases will not be reproducible easily.
+
+In addition, ensure that the barrier is re-usable. This means that
+if in a certain run the barrier proceeds to completion, one should
+be able to use that same barrier object again with the same 
+number of threads without causing any issues. 
+
+We have included mutex, conditionvariable and thread from the standard
+library as you will need all three for your implementation and testing.
+We recommend writing a few tests that will catch obviously wrong 
+solutions, but you are not graded on your tests.
+
+We've provided the following example with the intent to provide 
+some context to help you understand what it is you are trying to do.
+
+Say nThreads = 3 and we would like to batch the processing of
+an image file such that each thread computes 1/3rd of the image.
+It isn't meaningful for 1/3rd of the image to be rendered, so 
+we use a barrier to prevent the threads from exiting until all 
+work has been completed. We denote the threads as T1, T2 and T3.
+
+1) T1 calls 'enter' and does it's work - but since no other threads 
+   have entered yet, it must wait.
+2) T2 calls 'enter' but has not been executed yet.
+3) T3 calls 'enter' and does it's work - but since T2 hasn't started 
+   it will wait with T1 until T2 completes.
+4) T2 then resumes, does it's work and signals to T1 and T2 that it
+   is done and it is safe to proceed. T2 exits.
+5) As T1 and T3 wakeup they exit as well.
+6) All 3 parts are completed and the image renders.
+
+Note that in your actual implementation you do no actual processing.
+You are just ensuring that the threads execute in parallel while 
+waiting for all to complete before exiting.
