@@ -1,0 +1,9 @@
+Grading at 10/31/2019:19:35:52.055256
+For commit ID 2a50780c5392fc5fc6a71f870882512dcd581d63
+Grading at Thu Oct 31 15:35:50 EDT 2019
+Making everything public
+Compiling barrier
+g++ -std=c++11 -pthread -g -o main barrier.cpp main.cpp
+Barrier looks safe
+
+Overall Grade: A
