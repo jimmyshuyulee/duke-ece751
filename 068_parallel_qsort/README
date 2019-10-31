@@ -1,0 +1,19 @@
+For this assignment you will be implementing task-parallel
+quicksort from scratch. To do this, we have provided a class
+called ThreadPool on top of which this will be implemented.
+
+Part 1: ThreadPool
+
+In threadpool.hpp, you will see we've defined a few functions
+you will need. You will first need to define additional fields
+so that your threadpool functions correctly. Keep concurrency 
+in mind. You will need to synchronize your functions accordingly.
+The specification for these functions is in threadpool.hpp.
+
+
+Part 2: Quicksort
+
+Implement the quicksort. You've already done a single threaded
+version, so most of the work here is done. You need only modify
+your implementation to make use of the threadpool. Specifications
+are in quicksort.hpp.
