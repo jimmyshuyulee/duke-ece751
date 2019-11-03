@@ -1,0 +1,11 @@
+In this assignment you will be writing a parallelized genetic algorithm
+to perform evidence based scheduling. There are stubs to implement in both
+fitness.cpp and ga.hpp. For a detailed introduction on what you are doing,
+refer to the below link.
+
+https://www.joelonsoftware.com/2007/10/26/evidence-based-scheduling/
+
+Note the specification carefully as it is not identical to what is in the
+above article. You will be using both your ThreadPool and Parallel Quicksort
+to accomplish this task. Use the 'ln' command to create symbolic links to
+those files.
