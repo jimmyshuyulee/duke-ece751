@@ -20,7 +20,10 @@ int verifyAns(std::vector<int> & vec) {
 // basic test
 int test1(ECE751::ThreadPool<> & pool) {
   int JOB_COUNT = 5;
-  auto task = [] { std::cout << "Hello\n"; };
+  auto task = [] {
+    std::cout << "Hello "
+              << "\n";
+  };
   auto task2 = [&pool, task, JOB_COUNT] {
     for (int i = 0; i < JOB_COUNT; i++) {
       pool.enqueue([task]() { task(); });
@@ -51,7 +54,7 @@ int test3(ECE751::ThreadPool<> & pool) {
   std::vector<int> toSort;
   for (int i = 0; i < count; i++) {
     for (int j = 0; j < rounds; j++) {
-      toSort.push_back(1 + rand() % (count & 50 ));
+      toSort.push_back(1 + rand() % (count & 50));
     }
     parallel_qsort(pool, toSort, comp);
     assert(!verifyAns(toSort));
