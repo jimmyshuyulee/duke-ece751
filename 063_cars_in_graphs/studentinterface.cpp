@@ -3,14 +3,17 @@
 #include <cfloat>
 #include <fstream>
 #include <iostream>
+#include <queue>
 #include <string>
+
+using std::vector;
 
 Graph * readGraph(std::string fname) {
   Graph * g = new Graph();
   std::ifstream ifs;
   ifs.open(fname);
   std::string str;
-  std::vector<unsigned> info;
+  vector<unsigned> info;
 
   std::getline(ifs, str);
   while (!ifs.eof()) {
@@ -40,12 +43,26 @@ Graph * readGraph(std::string fname) {
   return nullptr;
 }
 
-std::vector<PerCarInfo *> startPlanning(Graph * graph,
-                                        const std::vector<start_info_t> & departing_cars);
+vector<intersection_id_t> dijkstra(Graph * graph,
+                                   intersection_id_t s,
+                                   intersection_id_t d) {
+  std::priority_queue<intersection_id_t> pq;
+  vector<intersection_id_t> = path;
+  pq.push(s);
+  vector<> visited(, );
+  while (!pq.empty()) {
+  }
 
-std::vector<intersection_id_t> getNextStep(
-    Graph * graph,
-    const std::vector<arrival_info_t> & arriving_cars);
+  return path;
+}
+
+vector<PerCarInfo *> startPlanning(Graph * graph,
+                                   const std::vector<start_info_t> & departing_cars) {
+  dijkstra(g, );
+}
+
+vector<intersection_id_t> getNextStep(Graph * graph,
+                                      const std::vector<arrival_info_t> & arriving_cars);
 
 void carArrived(PerCarInfo * finished_cars);
 

@@ -16,18 +16,27 @@ using std::vector;
 
 // defined by student
 // should probably only need id and path...
-class PerCarInfo {};
+class PerCarInfo {
+  unsigned id;
+  vector<intersection_id_t> path;
+
+ public:
+  PerCarInfo() = default;
+  const vector<intersection_id_t> & get_path() { return path; }
+};
 
 // defined by student
 // for now, this class is an alias for our GenericGraph
 class Graph {
   class RoadInfo {
    public:
-    unsigned carLimit;
-    vector<float> totalspeed_carNum;
+    unsigned source;
+    unsigned destiation;
+    unsigned car_limit;
+    vector<float> total_speed_car_num
 
     RoadInfo() = default;
-    RoadInfo(const unsigned & car, vector<float> & speed_carNum) :
+    RoadInfo(const unsigned & car, vector<float> & speed_car_num) :
         carLimit(car),
         totalspeed_carNum(speed_carNum) {}
   };
@@ -41,7 +50,7 @@ class Graph {
   void addEdge(const unsigned & source,
                const unsigned & destination,
                const unsigned & length,
-               vector<unsigned> & speed_carNum) {
+               vector<unsigned> & speed_car_num) {
     while (g.size() <= source) {
       g.push_back(adjacency_t());
     }
