@@ -1,12 +1,12 @@
-Grading at 11/03/2019:16:43:28.913058
-For commit ID fc07094904480e26d7a04cf5c96a9428bcb232ea
-Grading at Sun Nov  3 11:43:26 EST 2019
+Grading at 11/04/2019:20:43:49.660867
+For commit ID c36879d72cd3b6d245ca46667ca696087afce11b
+Grading at Mon Nov  4 15:43:47 EST 2019
 Building grader
 g++ -std=c++11 -pthread -o grader grader.cpp
 Running correctness tests
 Running performance tests
 g++ -std=c++14 -pthread -o perf st_quicksort.cpp perf.cpp
-Multithreaded Time: 71210614
-Single Threaded Time: 144991259
+Multithreaded Time: 95886568
+Single Threaded Time: 135887968
 
 Overall Grade: A
