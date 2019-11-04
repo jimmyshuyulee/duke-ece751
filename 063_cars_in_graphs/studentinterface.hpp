@@ -36,12 +36,13 @@ class Graph {
     vector<float> total_speed_car_num
 
     RoadInfo() = default;
-    RoadInfo(const unsigned & car, vector<float> & speed_car_num) :
-        carLimit(car),
-        totalspeed_carNum(speed_carNum) {}
+    RoadInfo(const unsigned & s, const unsigned & d, vector<float> & speed_car_num) :
+        source(s),
+        destination(d),
+        total_speed_carNum(speed_car_num) {}
   };
   typedef pair<unsigned, float> road_info_t;
-  typedef unordered_map<intersection_id_t, vector<road_info_t> > adjacency_t;
+  typedef unordered_map<intersection_id_t, vector<RoadInfo> > adjacency_t;
 
   vector<adjacency_t> g;
 
@@ -56,8 +57,8 @@ class Graph {
     }
 
     for (int i = 1; i < speed_carNum.size(); i += 2) {
-      g[source][destination].push_back(
-          road_info_t(speed_carNum[i], (float)length / speed_carNum[i - 1]));
+      g[source][destination].push_back(RoadInfo(
+          source, destination, speed_carNum[i], (float)length / speed_carNum[i - 1]));
     }
   }
 
