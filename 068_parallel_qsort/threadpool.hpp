@@ -18,6 +18,8 @@ namespace ECE751 {
     typedef std::list<std::function<void(void)> > task_queue_t;
     std::mutex mtx;
     std::condition_variable cv;
+    std::mutex end_mtx;
+    std::condition_variable end_cv;
     task_queue_t tasks;
     std::list<std::thread> workers;
     std::atomic<bool> join_all;
@@ -32,6 +34,9 @@ namespace ECE751 {
         std::function<void(void)> task(get_next_task());
         task();
         remaining_tasks--;
+        if (remaining_tasks == 0) {
+          end_cv.notify_one();
+        }
       }
       return;
     }
@@ -131,6 +136,8 @@ namespace ECE751 {
     void waitAll() {
       //std::unique_lock<std::mutex> add_lck(add_mtx);
       while (tasksRemaining() > 0 || remaining_tasks > 0) {
+        std::unique_lock<std::mutex> lck(end_mtx);
+        end_cv.wait(lck);
       }
     }
   };
