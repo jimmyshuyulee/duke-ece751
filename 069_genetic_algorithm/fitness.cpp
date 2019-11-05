@@ -23,7 +23,11 @@
  * number of actual
  */
 std::pair<size_t, size_t> read_matrix_size(std::ifstream & f) {
-  return std::make_pair(0, 0);
+  std::string str;
+  std::getline(f, str);
+  std::size_t pos = str.find(' ');
+
+  return std::make_pair(stoi(str.substr(0, pos - 1)), stoi(str.substr(pos + 1)));
 }
 
 /*
@@ -38,6 +42,16 @@ std::vector<std::vector<double> > read_dev_file(std::string fname) {
   std::vector<std::vector<double> > res(matrixSize.first,
                                         std::vector<double>(matrixSize.second));
   // Read the matrix
+  for (unsigned i = 0; i < res.size(); i++) {
+    std::string str;
+    std::getline(f, str);
+    std::size_t pos1 = 0;
+    while (pos1 != std::string::npos) {
+      std::size_t pos2 = str.find(' ', pos1 + 1);
+      res[i].push_back(stoi(str.substr(pos1 + 1, pos2 - pos1 - 1)));
+      pos1 = pos2;
+    }
+  }
   return res;
 }
 
@@ -50,7 +64,12 @@ std::vector<std::vector<double> > read_dev_file(std::string fname) {
 double ebs_one_trial(const std::vector<unsigned> & task_mapping,
                      const std::vector<std::vector<double> > & estimates,
                      const std::vector<std::vector<double> > & history) {
-  return 0;
+  double ans = 0;
+  for (unsigned i = 0; i < task_mapping.size(); i++) {
+    double rand_num = rand() % history[i].size();
+    ans += estimates[task_mapping[i]][i] * history[i][rand_num];
+  }
+  return ans;
 }
 
 /*
@@ -63,7 +82,12 @@ double evidence_based_scheduling(const std::vector<unsigned> & task_mapping,
                                  const std::vector<std::vector<double> > & history,
                                  unsigned n_trials,
                                  double confidence) {
-  return 0;
+  std::vector<double> record;
+  for (unsigned i = 0; i < n_trials; i++) {
+    record.push_back(ebs_one_trial(task_mapping, estimates, history));
+  }
+  std::sort(record.begin(), record.end());
+  return record[(int)(record.size() * 0.95)];
 }
 
 /*
