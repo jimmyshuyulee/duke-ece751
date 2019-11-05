@@ -1,0 +1,11 @@
+Grading at 11/05/2019:03:39:03.635734
+For commit ID 85d774f83b033b30364359ea635fd2dbd4f3a9b9
+Grading at Mon Nov  4 22:39:03 EST 2019
+Compiling Genetic Algorithm
+g++ --std=gnu++11 -Wall -g -pedantic -pthread -o main fitness.o per_thread_random.o
+Theirs < Ours
+Theirs < Ours
+Theirs < Ours
+Theirs < Ours
+
+Overall Grade: A
