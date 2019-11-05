@@ -42,7 +42,7 @@ Graph * readGraph(std::string fname) {
   g->printGraph();
   return nullptr;
 }
-
+/*
 vector<intersection_id_t> dijkstra(Graph * graph,
                                    intersection_id_t s,
                                    intersection_id_t d) {
@@ -55,10 +55,10 @@ vector<intersection_id_t> dijkstra(Graph * graph,
 
   return path;
 }
-
+*/
 vector<PerCarInfo *> startPlanning(Graph * graph,
                                    const std::vector<start_info_t> & departing_cars) {
-  dijkstra(g, );
+  //dijkstra(g, );
 }
 
 vector<intersection_id_t> getNextStep(Graph * graph,

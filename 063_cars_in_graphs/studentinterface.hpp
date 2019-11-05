@@ -28,22 +28,21 @@ class PerCarInfo {
 // defined by student
 // for now, this class is an alias for our GenericGraph
 class Graph {
+  typedef pair<unsigned, float> road_speed_info_t;
   class RoadInfo {
    public:
     unsigned source;
-    unsigned destiation;
-    unsigned car_limit;
-    vector<float> total_speed_car_num
+    unsigned destination;
+    vector<road_speed_info_t> speed_car_num;
 
     RoadInfo() = default;
-    RoadInfo(const unsigned & s, const unsigned & d, vector<float> & speed_car_num) :
+    RoadInfo(const unsigned & s, const unsigned & d, vector<road_speed_info_t> & scn) :
         source(s),
         destination(d),
-        total_speed_carNum(speed_car_num) {}
+        speed_car_num(scn) {}
   };
-  typedef pair<unsigned, float> road_info_t;
-  typedef unordered_map<intersection_id_t, vector<RoadInfo> > adjacency_t;
 
+  typedef unordered_map<intersection_id_t, vector<RoadInfo> > adjacency_t;
   vector<adjacency_t> g;
 
  public:
@@ -51,15 +50,16 @@ class Graph {
   void addEdge(const unsigned & source,
                const unsigned & destination,
                const unsigned & length,
-               vector<unsigned> & speed_car_num) {
+               vector<unsigned> & speed_carNum) {
     while (g.size() <= source) {
       g.push_back(adjacency_t());
     }
 
+    vector<road_speed_info_t> scn;
     for (int i = 1; i < speed_carNum.size(); i += 2) {
-      g[source][destination].push_back(RoadInfo(
-          source, destination, speed_carNum[i], (float)length / speed_carNum[i - 1]));
+      scn.emplace_back(speed_carNum[i], (float)length / speed_carNum[i - 1]);
     }
+    g[source][destination].push_back(RoadInfo(source, destination, scn));
   }
 
   void printGraph() {
@@ -68,7 +68,10 @@ class Graph {
       for (adjacency_t::iterator itr = g[i].begin(); itr != g[i].end(); itr++) {
         std::cout << itr->first;
         for (int j = 0; j < itr->second.size(); j++) {
-          std::cout << " " << itr->second[j].first << ":" << itr->second[j].second;
+          std::cout << " " << itr->second[j].source << " " << itr->second[j].destination;
+          for (int k = 0; k < itr->second[j].speed_car_num.size(); k++)
+            std::cout << " " << itr->second[j].speed_car_num[k].first << ":"
+                      << itr->second[j].speed_car_num[k].second;
         }
         std::cout << std::endl;
       }
