@@ -1,2 +1,60 @@
-This README should describe what should be done
-for the project proposal.
+For your final project in this course, you will propose and implement
+a program that solves an interesting and meaningful problem of your
+choosing. 
+
+We want you to use what you have learned this semester to do an
+excellent job planning, using abstration, and testing your code. In
+addition, your program should:
+- use good practices for C++ 11,
+- use at least one form of polymorphism,
+- create multiple classes,
+- use STL members where applicable,
+- accept input from cin or a file (as appropriate),
+- produce some output, either to stdout or a file (as appropriate), and
+- perform some kind of significant computation.  
+
+Inspiration can come from your future career goals, a personal pet
+project, ongoing research, etc. For example, a student in
+computational mechanics might write a mesh generator or finite element
+analysis tool. You could also implement a type of program mentioned in
+AoP, such as task scheduling or resource allocation.
+
+The scale of this program should be significant but reasonable to
+complete in three weeks. Choose something you find interesting and
+won't mind spending many hours on!
+
+You should also document your project well. We should be able to
+quickly read about the interface of your program. You should provide a
+test suite and instructions for how to test your program. The program
+must be able to run on the 751 server without installing anything
+additional. 
+
+The grading breakdown will be as follows:
+-  5% project proposal
+- 25% code quality
+      o abstraction
+      o documentation
+      o formatting
+- 40% functionality
+      o sophistication of problem
+      o robustness to various inputs
+      o no memory leaks
+- 30% testing
+      o documentation of test cases
+      o thoroughness of test cases
+
+To help you scale your project, you should tell us in advance what you
+are planning to do, so we can give you feedback on what is reasonable
+in this time frame. For the proposal, please submit a file
+proposal.txt that includes the following information:
+- Title of your project
+- Paragraph summarizing the goal of your project
+- Interface specification
+- Testing plan
+- Breakdown of project into 3-5 steps and how long you expect each one
+  to take
+- Sources of required domain knowledge
+
+The proposal is worth 5% of the project grade, and you must include
+all of the above components for full credit.
+  

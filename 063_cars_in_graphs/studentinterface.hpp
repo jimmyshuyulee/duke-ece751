@@ -22,63 +22,85 @@ class PerCarInfo {
 
  public:
   PerCarInfo() = default;
-  const vector<intersection_id_t> & get_path() { return path; }
+  PerCarInfo(const unsigned & car_id, const vector<intersection_id_t> & car_path) :
+      id(car_id),
+      path(car_path) {}
+  unsigned getId() const { return id; }
+  vector<intersection_id_t> & getPath() const { return path; }
 };
 
 // defined by student
 // for now, this class is an alias for our GenericGraph
 class Graph {
-  typedef pair<unsigned, float> road_speed_info_t;
-  class RoadInfo {
-   public:
-    unsigned source;
-    unsigned destination;
-    vector<road_speed_info_t> speed_car_num;
-
-    RoadInfo() = default;
-    RoadInfo(const unsigned & s, const unsigned & d, vector<road_speed_info_t> & scn) :
-        source(s),
-        destination(d),
-        speed_car_num(scn) {}
-  };
-
-  typedef unordered_map<intersection_id_t, vector<RoadInfo> > adjacency_t;
+  typedef pair<unsigned, float> road_time_info_t;
+  typedef unordered_map<intersection_id_t, vector<road_time_info_t> > adjacency_t;
+  unsigned vertex_num;
+  unsigned edge_num;
   vector<adjacency_t> g;
+
+  // Did not think of a better wat to hash a from_to_pair_t, so I simply encode
+  // the source-destination pair into a string
+  unordered_map<std::string, vector<intersection_id_t> > shortest_path;
 
  public:
   Graph() = default;
+  adjacency_t getAdj(const intersection_id_t & idx) const { return g[idx]; }
+  unsigned getVNum() const { return vertex_num; }
+  vector<road_time_info_t> getRoadInfo(const intersection_id_t & s,
+                                       const intersection_id_t & d) const {
+    return g[s].at(d);
+  }
+  vector<intersection_id_t> getShortestPath(const unsigned & s,
+                                            const unsigned & d) const {
+    std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
+    if (shortest_path.find(ftp) != shortest_path.end()) {
+      return shortest_path.at(ftp);
+    }
+    else {
+      return vector<intersection_id_t>();
+    }
+  }
+  void setShortestPath(const unsigned & s,
+                       const unsigned & d,
+                       vector<intersection_id_t> sp) {
+    std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
+    shortest_path[ftp] = sp;
+  }
+
   void addEdge(const unsigned & source,
                const unsigned & destination,
                const unsigned & length,
                vector<unsigned> & speed_carNum) {
-    while (g.size() <= source) {
+    while (g.size() <= source || g.size() <= destination) {
       g.push_back(adjacency_t());
+      ++vertex_num;
     }
 
-    vector<road_speed_info_t> scn;
+    vector<road_time_info_t> cnt;
     for (int i = 1; i < speed_carNum.size(); i += 2) {
-      scn.emplace_back(speed_carNum[i], (float)length / speed_carNum[i - 1]);
+      cnt.emplace_back(speed_carNum[i], (float)length / speed_carNum[i - 1]);
     }
-    g[source][destination].push_back(RoadInfo(source, destination, scn));
+    g[source][destination] = cnt;
+    ++edge_num;
   }
 
   void printGraph() {
-    for (int i = 0; i < g.size(); i++) {
+    for (int i = 1; i < g.size(); i++) {
       std::cout << "Edge " << i << ": " << std::endl;
-      for (adjacency_t::iterator itr = g[i].begin(); itr != g[i].end(); itr++) {
-        std::cout << itr->first;
-        for (int j = 0; j < itr->second.size(); j++) {
-          std::cout << " " << itr->second[j].source << " " << itr->second[j].destination;
-          for (int k = 0; k < itr->second[j].speed_car_num.size(); k++)
-            std::cout << " " << itr->second[j].speed_car_num[k].first << ":"
-                      << itr->second[j].speed_car_num[k].second;
-        }
+      for (auto itr : g[i]) {
+        std::cout << itr.first;
+        for (int k = 0; k < itr.second.size(); k++)
+          std::cout << " " << itr.second[k].first << ":" << itr.second[k].second;
         std::cout << std::endl;
       }
+      std::cout << std::endl;
     }
   }
 };
 
+vector<intersection_id_t> dijkstra(Graph * graph,
+                                   intersection_id_t s,
+                                   intersection_id_t d);
 // Creates the src, dest car pairs needed for startPlanning
 Graph * readGraph(std::string fname);
 
