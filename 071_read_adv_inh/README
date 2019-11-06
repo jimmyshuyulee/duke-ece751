@@ -1,0 +1,26 @@
+Consider the code in code.cpp, which uses
+virtual multiple inheritance.  Take a moment to draw
+the object layout, assuming that
+
+sizeof(int) = 4
+sizeof(void *) = 8
+
+Additionally, note that each sub-object's size will be rounded up to a multiple
+of sizeof(void*) (with unused bytes added to the end of the sub-object) so that
+each vtable pointer is aligned (on an address that is a multiple of sizeof(void*)).
+This includes the last sub-object (so that the next object's vtable will also be aligned).
+
+
+Further note that you will need to know the address of the D object
+(d1) created.  As you cannot know this exactly, we have
+provided you the address at which you should consider it to be.
+Namely
+
+  D d1;  //assume &d1 = 0x1000
+
+You should assume that d1 is at address 0x1000.  If sizeof(D)
+were 16, then d1 would occupy addresses [0x1000, 0x1010).
+
+Write the ouptut of the program into answer.txt
+
+
