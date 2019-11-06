@@ -25,8 +25,16 @@ class PerCarInfo {
   PerCarInfo(const unsigned & car_id, const vector<intersection_id_t> & car_path) :
       id(car_id),
       path(car_path) {}
-  unsigned getId() const { return id; }
-  vector<intersection_id_t> & getPath() const { return path; }
+  unsigned getCarId() const { return id; }
+  intersection_id_t getNextIntersectionId(const intersection_id_t & inter_id) const {
+    for (int i = 0; i < path.size() - 1; i++) {
+      if (path[i] == inter_id) {
+        return path[i + 1];
+      }
+      return 0;
+    }
+  }
+  vector<intersection_id_t> getPath() const { return path; }
 };
 
 // defined by student

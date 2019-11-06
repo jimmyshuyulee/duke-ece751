@@ -118,13 +118,10 @@ vector<PerCarInfo *> startPlanning(Graph * graph,
 vector<intersection_id_t> getNextStep(Graph * graph,
                                       const std::vector<arrival_info_t> & arriving_cars) {
   vector<intersection_id_t> ans;
-  for (int i = 0; i < arriving_cars.size(); i++) {
-    ans.push_back(arriving_cars[i].second->getNextIntersectionId(arriving_cars[i].first));
+  for (int i = 0; i < arrival_info_t.size(); i++) {
+    ans.push_back(arriving_cars[i].second.getNextIntersectionId(arriving_cars[i].first));
   }
   return ans;
-}
 
-void carArrived(PerCarInfo * finished_cars) {
-  delete finished_cars;
-}
+  void carArrived(PerCarInfo * finished_cars);
 
