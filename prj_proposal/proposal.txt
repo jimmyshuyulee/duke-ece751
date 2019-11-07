@@ -1,0 +1,14 @@
+C++ version of Apache Airflow
+
+The goal of your project:
+Inspired by Apache Airflow, which is a platform to programmatically author, schedule, and monitor workflows.
+
+Interface specification:
+Input: .txt file showing the specification of tasks to be completed, followed by an adjacency list representing the workflow DAG
+
+Output: A .log file specifying whether the scheduled tasks sequence has been successfully completed or not
+- Testing plan
+- Breakdown of project into 3-5 steps and how long you expect each one
+  to take
+- Sources of required domain knowledge
+
