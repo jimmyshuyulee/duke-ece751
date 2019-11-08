@@ -1,0 +1,46 @@
+In this assignment, you will need to write several classes, which will test your understanding
+about multiple inheritance.
+
+The classes you need to implement concern about a very interesting topic - socket programming,
+which is a useful tool of IPC (Inter-Process Communication) int network and you will learn more
+about it in ECE650. Socket programming has a great number of applications and most of them are quite
+complicated. However, we just need you to get familiar with the it and do some simple send-receive
+oprations, rather than some other quite complicated programming.
+
+We have provide you with the grandparent class: Socket, which contains some basic initializations of
+socket connection setting up. Take a look at Socket.hpp file and try to understand what it is doing
+there. You need to implement three other classes, which have the relations like the following diamond
+diagram.
+
+		 Socket
+		/      \
+	    Server     Client
+	        \      /
+		 Proxy
+
+Server and Client are two derived classes inheriting Socket and Proxy is the grandchild class inherits
+both Server and Client, which means Proxy could play the role of both server and client in socket connections.
+Remember what we learned in chapter 29, virtual inheritance could be used to avoid two copies of the
+grandparent class, which is Socket in this assignment.
+
+What you need to do is to implement class Server, class Client and class Proxy in each seperated header file.
+You will do the basic socket connection initializations first for setting up the following connection structure
+in your own server, which means you will do self-send and self-receive opeartions between them.
+
+   	Server  <---------->  Proxy  <---------->  Client
+		 port: 8000           port: 8080
+
+
+
+
+
+What you need to do for multiple inheritance:
+
+ - class Socket
+
+ - class Server
+
+ - class Client
+
+ - class Proxy
+
