@@ -1,4 +1,11 @@
-test:test.cpp studentinterface.o
-	g++ -std=c++11 -o test test.cpp studentinterface.o
+CFLAGS= -Wall -Werror -std=gnu++11 -pedantic -ggdb3
+sim-dijkstra-start:studentinterface.o
+	g++ $(CFLAGS) -o sim-dijkstra-start libcars.a studentinterface.cpp
 studentinterface.o:studentinterface.cpp studentinterface.hpp
-	g++ -std=c++11 -c studentinterface.cpp
+	g++ $(CFLAGS) -c studentinterface.cpp
+test:test.cpp studentinterface.o
+	g++ $(CFLAGS) -o test test.cpp studentinterface.o
+
+.PHONY: clean
+clean:
+	rm -f test sim-dijkstra-start *.o
