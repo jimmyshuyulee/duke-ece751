@@ -6,9 +6,38 @@ Inspired by Apache Airflow, which is a platform to programmatically author, sche
 Interface specification:
 Input: .txt file showing the specification of tasks to be completed, followed by an adjacency list representing the workflow DAG
 
+=========start of file==========
+1
+2
+3
+4
+5
+
+1:2
+2:3,4
+3:5
+4:5
+5:
+
+==========end of file===========
+        3
+      /   \
+1 - 2       5
+      \   /
+        4
 Output: A .log file specifying whether the scheduled tasks sequence has been successfully completed or not
+
 - Testing plan
-- Breakdown of project into 3-5 steps and how long you expect each one
-  to take
+
+Breakdown of project into 3-5 steps:
+1. Inplement the Task class and complete two functions:
+    i. Read the input file and construct the corresponding DAG
+    ii. Check if the graph is really acyclic.
+2. Complete inherited class for different type of tasks, such as binary,
+   shell script... and complete a function which generate log information.
+3. Utilize some system call to achieve task scheduling and automation.
+4. Leverage parellelism for independent tasks processing.
+Each steps should take approximately 5 days to complete and test.
+
 - Sources of required domain knowledge
 
