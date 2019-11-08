@@ -4,21 +4,21 @@ sizeof C:32
 sizeof D:56
 Construct A: this = 0x1028
 Construct C: this = 0x1000
-Construct B: this = 0x1010
+Construct B: this = 0x1000
 Construct D: this = 0x1000
 A thing this = 0x1028
 A D this= 0x1000
-B thing this = 0x1020
+B thing this = 0x1010
 A D this= 0x1000
-C thing this = 0x1010
+C thing this = 0x1000
 A D this= 0x1000
-B:0x1020
-B thing this = 0x1020
+B:0x1010
+B thing this = 0x1010
 A D this= 0x1000
 A thing this = 0x1028
 A D this= 0x1000
-C:0x1010
-C thing this = 0x1010
+C:0x1000
+C thing this = 0x1000
 A D this= 0x1000
 A thing this = 0x1028
 A D this= 0x1000
@@ -26,6 +26,6 @@ A:0x1028
 A thing this = 0x1028
 A D this= 0x1000
 Destruct D: this = 0x1000
-Destruct B: this = 0x1020
-Destruct C: this = 0x1010
+Destruct B: this = 0x1010
+Destruct C: this = 0x1000
 Destruct A: this = 0x1028
