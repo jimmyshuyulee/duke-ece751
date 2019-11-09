@@ -1,6 +1,20 @@
-Grading at 11/08/2019:04:23:55.812091
-For commit ID b36e969fd459889685d9ae5090bc86644793bdd0
-Grading at Thu Nov  7 23:23:55 EST 2019
-A pre grader will be setup soon.  Please be patient.
+Grading at 11/09/2019:20:01:42.654052
+For commit ID 99931a2e85c9e105b0a631f62898734d0065d472
+Grading at Sat Nov  9 15:01:42 EST 2019
+Running Cars in Graphs pre-grader
+NOTE: Only part 1 is being tested
+These tests are NOT exhaustive
+You are STRONGLY RECOMMENDED to write more tests
+Compiling code
+make: 'sim-dijkstra-start' is up to date.
+Your file did not match the expected ouput
+Test 1 failed!
+Basic test 1 failed
+Your file did not match the expected ouput
+Test 2 failed!
+Basic test 2 failed
+Your file did not match the expected ouput
+Test 3 failed!
+Basic test 3 failed
 
 Overall Grade: NO GRADE YET
