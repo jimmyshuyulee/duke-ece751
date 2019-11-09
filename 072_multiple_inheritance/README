@@ -19,28 +19,65 @@ diagram.
 		 Proxy
 
 Server and Client are two derived classes inheriting Socket and Proxy is the grandchild class inherits
-both Server and Client, which means Proxy could play the role of both server and client in socket connections.
-Remember what we learned in chapter 29, virtual inheritance could be used to avoid two copies of the
-grandparent class, which is Socket in this assignment.
+both Server and Client, which means Proxy could play the role of both server and client in socket
+connections. Remember what we learned in chapter 29, virtual inheritance could be used to avoid two
+copies of the grandparent class, which is Socket in this assignment.
 
-What you need to do is to implement class Server, class Client and class Proxy in each seperated header file.
-You will do the basic socket connection initializations first for setting up the following connection structure
-in your own server, which means you will do self-send and self-receive opeartions between them.
+What you need to do is to implement class Server, class Client and class Proxy in each seperated header
+file. You will do the basic socket connection initializations first for setting up the following
+connection structure in your own server, which means you will do self-send and self-receive opeartions
+between them.
 
    	Server  <---------->  Proxy  <---------->  Client
 		 port: 8000           port: 8080
 
+Procedures of setting up socket connections:
 
+ Server: getaddrinfo -> socket -> setsockopt -> bind -> listen -> accept -> recv/send
 
+ Client: getaddrinfo -> socket           ->             connect     ->      recv/send
 
+(For all those system calls, you could see their man pages for more details)
+ - getaddrinfo: does DNS lookups before socket connections. Sometime it is not necessary if you already
+ know your hostname IP address.
+ - socket: does the socket creation at a basic step. You will get a socket descriptor, as you pass in
+ the desired domain, type and protocol. 
+ - setsockopt: helps in manipulating options for the socket referred by socket descriptor you just got.
+ This helps in reuse of address and port, preventing errors like "address already in use". 
+ - bind: helps bind the socket you just created to the address and port you want. 
+ - listen: this puts server socket in a passive mode, waiting for the client to approach the server
+ to make a connection. 
+ - accept: for a server, it extracts the first connection request on the queue of pending connections
+ for listening sockets, and it returns a new file descriptor referring to that client socket.
+ - connect: for a client, it helps connect to the file descriptor referred to its server addr.
 
 What you need to do for multiple inheritance:
 
  - class Socket
-
+     We have already provide you with Socket.hpp header file, which contains some basic set-ups of socket
+     connections. Take a look and try to figure out how it works there.
  - class Server
-
+     You need to implement your own initializer for server, which is ServerInit. It takes in a port
+     number and complete the remaining connection set-up procedures. Don't forget you could make use of
+     the initializer in Socket, which is Socket::init(). After this initializer being invoked, your sever
+     should all set and wait for connections from clients. You should also complete the receiver and
+     sender of Server, which receives message from and sends message to your client.
  - class Client
-
+     You need to implement your own initializer for client, which is ClientInit. Similar to Server, it
+     takes in the hose namd and port number, which is used to connect to the socke server just set up.
+     Also, you could make use of the initializer in Socket. After this initializer being invoked, your
+     should have connected to the server as a client. Receiver and sender are also similar. Once you
+     have set up the connection with the server, you could call the sender and receiver to communicate
+     with the server.
  - class Proxy
+     Proxy is just the intermediate one between Server and Client. Proxy here in this assignment is quite
+     simple and just complete the mission of conveying messages. First of all, you still need to
+     implement your own initializer for proxy. What is important is that proxy is both a "server" and
+     a "client". Therefore, it should take advantages of its parent classes initializers. It should
+     initialize both and after this initializer being invoked, the proxy should successfully connect to
+     a server as a client and wait for another client to connect as a server. For other messages
+     conveying functions you are about to implement, do it as its name indicates. For example, in
+     function from_client_to_server, you would probably recv message from client and send it to server.
 
+Do not modify the code that has already given. You could also write your own test cases to test your
+functionalities. Make sure your server, client and proxy work well beforeyou submit your code.
