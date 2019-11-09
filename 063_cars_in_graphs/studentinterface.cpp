@@ -20,13 +20,21 @@ Graph * readGraph(std::string fname) {
 
   std::getline(ifs, str);
   while (!ifs.eof()) {
-    // Road id will not be stored here, since I'm not going to use it.
-    std::size_t pos1 = str.find(' ');
-    while (pos1 != std::string::npos) {
-      std::size_t pos2 = str.find(' ', pos1 + 1);
-      info.push_back(stoi(str.substr(pos1 + 1, pos2 - pos1 - 1)));
-      pos1 = pos2;
+    std::size_t pos = 0;
+    while ((pos = str.find(' ')) != std::string::npos) {
+      info.push_back(stoi(str.substr(0, pos)));
+      str.erase(0, pos + 1);
     }
+    info.push_back(stoi(str.substr(0, pos)));
+    // The minimun number of argument per line (per road) should be 6,
+    // and the number of argument per line should be an even number
+    if (info.size() < 6 || info.size() % 2 != 0) {
+      std::cerr << "The format of road information is incorrect" << std::endl;
+      exit(EXIT_FAILURE);
+    }
+
+    unsigned id = info[0];
+    info.erase(info.begin());
     unsigned source = info[0];
     info.erase(info.begin());
     unsigned destination = info[0];
@@ -37,8 +45,7 @@ Graph * readGraph(std::string fname) {
     info.erase(info.begin());
 
     info.push_back(maxcars);
-
-    g->addEdge(source, destination, length, info);
+    g->addEdge(id, source, destination, length, info);
     info.clear();
     std::getline(ifs, str);
   }
@@ -73,7 +80,7 @@ vector<intersection_id_t> dijkstra(Graph * graph,
     pq.pop();
     for (auto neighbor : graph->getAdj(curr)) {
       intersection_id_t neighbor_id = neighbor.first;
-      int travel_time = neighbor.second[0].second;
+      int travel_time = neighbor.second.road_time_info[0].second;
       if (dist[neighbor_id] > dist[curr] + travel_time) {
         dist[neighbor_id] = dist[curr] + travel_time;
         pre[neighbor_id] = curr;
@@ -98,7 +105,6 @@ vector<intersection_id_t> dijkstra(Graph * graph,
     std::reverse(path.begin(), path.end());
     graph->setShortestPath(curr, i, path);
     path.clear();
-    //std::cout << "success!\n";
   }
   return graph->getShortestPath(s, d);
 }
@@ -106,7 +112,7 @@ vector<intersection_id_t> dijkstra(Graph * graph,
 vector<PerCarInfo *> startPlanning(Graph * graph,
                                    const std::vector<start_info_t> & departing_cars) {
   vector<PerCarInfo *> ans;
-  for (int i = 0; i < departing_cars.size(); i++) {
+  for (unsigned i = 0; i < departing_cars.size(); i++) {
     PerCarInfo * car_info = new PerCarInfo(
         departing_cars[i].first,
         dijkstra(graph, departing_cars[i].second.first, departing_cars[i].second.second));
@@ -118,7 +124,7 @@ vector<PerCarInfo *> startPlanning(Graph * graph,
 vector<intersection_id_t> getNextStep(Graph * graph,
                                       const std::vector<arrival_info_t> & arriving_cars) {
   vector<intersection_id_t> ans;
-  for (int i = 0; i < arriving_cars.size(); i++) {
+  for (unsigned i = 0; i < arriving_cars.size(); i++) {
     ans.push_back(arriving_cars[i].second->getNextIntersectionId(arriving_cars[i].first));
   }
   return ans;

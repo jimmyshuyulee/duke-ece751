@@ -27,21 +27,31 @@ class PerCarInfo {
       path(car_path) {}
   unsigned getCarId() const { return id; }
   intersection_id_t getNextIntersectionId(const intersection_id_t & inter_id) const {
-    for (int i = 0; i < path.size() - 1; i++) {
+    for (unsigned i = 0; i < path.size() - 1; i++) {
       if (path[i] == inter_id) {
         return path[i + 1];
       }
-      return 0;
     }
+    return 0;
   }
   vector<intersection_id_t> getPath() const { return path; }
+};
+
+class RoadInfo {
+  typedef pair<unsigned, float> road_time_info_t;
+  unsigned id;
+  vector<road_time_info_t> road_time_info;
+
+ public:
+  RoadInfo() = default;
+  RoadInfo(unsigned id_) : id(id_) {}
+  RoadInfo(unsigned id_, vector<road_time_info_t> rti) : id(id_), road_time_info(rti) {}
 };
 
 // defined by student
 // for now, this class is an alias for our GenericGraph
 class Graph {
-  typedef pair<unsigned, float> road_time_info_t;
-  typedef unordered_map<intersection_id_t, vector<road_time_info_t> > adjacency_t;
+  typedef unordered_map<intersection_id_t, RoadInfo> adjacency_t;
   unsigned vertex_num;
   unsigned edge_num;
   vector<adjacency_t> g;
@@ -54,12 +64,15 @@ class Graph {
   Graph() = default;
   adjacency_t getAdj(const intersection_id_t & idx) const { return g[idx]; }
   unsigned getVNum() const { return vertex_num; }
-  vector<road_time_info_t> getRoadInfo(const intersection_id_t & s,
+  /*
+   * vector<road_time_info_t> getRoadInfo(const intersection_id_t & s,
                                        const intersection_id_t & d) const {
     return g[s].at(d);
   }
+  */
   vector<intersection_id_t> getShortestPath(const unsigned & s,
                                             const unsigned & d) const {
+    // Encode source and destination pair into a string
     std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
     if (shortest_path.find(ftp) != shortest_path.end()) {
       return shortest_path.at(ftp);
@@ -71,11 +84,13 @@ class Graph {
   void setShortestPath(const unsigned & s,
                        const unsigned & d,
                        vector<intersection_id_t> sp) {
+    // Encode source and destination pair into a string
     std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
     shortest_path[ftp] = sp;
   }
 
-  void addEdge(const unsigned & source,
+  void addEdge(const unsigned & id,
+               const unsigned & source,
                const unsigned & destination,
                const unsigned & length,
                vector<unsigned> & speed_carNum) {
@@ -84,21 +99,28 @@ class Graph {
       ++vertex_num;
     }
 
-    vector<road_time_info_t> cnt;
-    for (int i = 1; i < speed_carNum.size(); i += 2) {
-      cnt.emplace_back(speed_carNum[i], (float)length / speed_carNum[i - 1]);
+    if (g[source].find(destination) != g[source].end()) {
+      std::cerr << "Exist multiple lines of information for the same road!" << std::endl;
+      exit(EXIT_FAILURE);
     }
-    g[source][destination] = cnt;
+
+    RoadInfo ri(id);
+    for (unsigned i = 1; i < speed_carNum.size(); i += 2) {
+      ri.road_time_info.emplace_back(speed_carNum[i],
+                                     (float)length / speed_carNum[i - 1]);
+    }
+    g[source][destination] = ri;
     ++edge_num;
   }
 
   void printGraph() {
-    for (int i = 1; i < g.size(); i++) {
+    for (unsigned i = 1; i < g.size(); i++) {
       std::cout << "Edge " << i << ": " << std::endl;
       for (auto itr : g[i]) {
-        std::cout << itr.first;
-        for (int k = 0; k < itr.second.size(); k++)
-          std::cout << " " << itr.second[k].first << ":" << itr.second[k].second;
+        std::cout << itr.first << " " << itr.second.id;
+        for (unsigned k = 0; k < itr.second.road_time_info.size(); k++)
+          std::cout << " " << itr.second.road_time_info[k].first << ":"
+                    << itr.second.road_time_info[k].second;
         std::cout << std::endl;
       }
       std::cout << std::endl;
