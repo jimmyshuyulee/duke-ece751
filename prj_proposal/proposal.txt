@@ -1,33 +1,46 @@
 C++ version of Apache Airflow
 
 The goal of your project:
-Inspired by Apache Airflow, which is a platform to programmatically author, schedule, and monitor workflows.
+Inspired by Apache Airflow, which is a platform to programmatically author,
+schedule, and monitor workflows. I would like to pick up Airflow's idea of
+representing the as a Directed Acyclic Graph (DAG), so dependent tasks can be
+executed in sequence, and independent tasks can be executed in parallel. This
+scheduling task can also be done by writing a script and scheduling it with
+crontab, but then it would be difficult to trace which part of the workflow
+has error. Also, dependent tasks may have unexpected behavior if some of them
+are completed successfully, and some are not. My project aims to implement a
+workflow managment program which provides task scheduling, automation, and a
+complete log of execution result.
 
 Interface specification:
-Input: .txt file showing the specification of tasks to be completed, followed by an adjacency list representing the workflow DAG
+Input: .txt file showing the specification of tasks to be completed, followed
+by an adjacency list representing the workflow DAG. The format should be
 
+taskId executableName [argument1, argument2, ...]
+
+For example:
 =========start of file==========
-1
-2
-3
-4
-5
+1 task1 1000
+2 task2.sh
+3 task3 file1.txt fil2.txt
+4 task4 a b c
+5 task5.sh
 
 1:2
 2:3,4
 3:5
 4:5
 5:
-
 ==========end of file===========
+which represent a workflow:
         3
       /   \
 1 - 2       5
       \   /
         4
-Output: A .log file specifying whether the scheduled tasks sequence has been successfully completed or not
 
-- Testing plan
+Output: A .log file specifying whether the scheduled tasks sequence has been
+successfully completed or not.
 
 Breakdown of project into 3-5 steps:
 1. Inplement the Task class and complete two functions:
@@ -39,5 +52,14 @@ Breakdown of project into 3-5 steps:
 4. Leverage parellelism for independent tasks processing.
 Each steps should take approximately 5 days to complete and test.
 
-- Sources of required domain knowledge
+Testing plan:
+1. Write unit tests for the Task class and the two functions.
+2. Functional test on the whole log generation process, and make sure all the
+resource are properly freed if any task is not finished successfully.
+3. Unit tests on system calls on Task objects.
+4. Performance test on concurrency implementation
+5. Integration test on the whole program
+
+Sources of required domain knowledge:
+Airflow's Github repositary and documentation
 
