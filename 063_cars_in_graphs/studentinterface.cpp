@@ -18,15 +18,19 @@ Graph * readGraph(std::string fname) {
   std::string str;
   vector<unsigned> info;
 
-  std::getline(ifs, str);
   while (!ifs.eof()) {
+    std::getline(ifs, str);
     std::size_t pos = 0;
     while ((pos = str.find(' ')) != std::string::npos) {
       info.push_back(stoi(str.substr(0, pos)));
       str.erase(0, pos + 1);
     }
-    info.push_back(stoi(str.substr(0, pos)));
-    // The minimun number of argument per line (per road) should be 6,
+    try {
+      info.push_back(stoi(str.substr(0, pos)));
+    }
+    catch (std::invalid_argument) {
+      std::cout << str.substr(0, pos);
+    }  // The minimun number of argument per line (per road) should be 6,
     // and the number of argument per line should be an even number
     if (info.size() < 6 || info.size() % 2 != 0) {
       std::cerr << "The format of road information is incorrect" << std::endl;
@@ -47,9 +51,8 @@ Graph * readGraph(std::string fname) {
     info.push_back(maxcars);
     g->addEdge(id, source, destination, length, info);
     info.clear();
-    std::getline(ifs, str);
   }
-  g->printGraph();
+  //g->printGraph();
   return g;
 }
 
@@ -78,9 +81,9 @@ vector<intersection_id_t> dijkstra(Graph * graph,
   while (!pq.empty()) {
     intersection_id_t curr = pq.top().first;
     pq.pop();
-    for (auto neighbor : graph->getAdj(curr)) {
-      intersection_id_t neighbor_id = neighbor.first;
-      int travel_time = neighbor.second.road_time_info[0].second;
+    for (auto road : graph->getAdj(curr)) {
+      intersection_id_t neighbor_id = road.second.destination;
+      int travel_time = road.second.road_time_info[0].second;
       if (dist[neighbor_id] > dist[curr] + travel_time) {
         dist[neighbor_id] = dist[curr] + travel_time;
         pre[neighbor_id] = curr;
@@ -125,7 +128,13 @@ vector<intersection_id_t> getNextStep(Graph * graph,
                                       const std::vector<arrival_info_t> & arriving_cars) {
   vector<intersection_id_t> ans;
   for (unsigned i = 0; i < arriving_cars.size(); i++) {
-    ans.push_back(arriving_cars[i].second->getNextIntersectionId(arriving_cars[i].first));
+    intersection_id_t next =
+        arriving_cars[i].second->getNextIntersectionId(arriving_cars[i].first);
+    if (next == 0) {
+      std::cerr << "Next step does not Exist!" << std::endl;
+      exit(EXIT_FAILURE);
+    }
+    ans.push_back(next);
   }
   return ans;
 }

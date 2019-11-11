@@ -27,9 +27,9 @@ class PerCarInfo {
       path(car_path) {}
   unsigned getCarId() const { return id; }
   intersection_id_t getNextIntersectionId(const intersection_id_t & inter_id) const {
-    for (unsigned i = 0; i < path.size() - 1; i++) {
-      if (path[i] == inter_id) {
-        return path[i + 1];
+    for (unsigned i = 1; i < path.size(); i++) {
+      if (path[i - 1] == inter_id) {
+        return path[i];
       }
     }
     return 0;
@@ -38,13 +38,13 @@ class PerCarInfo {
 };
 
 class RoadInfo {
+ public:
   typedef pair<unsigned, float> road_time_info_t;
   unsigned id;
   intersection_id_t source;
   intersection_id_t destination;
   vector<road_time_info_t> road_time_info;
 
- public:
   RoadInfo() = default;
   RoadInfo(unsigned id_,
            intersection_id_t s,
@@ -59,7 +59,7 @@ class RoadInfo {
 // defined by student
 // for now, this class is an alias for our GenericGraph
 class Graph {
-  typedef unordered_map<intersection_id_t, vector<RoadInfo> > adjacency_t;
+  typedef unordered_map<road_id_t, RoadInfo> adjacency_t;
   unsigned vertex_num;
   unsigned edge_num;
   vector<adjacency_t> g;
@@ -72,12 +72,6 @@ class Graph {
   Graph() = default;
   adjacency_t getAdj(const intersection_id_t & idx) const { return g[idx]; }
   unsigned getVNum() const { return vertex_num; }
-  /*
-   * vector<road_time_info_t> getRoadInfo(const intersection_id_t & s,
-                                       const intersection_id_t & d) const {
-    return g[s].at(d);
-  }
-  */
   vector<intersection_id_t> getShortestPath(const unsigned & s,
                                             const unsigned & d) const {
     // Encode source and destination pair into a string
@@ -107,17 +101,17 @@ class Graph {
       ++vertex_num;
     }
 
-    if (g[source].find(destination) != g[source].end()) {
+    if (g[source].find(id) != g[source].end()) {
       std::cerr << "Exist multiple lines of information for the same road!" << std::endl;
       exit(EXIT_FAILURE);
     }
 
-    RoadInfo ri(id);
+    RoadInfo ri(id, source, destination);
     for (unsigned i = 1; i < speed_carNum.size(); i += 2) {
       ri.road_time_info.emplace_back(speed_carNum[i],
                                      (float)length / speed_carNum[i - 1]);
     }
-    g[source][destination] = ri;
+    g[source][id] = ri;
     ++edge_num;
   }
 
@@ -125,7 +119,8 @@ class Graph {
     for (unsigned i = 1; i < g.size(); i++) {
       std::cout << "Edge " << i << ": " << std::endl;
       for (auto itr : g[i]) {
-        std::cout << itr.first << " " << itr.second.id;
+        std::cout << itr.first << " " << itr.second.source << " "
+                  << itr.second.destination;
         for (unsigned k = 0; k < itr.second.road_time_info.size(); k++)
           std::cout << " " << itr.second.road_time_info[k].first << ":"
                     << itr.second.road_time_info[k].second;
