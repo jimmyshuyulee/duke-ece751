@@ -20,17 +20,20 @@ Graph * readGraph(std::string fname) {
 
   while (!ifs.eof()) {
     std::getline(ifs, str);
+    str.erase(str.find_last_not_of(" ") + 1);  // Remove trailing whitespace
     std::size_t pos = 0;
     while ((pos = str.find(' ')) != std::string::npos) {
       info.push_back(stoi(str.substr(0, pos)));
       str.erase(0, pos + 1);
     }
+
     try {
       info.push_back(stoi(str.substr(0, pos)));
     }
     catch (std::invalid_argument) {
-      std::cout << str.substr(0, pos);
-    }  // The minimun number of argument per line (per road) should be 6,
+      std::cout << str.substr(0, pos) << "aaaa";
+    }
+    // The minimun number of argument per line (per road) should be 6,
     // and the number of argument per line should be an even number
     if (info.size() < 6 || info.size() % 2 != 0) {
       std::cerr << "The format of road information is incorrect" << std::endl;
