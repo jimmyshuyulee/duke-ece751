@@ -40,18 +40,26 @@ class PerCarInfo {
 class RoadInfo {
   typedef pair<unsigned, float> road_time_info_t;
   unsigned id;
+  intersection_id_t source;
+  intersection_id_t destination;
   vector<road_time_info_t> road_time_info;
 
  public:
   RoadInfo() = default;
-  RoadInfo(unsigned id_) : id(id_) {}
-  RoadInfo(unsigned id_, vector<road_time_info_t> rti) : id(id_), road_time_info(rti) {}
+  RoadInfo(unsigned id_,
+           intersection_id_t s,
+           intersection_id_t d,
+           vector<road_time_info_t> rti = vector<road_time_info_t>()) :
+      id(id_),
+      source(s),
+      destination(d),
+      road_time_info(rti) {}
 };
 
 // defined by student
 // for now, this class is an alias for our GenericGraph
 class Graph {
-  typedef unordered_map<intersection_id_t, RoadInfo> adjacency_t;
+  typedef unordered_map<intersection_id_t, vector<RoadInfo> > adjacency_t;
   unsigned vertex_num;
   unsigned edge_num;
   vector<adjacency_t> g;
