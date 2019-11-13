@@ -18,21 +18,22 @@ using std::vector;
 // should probably only need id and path...
 class PerCarInfo {
   unsigned id;
+  intersection_id_t destination;
   vector<intersection_id_t> path;
 
  public:
   PerCarInfo() = default;
-  PerCarInfo(const unsigned & car_id, const vector<intersection_id_t> & car_path) :
+  PerCarInfo(const unsigned & car_id,
+             const vector<intersection_id_t> & car_path = vector<intersection_id_t>()) :
       id(car_id),
       path(car_path) {}
   unsigned getCarId() const { return id; }
-  intersection_id_t getNextIntersectionId(const intersection_id_t & inter_id) const {
-    for (unsigned i = 1; i < path.size(); i++) {
-      if (path[i - 1] == inter_id) {
-        return path[i];
-      }
+  intersection_id_t getNextIntersectionId() {
+    if (path.size() == 0) {
+      return 0;
     }
-    return 0;
+    path.erase(path.begin());
+    return path[0];
   }
   vector<intersection_id_t> getPath() const { return path; }
 };
@@ -70,6 +71,7 @@ class Graph {
 
  public:
   Graph() = default;
+  bool isInGraph(intersection_id_t i) { return g.size() > i; }
   adjacency_t getAdj(const intersection_id_t & idx) const { return g[idx]; }
   unsigned getVNum() const { return vertex_num; }
   vector<intersection_id_t> getShortestPath(const unsigned & s,
@@ -132,8 +134,22 @@ class Graph {
 };
 
 vector<intersection_id_t> dijkstra(Graph * graph,
-                                   intersection_id_t s,
-                                   intersection_id_t d);
+                                   const intersection_id_t & s,
+                                   const intersection_id_t & d);
+
+void getPath(vector<intersection_id_t> & path,
+             const vector<intersection_id_t> & previous_node,
+             const intersection_id_t & start,
+             const intersection_id_t & end);
+
+vector<intersection_id_t> dijkstraAtStart(Graph * graph,
+                                          const intersection_id_t & s,
+                                          const intersection_id_t & d);
+
+vector<intersection_id_t> dijkstraAtIntersection(Graph * graph,
+                                                 const intersection_id_t & s,
+                                                 const intersection_id_t & d);
+
 // Creates the src, dest car pairs needed for startPlanning
 Graph * readGraph(std::string fname);
 
