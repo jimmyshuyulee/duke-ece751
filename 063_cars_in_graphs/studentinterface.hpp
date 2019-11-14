@@ -186,4 +186,6 @@ std::vector<intersection_id_t> getNextStep(
 // that resource freeing and other book-keeping does not need coordination]
 void carArrived(PerCarInfo * finished_cars);
 
+void cleanup(Graph * g);
+
 #endif

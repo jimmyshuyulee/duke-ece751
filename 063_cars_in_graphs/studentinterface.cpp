@@ -83,11 +83,13 @@ vector<intersection_id_t> dijkstra(Graph * graph,
   dist[s] = 0;
   vector<intersection_id_t> pre(graph->getVNum(), 0);
   pre[s] = s;
+  vector<bool> visited(graph->getVNum(), false);
 
   pq.push(std::make_pair(s, 0));
   while (!pq.empty()) {
     intersection_id_t curr = pq.top().first;
     pq.pop();
+    visited[curr] = true;
     for (auto road : graph->getAdj(curr)) {
       intersection_id_t neighbor_id = road.second.destination;
       // Set the travel time from curr to neighbor to infinity, and check
@@ -105,7 +107,7 @@ vector<intersection_id_t> dijkstra(Graph * graph,
 #else
       travel_time = road.second.road_time_info[0].second;
 #endif
-      if (dist[neighbor_id] > dist[curr] + travel_time) {
+      if (!visited[neighbor_id] && dist[neighbor_id] > dist[curr] + travel_time) {
         dist[neighbor_id] = dist[curr] + travel_time;
         pre[neighbor_id] = curr;
         pq.push(std::make_pair(neighbor_id, dist[neighbor_id]));
@@ -211,3 +213,6 @@ void carArrived(PerCarInfo * finished_cars) {
   delete finished_cars;
 }
 
+void cleanup(Graph * g) {
+  delete g;
+}

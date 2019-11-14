@@ -1,0 +1,34 @@
+Below you will find the expected numbers.
+Where applicable a second is provided for part 2.
+There are many hidden tests. These are not fully representative.
+Format: total ticks|sum of all ticks
+
+Graph 1 (simplest):
+    4 nodes, 10 maxSpeed
+    Cars 1: 8|8
+    Cars 2: 8|18
+
+Graph 2 (triangle):
+    4 nodes, 10 maxSpeed
+    Cars 1: 8|8
+    Cars 2: 10|23
+    Cars 3: 55|2383
+
+Graph 3 (more complicated):
+    7 nodes, 1000 maxSpeed
+    Cars 1: 43|76
+    Cars 2: 86|300
+    Cars 3: 51|1348
+
+Graph 7 (3 level road system):
+    18 nodes, 1000 maxSpeed
+    Cars 1: 802|1418
+    Cars 2: 802|2266
+    Cars 3: 86|1691
+    Cars 4: 12091|24174
+
+Graph 10 (neighborhood-like layout):
+    9 nodes, 100 maxSpeed
+    Cars 1: 10|20
+    Cars 2: 15|90
+    Cars 3: 58|1840 40|1484
