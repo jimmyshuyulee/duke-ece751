@@ -1,0 +1,21 @@
+[     ] Title of your project 
+[  1/1] Paragraph summarizing the goal of your project
+[  1/1] Interface specification
+[  1/1] Testing plan
+[  1/1] Breakdown of project into 3-5 steps and how long you expect each one
+  to take
+[  1/1] Sources of required domain knowledge
+
+Total:
+[  5/5]
+
+Feedback:
+I'm very concerned that your domain knowledge is a github repo that
+already does this.  That sounds very dangerous in terms of isolating
+your work from their work. Do you have alternative sources of domain
+knowledge? 
+
+Otherwise, this sounds ok.
+
+I would also create a more descriptive title that doesn't include
+"Apache Airflow." 
