@@ -1,12 +1,12 @@
-Grading at 11/15/2019:22:23:02.412823
-For commit ID 6a49249e5abddba2db5ee0f217593a308ebdc1af
-Grading at Fri Nov 15 17:23:02 EST 2019
+Grading at 11/16/2019:22:30:19.421814
+For commit ID 129e980b611cadf1cd3d9dfd9586463d41b919b4
+Grading at Sat Nov 16 17:30:17 EST 2019
 Running Cars in Graphs pre-grader
 NOTE: Only part 1 is being tested
 These tests are NOT exhaustive
 You are STRONGLY RECOMMENDED to write more tests
 Compiling code
-make: 'sim-dijkstra-start' is up to date.
+g++ -Wall -Werror -std=gnu++11 -pedantic -ggdb3 -o sim-dijkstra-start studentinterface.cpp -L . -lcars
 Your file did not match the expected ouput
 Test 1 failed!
 Basic test 1 failed
