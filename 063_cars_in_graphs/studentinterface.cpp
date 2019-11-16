@@ -94,10 +94,12 @@ vector<intersection_id_t> dijkstra(Graph * graph,
       intersection_id_t neighbor_id = road.second.destination;
       // Set the travel time from curr to neighbor to infinity, and check
       // the number of cars on that road to decide the actual travel time.
-      float travel_time = FLT_MAX;
 #ifdef STEP2
-      unsigned car_num =
-          query_road(road.first).num_cars + query_road(road.first).num_pending_cars;
+      float travel_time =
+          road.second.road_time_info[road.second.road_time_info.size() - 1].second;
+      ;
+      RoadStatus road_status = query_road(road.first);
+      unsigned car_num = road_status.num_cars + road_status.num_pending_cars;
       for (auto road_time : road.second.road_time_info) {
         if (car_num < road_time.first) {
           travel_time = road_time.second;
@@ -105,7 +107,7 @@ vector<intersection_id_t> dijkstra(Graph * graph,
         }
       }
 #else
-      travel_time = road.second.road_time_info[0].second;
+      float travel_time = road.second.road_time_info[0].second;
 #endif
       if (!visited[neighbor_id] && dist[neighbor_id] > dist[curr] + travel_time) {
         dist[neighbor_id] = dist[curr] + travel_time;
@@ -152,7 +154,7 @@ vector<intersection_id_t> dijkstraAtStart(Graph * graph,
   return graph->getShortestPath(s, d);
 }
 
-#ifdef SEPT2
+#ifdef STEP2
 vector<intersection_id_t> dijkstraAtIntersection(Graph * graph,
                                                  const intersection_id_t & s,
                                                  const intersection_id_t & d) {
@@ -179,10 +181,12 @@ vector<PerCarInfo *> startPlanning(Graph * graph,
     }
 
 #ifdef STEP2
-    PerCarInfo * car_info = new PerCarInfo(departing_cars[i].first);
+    PerCarInfo * car_info =
+        new PerCarInfo(departing_cars[i].first, departing_cars[i].second.second);
 #else
     PerCarInfo * car_info = new PerCarInfo(
         departing_cars[i].first,
+        departing_cars[i].second.second,
         dijkstraAtStart(
             graph, departing_cars[i].second.first, departing_cars[i].second.second));
 #endif
@@ -196,7 +200,8 @@ vector<intersection_id_t> getNextStep(Graph * graph,
   vector<intersection_id_t> ans;
   for (unsigned i = 0; i < arriving_cars.size(); i++) {
 #ifdef STEP2
-    intersection_id_t next = dijkstraAtIntersection(graph, arriving_cars[i].second)[1];
+    intersection_id_t next = dijkstraAtIntersection(
+        graph, arriving_cars[i].first, arriving_cars[i].second->getDestination())[1];
 #else
     intersection_id_t next = arriving_cars[i].second->getNextIntersectionId();
 #endif

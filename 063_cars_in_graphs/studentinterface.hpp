@@ -24,10 +24,13 @@ class PerCarInfo {
  public:
   PerCarInfo() = default;
   PerCarInfo(const unsigned & car_id,
+             const intersection_id_t & des,
              const vector<intersection_id_t> & car_path = vector<intersection_id_t>()) :
       id(car_id),
+      destination(des),
       path(car_path) {}
   unsigned getCarId() const { return id; }
+  intersection_id_t getDestination() const { return destination; }
   intersection_id_t getNextIntersectionId() {
     if (path.size() == 0) {
       return 0;
@@ -119,7 +122,7 @@ class Graph {
 
   void printGraph() {
     for (unsigned i = 1; i < g.size(); i++) {
-      std::cout << "Edge " << i << ": " << std::endl;
+      std::cout << "Intersection " << i << ": " << std::endl;
       for (auto itr : g[i]) {
         std::cout << itr.first << " " << itr.second.source << " "
                   << itr.second.destination;

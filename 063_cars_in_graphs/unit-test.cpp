@@ -2,11 +2,7 @@
 
 int main(void) {
   std::cout << "Testing readGraph" << std::endl;
-  Graph * g = readGraph("graph7.txt");
-  g->printGraph();
-  g = readGraph("graph1.txt");
-  g->printGraph();
-  g = readGraph("graph2.txt");
+  Graph * g = readGraph("graph2.txt");
   g->printGraph();
   std::cout << std::endl;
 

@@ -1,0 +1,15 @@
+./sim-dijkstra-$1 graph1.txt cars1.txt
+./sim-dijkstra-$1 graph1.txt cars2.txt
+./sim-dijkstra-$1 graph2.txt cars1.txt
+./sim-dijkstra-$1 graph2.txt cars2.txt
+./sim-dijkstra-$1 graph2.txt cars3.txt
+./sim-dijkstra-$1 graph3.txt cars1.txt
+./sim-dijkstra-$1 graph3.txt cars2.txt
+./sim-dijkstra-$1 graph3.txt cars3.txt
+./sim-dijkstra-$1 graph7.txt cars1.txt
+./sim-dijkstra-$1 graph7.txt cars2.txt
+./sim-dijkstra-$1 graph7.txt cars3.txt
+./sim-dijkstra-$1 graph7.txt cars4.txt
+./sim-dijkstra-$1 graph10.txt cars1.txt
+./sim-dijkstra-$1 graph10.txt cars2.txt
+./sim-dijkstra-$1 graph10.txt cars3.txt

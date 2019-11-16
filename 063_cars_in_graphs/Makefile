@@ -1,8 +1,8 @@
 CFLAGS= -Wall -Werror -std=gnu++11 -pedantic -ggdb3
 
-sim-dijkstra-start:studentinterface.o
+sim-dijkstra-start:studentinterface.cpp
 	g++ $(CFLAGS) -o sim-dijkstra-start studentinterface.cpp -L . -lcars
-sim-dijkstra-each:studentinterface.o
+sim-dijkstra-each:studentinterface.cpp
 	g++ $(CFLAGS) -o sim-dijkstra-each studentinterface.cpp -DSTEP2 -L . -lcars
 
 studentinterface.o:studentinterface.cpp studentinterface.hpp
