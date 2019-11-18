@@ -12,6 +12,8 @@ using std::pair;
 using std::vector;
 
 intersection_id_t PerCarInfo::getNextIntersectionId() {
+  // I decided to return 0 if there is no path exist, since intersection_id_t
+  // starts from 1
   if (path.size() == 0) {
     return 0;
   }
@@ -44,6 +46,7 @@ void Graph::addEdge(const unsigned & id,
                     const unsigned & destination,
                     const unsigned & length,
                     vector<unsigned> & speed_carNum) {
+  // I use index of vector to represent intersection_id_t of the nodes
   while (g.size() <= source || g.size() <= destination) {
     g.push_back(adjacency_t());
     ++vertex_num;
@@ -54,8 +57,10 @@ void Graph::addEdge(const unsigned & id,
     exit(EXIT_FAILURE);
   }
 
-  RoadInfo ri(id, source, destination);
+  RoadInfo ri(id, source, destination, length);
   for (unsigned i = 1; i < speed_carNum.size(); i += 2) {
+    // Store {car number, corresponding travel time} pairs into road_time_info
+    // of the RoadInfo object
     ri.road_time_info.emplace_back(speed_carNum[i], (float)length / speed_carNum[i - 1]);
   }
   g[source][id] = ri;
@@ -91,8 +96,10 @@ Graph * readGraph(std::string fname) {
     str.erase(str.find_last_not_of(" ") + 1);  // Remove trailing whitespace
     std::size_t pos = 0;
 
+    // Abstract the reading and conversion portion for the while loop below
     auto convert_and_push =
         [](vector<unsigned> & roadInfo, const std::string & s, const std::size_t & p) {
+          // Exception handling block to deal with non-integer information
           try {
             roadInfo.push_back(stoi(s.substr(0, p)));
           }
@@ -126,6 +133,8 @@ Graph * readGraph(std::string fname) {
     unsigned maxcars = info[0];
     info.erase(info.begin());
 
+    // Move maximum car number to the end of info, so the info format is
+    // {speed, the corresponding car limit} for info[2i] and info[2i+1]
     info.push_back(maxcars);
     g->addEdge(id, source, destination, length, info);
     info.clear();
@@ -136,6 +145,7 @@ Graph * readGraph(std::string fname) {
 vector<intersection_id_t> dijkstra(Graph * graph,
                                    const intersection_id_t & s,
                                    const intersection_id_t & d) {
+  // Use travel time to construct a priority queue
   auto my_comp = [](const pair<intersection_id_t, float> & x,
                     const pair<intersection_id_t, float> & y) {
     return x.second < y.second;
@@ -157,12 +167,11 @@ vector<intersection_id_t> dijkstra(Graph * graph,
     visited[curr] = true;
     for (auto road : graph->getAdj(curr)) {
       intersection_id_t neighbor_id = road.second.destination;
-      // Set the travel time from curr to neighbor to infinity, and check
-      // the number of cars on that road to decide the actual travel time.
 #ifdef STEP2
-      float travel_time =
-          road.second.road_time_info[road.second.road_time_info.size() - 1].second;
-      ;
+      // Set the travel time from curr to neighbor to length of the road
+      // (speed == 1), and check the number of cars on that road to decide
+      // the actual travel time.
+      float travel_time = road.second.length;
       RoadStatus road_status = query_road(road.first);
       unsigned car_num = road_status.num_cars + road_status.num_pending_cars;
       for (auto road_time : road.second.road_time_info) {
@@ -172,6 +181,7 @@ vector<intersection_id_t> dijkstra(Graph * graph,
         }
       }
 #else
+      // Simply use the max speed for this case
       float travel_time = road.second.road_time_info[0].second;
 #endif
       if (!visited[neighbor_id] && dist[neighbor_id] > dist[curr] + travel_time) {
@@ -181,6 +191,7 @@ vector<intersection_id_t> dijkstra(Graph * graph,
       }
     }
   }
+  // Return the list of previous node in the shortest path
   return pre;
 }
 
@@ -246,9 +257,13 @@ vector<PerCarInfo *> startPlanning(Graph * graph,
     }
 
 #ifdef STEP2
+    // For sim-dijkstra-each, construct each car with only car id and
+    // intersection_id_t of its destination
     PerCarInfo * car_info =
         new PerCarInfo(departing_cars[i].first, departing_cars[i].second.second);
 #else
+    // For sim-dijkstra-start, compute the entire shorterst path at the
+    // beginning and store it into PerCarInfo
     PerCarInfo * car_info = new PerCarInfo(
         departing_cars[i].first,
         departing_cars[i].second.second,
@@ -265,9 +280,13 @@ vector<intersection_id_t> getNextStep(Graph * graph,
   vector<intersection_id_t> ans;
   for (unsigned i = 0; i < arriving_cars.size(); i++) {
 #ifdef STEP2
+    // For sim-dijkstra-each, execute dijkstraAtIntersection() to get the next
+    // intersection_id_t based on current road status
     intersection_id_t next = dijkstraAtIntersection(
         graph, arriving_cars[i].first, arriving_cars[i].second->getDestination())[1];
 #else
+    // For sim-dijkstra-start, just get the next intersection_id_t from the
+    // stroed shortest path
     intersection_id_t next = arriving_cars[i].second->getNextIntersectionId();
 #endif
     if (next == 0) {

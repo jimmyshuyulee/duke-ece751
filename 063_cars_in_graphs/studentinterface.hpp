@@ -33,6 +33,7 @@ class PerCarInfo {
   unsigned getCarId() const { return id; }
   intersection_id_t getDestination() const { return destination; }
   vector<intersection_id_t> getPath() const { return path; }
+
   // For sim-dijkstra-start, I store the shortest path in the variable path.
   // This funtion is called when a car arrives an intersection. It renew the
   // starting intersection of the path to current intersection, and returns the
@@ -46,16 +47,19 @@ class RoadInfo {
   unsigned id;
   intersection_id_t source;
   intersection_id_t destination;
+  unsigned length;
   vector<road_time_info_t> road_time_info;
 
   RoadInfo() = default;
   RoadInfo(unsigned id_,
            intersection_id_t s,
            intersection_id_t d,
+           unsigned l,
            vector<road_time_info_t> rti = vector<road_time_info_t>()) :
       id(id_),
       source(s),
       destination(d),
+      length(l),
       road_time_info(rti) {}
 };
 
@@ -65,6 +69,7 @@ class Graph {
   typedef unordered_map<road_id_t, RoadInfo> adjacency_t;
   unsigned vertex_num;
   unsigned edge_num;
+  // Simply use index to represent intersection_id_t
   vector<adjacency_t> g;
 
   // Did not think of a better wat to hash a from_to_pair_t, so I simply encode
@@ -76,22 +81,42 @@ class Graph {
   bool isInGraph(intersection_id_t i) { return g.size() > i; }
   adjacency_t getAdj(const intersection_id_t & idx) const { return g[idx]; }
   unsigned getVNum() const { return vertex_num; }
+
+  // Get the pre-computed shortest path stored for given s and d. It will
+  // return a default constructed vector<intersection_id_t> if the path is not
+  // computed before.
   vector<intersection_id_t> getShortestPath(const unsigned & s, const unsigned & d) const;
+
+  // Store the shortest path computed by dijkstra() for future usage.
   void setShortestPath(const unsigned & s,
                        const unsigned & d,
                        vector<intersection_id_t> sp);
+
+  // Add an edge to the graph. It constructs a RoadInfo object and stores it
+  // into its corresponding position. It should only be called in readGraph()
+  // function and if the added road's id exists in the graph, this funtion will
+  // exit the program with error messages.
   void addEdge(const unsigned & id,
                const unsigned & source,
                const unsigned & destination,
                const unsigned & length,
                vector<unsigned> & speed_carNum);
+
+  // Simply used for debugging. It prints the adjacency list stored
   void printGraph();
 };
 
+// Implementation of Dijkstra algorithm. It should only be called in
+// dijkstraAtStart or dijkstraAtIntersection(). This function returns a vector
+// of intersection_id_t representing the previous node in the shortest path
+// from source s for each intersection
 vector<intersection_id_t> dijkstra(Graph * graph,
                                    const intersection_id_t & s,
                                    const intersection_id_t & d);
 
+// Given a pair of start and end and the vector of previous nodes we get from
+// dijkstra(), traverse back to get the corresponding shortest path, and stores
+// it in variable path.
 void getPath(vector<intersection_id_t> & path,
              const vector<intersection_id_t> & previous_node,
              const intersection_id_t & start,
@@ -147,6 +172,7 @@ std::vector<intersection_id_t> getNextStep(
 // that resource freeing and other book-keeping does not need coordination]
 void carArrived(PerCarInfo * finished_cars);
 
+// Clean up the Graph object before exiting the program
 void cleanup(Graph * g);
 
 #endif
