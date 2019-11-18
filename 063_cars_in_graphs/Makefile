@@ -7,8 +7,8 @@ sim-dijkstra-each:studentinterface.o
 #	g++ $(CFLAGS) -o sim-dijkstra-start studentinterface.cpp -L . -lcars
 studentinterface.o:studentinterface.cpp studentinterface.hpp
 	g++ $(CFLAGS) -c studentinterface.cpp
-unit-test:unit-test.cpp studentinterface.o
-	g++ $(CFLAGS) -o unit-test unit-test.cpp studentinterface.o
+#unit-test:unit-test.cpp studentinterface.o
+#	g++ $(CFLAGS) -o unit-test unit-test.cpp studentinterface.o
 
 .PHONY: clean
 clean:
