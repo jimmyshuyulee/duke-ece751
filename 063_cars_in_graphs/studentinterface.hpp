@@ -29,16 +29,15 @@ class PerCarInfo {
       id(car_id),
       destination(des),
       path(car_path) {}
+
   unsigned getCarId() const { return id; }
   intersection_id_t getDestination() const { return destination; }
-  intersection_id_t getNextIntersectionId() {
-    if (path.size() == 0) {
-      return 0;
-    }
-    path.erase(path.begin());
-    return path[0];
-  }
   vector<intersection_id_t> getPath() const { return path; }
+  // For sim-dijkstra-start, I store the shortest path in the variable path.
+  // This funtion is called when a car arrives an intersection. It renew the
+  // starting intersection of the path to current intersection, and returns the
+  // next intersection id.
+  intersection_id_t getNextIntersectionId();
 };
 
 class RoadInfo {
@@ -77,63 +76,16 @@ class Graph {
   bool isInGraph(intersection_id_t i) { return g.size() > i; }
   adjacency_t getAdj(const intersection_id_t & idx) const { return g[idx]; }
   unsigned getVNum() const { return vertex_num; }
-  vector<intersection_id_t> getShortestPath(const unsigned & s,
-                                            const unsigned & d) const {
-    // Encode source and destination pair into a string
-    std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
-    if (shortest_path.find(ftp) != shortest_path.end()) {
-      return shortest_path.at(ftp);
-    }
-    else {
-      return vector<intersection_id_t>();
-    }
-  }
+  vector<intersection_id_t> getShortestPath(const unsigned & s, const unsigned & d) const;
   void setShortestPath(const unsigned & s,
                        const unsigned & d,
-                       vector<intersection_id_t> sp) {
-    // Encode source and destination pair into a string
-    std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
-    shortest_path[ftp] = sp;
-  }
-
+                       vector<intersection_id_t> sp);
   void addEdge(const unsigned & id,
                const unsigned & source,
                const unsigned & destination,
                const unsigned & length,
-               vector<unsigned> & speed_carNum) {
-    while (g.size() <= source || g.size() <= destination) {
-      g.push_back(adjacency_t());
-      ++vertex_num;
-    }
-
-    if (g[source].find(id) != g[source].end()) {
-      std::cerr << "Exist multiple lines of information for the same road!" << std::endl;
-      exit(EXIT_FAILURE);
-    }
-
-    RoadInfo ri(id, source, destination);
-    for (unsigned i = 1; i < speed_carNum.size(); i += 2) {
-      ri.road_time_info.emplace_back(speed_carNum[i],
-                                     (float)length / speed_carNum[i - 1]);
-    }
-    g[source][id] = ri;
-    ++edge_num;
-  }
-
-  void printGraph() {
-    for (unsigned i = 1; i < g.size(); i++) {
-      std::cout << "Intersection " << i << ": " << std::endl;
-      for (auto itr : g[i]) {
-        std::cout << itr.first << " " << itr.second.source << " "
-                  << itr.second.destination;
-        for (unsigned k = 0; k < itr.second.road_time_info.size(); k++)
-          std::cout << " " << itr.second.road_time_info[k].first << ":"
-                    << itr.second.road_time_info[k].second;
-        std::cout << std::endl;
-      }
-      std::cout << std::endl;
-    }
-  }
+               vector<unsigned> & speed_carNum);
+  void printGraph();
 };
 
 vector<intersection_id_t> dijkstra(Graph * graph,
@@ -145,10 +97,16 @@ void getPath(vector<intersection_id_t> & path,
              const intersection_id_t & start,
              const intersection_id_t & end);
 
+// This function is used for sim-dijkstra-start, which is only executed once
+// at the start, search for the shortest path for each cars, and store the
+// path for future usage
 vector<intersection_id_t> dijkstraAtStart(Graph * graph,
                                           const intersection_id_t & s,
                                           const intersection_id_t & d);
 
+// This function is used for sim-dijkstra-each, which is executed whenever a
+// car arrives an intersection. It will get the latest road status, search for
+// the shortest path accordingly, and return the next intersection to head for.
 vector<intersection_id_t> dijkstraAtIntersection(Graph * graph,
                                                  const intersection_id_t & s,
                                                  const intersection_id_t & d);

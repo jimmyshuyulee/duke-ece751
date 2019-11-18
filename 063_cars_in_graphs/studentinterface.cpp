@@ -11,6 +11,71 @@
 using std::pair;
 using std::vector;
 
+intersection_id_t PerCarInfo::getNextIntersectionId() {
+  if (path.size() == 0) {
+    return 0;
+  }
+  path.erase(path.begin());
+  return path[0];
+}
+
+vector<intersection_id_t> Graph::getShortestPath(const unsigned & s,
+                                                 const unsigned & d) const {
+  // Encode source and destination pair into a string
+  std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
+  if (shortest_path.find(ftp) != shortest_path.end()) {
+    return shortest_path.at(ftp);
+  }
+  else {
+    return vector<intersection_id_t>();
+  }
+}
+
+void Graph::setShortestPath(const unsigned & s,
+                            const unsigned & d,
+                            vector<intersection_id_t> sp) {
+  // Encode source and destination pair into a string
+  std::string ftp = "from" + std::to_string(s) + "to" + std::to_string(d);
+  shortest_path[ftp] = sp;
+}
+
+void Graph::addEdge(const unsigned & id,
+                    const unsigned & source,
+                    const unsigned & destination,
+                    const unsigned & length,
+                    vector<unsigned> & speed_carNum) {
+  while (g.size() <= source || g.size() <= destination) {
+    g.push_back(adjacency_t());
+    ++vertex_num;
+  }
+
+  if (g[source].find(id) != g[source].end()) {
+    std::cerr << "Exist multiple lines of information for the same road!" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  RoadInfo ri(id, source, destination);
+  for (unsigned i = 1; i < speed_carNum.size(); i += 2) {
+    ri.road_time_info.emplace_back(speed_carNum[i], (float)length / speed_carNum[i - 1]);
+  }
+  g[source][id] = ri;
+  ++edge_num;
+}
+
+void Graph::printGraph() {
+  for (unsigned i = 1; i < g.size(); i++) {
+    std::cout << "Intersection " << i << ": " << std::endl;
+    for (auto itr : g[i]) {
+      std::cout << itr.first << " " << itr.second.source << " " << itr.second.destination;
+      for (unsigned k = 0; k < itr.second.road_time_info.size(); k++)
+        std::cout << " " << itr.second.road_time_info[k].first << ":"
+                  << itr.second.road_time_info[k].second;
+      std::cout << std::endl;
+    }
+    std::cout << std::endl;
+  }
+}
+
 Graph * readGraph(std::string fname) {
   Graph * g = new Graph();
   std::ifstream ifs;
