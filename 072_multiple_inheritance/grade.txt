@@ -1,6 +1,29 @@
-Grading at 11/11/2019:19:55:08.424440
-For commit ID e3d75e6079ae1da2ac290caf778e5b80c09b0cca
-Grading at Mon Nov 11 14:55:08 EST 2019
-Good job! This is your last assignment, please wait for grading.
+Grading at 12/04/2019:21:13:13.851274
+For commit ID 521fab1dcff18ad065e86b97e7f1c8d73d3e9264
+Grading at Wed Dec  4 16:13:10 EST 2019
+Compiling student code
+g++ -o server -std=c++11 -g -pedantic -Wall -Werror server.cpp
+g++ -o client -std=c++11 -g -pedantic -Wall -Werror client.cpp
+g++ -o proxy -std=c++11 -g -pedantic -Wall -Werror proxy.cpp
+Running given test
+Waiting for connection on port 8080
+Waiting for connection on port 8000
+Connecting to 127.0.0.1 on port 8080...
+Server: successfully accepted
+Proxy connectd to client at port 8080
+Connecting to 127.0.0.1 on port 8000...
+Client: successfully connected
+Proxy connected to server at port 8000
+Proxy received 5 bytes from client: hello
+Server: successfully accepted
+Server received 5 bytes: hello
+Proxy received 5 bytes from server: world
+Client: successfully connected
+Client received 5 bytes: world
+Proxy received 3 bytes from client: foolo
+Server received 5 bytes: foolo
+Proxy received 3 bytes from server: barld
+Client received 5 bytes: barld
+Test 1 passed!
 
-Overall Grade: NO GRADE YET
+Overall Grade: A
