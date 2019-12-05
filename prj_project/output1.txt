@@ -1,0 +1,8 @@
+2019-11-5 1:7:1 - test_workflow_2 - INFO    - Start running test_workflow_2
+2019-11-5 1:7:1 - test_workflow_2 - INFO    - Task 1 is successfully executed
+2019-11-5 1:7:1 - test_workflow_2 - WARNING - Task 3 is skipped by branching
+2019-11-5 1:7:1 - test_workflow_2 - INFO    - Task 2 is successfully executed
+test2
+2019-11-5 1:7:1 - test_workflow_2 - INFO    - Task 4 is successfully executed
+test4
+2019-11-5 1:7:1 - test_workflow_2 - INFO    - All tasks are successfully executed !

@@ -1,0 +1,9 @@
+test_workflow_2 * * * * * 
+
+1 task1 branch [echo 2, 2:2, 3:3]
+2 task2 bash [echo test2;]         
+3 task3 bash [echo "test 3"; ]  a
+4 task4 bash [echo test4]
+
+1 >> 2,3
+2, 3 >> 4
