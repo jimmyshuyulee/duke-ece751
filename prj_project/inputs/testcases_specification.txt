@@ -1,0 +1,6 @@
+Test 1: easy 1-node workflow
+Test 2: easy 2-node workflow
+Test 3: 5-node workflow with two dependancy
+Test 4: 4-node workflow with branching
+Test 5: 5-node workflow with multi dependancy
+Test 6: easy 2 node workflow

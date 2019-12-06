@@ -1,4 +1,4 @@
-test_workflow_2 * * * * * 
+test_workflow_4 * * * * * 
 
 1 task1 branch [echo 2, 2:2, 3:3]
 2 task2 bash [echo test2;]         

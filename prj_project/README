@@ -1,5 +1,6 @@
 For this assignment, you are just going to do what you proposed!
 
+
 There are three different supported jobs:
 1. check the workflow logic
 ./workflow check inputfile outputfile
@@ -10,3 +11,5 @@ There are three different supported jobs:
 3. Schedule the workflow to the time specified in inputfile
 ./workflow schedule inputfile outputfile
 
+
+Test cases are in input/ repo, and outputs are in logs/

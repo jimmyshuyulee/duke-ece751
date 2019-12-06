@@ -1,0 +1,6 @@
+test_workflow_2 * * * * *
+  
+1  task1 bash [echo test1]
+2 task2 bash [echo test2]         
+  
+1>>2 
