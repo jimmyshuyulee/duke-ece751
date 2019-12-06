@@ -6,8 +6,11 @@
 #include <vector>
 
 #include "graph.hpp"
-//#include "logging.hpp"
+#include "logging.hpp"
 
+// This function check the format of arguments and return the command of the
+// task to be executed. It will find the outest bracket and regard everything
+// inside as the command
 std::string getArguments(std::stringstream & ss) {
   std::stringstream args;
   std::string temp;
@@ -22,13 +25,13 @@ std::string getArguments(std::stringstream & ss) {
     args << temp + " ";
   }
 
-  // std::cout << args.str() << std::endl;
   std::string s = args.str();
   return s;
 }
 
-// Only check the type and format of input arguments here. The validity of
-// those arguments will be checked in createTask().
+// This function converts task definition lines into vertices of the graph.
+// It only check the type and format of input arguments here. The validity of
+// those arguments will be checked in addTask().
 void convertTask(std::unique_ptr<Graph> & graph, std::string & str) {
   std::stringstream ss(str);
   std::string task_id, task_name, task_type;
@@ -45,17 +48,16 @@ void convertTask(std::unique_ptr<Graph> & graph, std::string & str) {
     std::cerr << "Missing bracket for arguments." << std::endl;
     exit(EXIT_FAILURE);
   }
-  // std::cout << task_arguments.substr(1, task_arguments.size() - 2) <<
-  // std::endl;
 
-  std::shared_ptr<Task> t = createTask(
+  graph->addTask(
       task_type,
       stoi(task_id),
       task_name,
       task_arguments.substr(task_arguments.find('[') + 1, task_arguments.rfind(']') - 1));
-  graph->addTask(t);
 }
 
+// This function check the input line format and convert it into edges of the
+// graph
 void convertDependency(std::unique_ptr<Graph> & graph, std::string & str) {
   // Check the validity of the expression here
   std::string nodes = "[0-9]*([[:space:]]*,[[:space:]]*[0-9]*)*";
@@ -76,6 +78,8 @@ void convertDependency(std::unique_ptr<Graph> & graph, std::string & str) {
   }
 }
 
+// This function parse the first line of the input file and create a graph with
+// those information
 std::unique_ptr<Graph> createGraph(const std::string & str, Logger * logger) {
   std::vector<std::string> cronInfo = splitString(str, " ");
   // Checking cron line format is too complicated, so I only make sure the
@@ -92,11 +96,14 @@ std::unique_ptr<Graph> createGraph(const std::string & str, Logger * logger) {
   return graph;
 }
 
+// This function read and parse the input file, then call createGraph(),
+// convertDependency() and convertTask() functions respectively.
 std::unique_ptr<Graph> readWorkflowFile(std::ifstream & ifs, Logger * logger) {
   std::string str;
 
   bool workflow_definition = false;
   std::getline(ifs, str);
+  // Remove leading and trailing spaces
   str.erase(0, str.find_first_not_of(" "));
   str.erase(str.find_last_not_of(" ") + 1);
   std::unique_ptr<Graph> graph(createGraph(str, logger));
@@ -110,6 +117,8 @@ std::unique_ptr<Graph> readWorkflowFile(std::ifstream & ifs, Logger * logger) {
     std::getline(ifs, str);
     str.erase(0, str.find_first_not_of(" "));
     str.erase(str.find_last_not_of(" ") + 1);
+    // Finding an empty line means tasks definition part has ended, start
+    // parsing workflow dependency definition.
     if (str.empty()) {
       workflow_definition = true;
       continue;
