@@ -12,4 +12,5 @@ There are three different supported jobs:
 ./workflow schedule inputfile outputfile
 
 
-Test cases are in input/ repo, and outputs are in logs/
+Test cases are in inputs/ repo, and outputs are in logs/. There is also a test
+specification in inputs/
