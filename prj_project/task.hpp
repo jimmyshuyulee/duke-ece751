@@ -34,7 +34,8 @@ class TaskCom {
   }
   inline void setSkipped(const TaskID & id) { skipped_.insert(id); }
   // Return whether curr_id depends on dep_id. Since adj_list_ is a const& here
-  // , the [] operator cannot be used.
+  // , the [] operator cannot be used. The use of this function already make
+  // sure that curr_id and dep_id are in the adj_list_.
   inline bool getDependency(const TaskID & curr_id, const TaskID & dep_id) {
     return (adj_list_.at(curr_id).find(dep_id) != adj_list_.at(curr_id).end());
   }

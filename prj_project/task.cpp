@@ -29,6 +29,10 @@ int BranchTask::checkTask(std::unique_ptr<TaskCom> & task_com) {
     if (!std::regex_match(branch[1], std::regex("[0-9]*"))) {
       throw std::invalid_argument("Branching destination should be a task id.");
     }
+    else if (task_com->get_adj_list().find(stoi(branch[1])) ==
+             task_com->get_adj_list().end()) {
+      throw std::invalid_argument("Branching destination is not in this graph.");
+    }
     else if (!task_com->getDependency(stoi(branch[1]), id_)) {
       throw std::invalid_argument(
           "Branching destination is not a dependent of the branch task.");
