@@ -1,19 +1,7 @@
 #include "task.hpp"
 
-//virtual int BashTask::checkTask(std::unique_ptr<TaskCom> & task_com) final override {
-//  return 0;
-//};
 exitStatusOutputPair BashTask::executeTask(std::unique_ptr<TaskCom> & task_com) {
   exitStatusOutputPair es_output = executeAndGetOutput(args_ + " 2>&1");
-
-  /*
-      std::cout << status << std::endl;
-       for (auto i : task_com->get_adj_list()) {
-         std::cout << i.first << " : ";
-         for (auto j : i.second) std::cout << j << " ";
-         std::cout << std::endl;
-       }
-   */
   return es_output;
 }
 
@@ -24,7 +12,7 @@ int BranchTask::checkTask(std::unique_ptr<TaskCom> & task_com) {
   for (unsigned i = 1; i < branches.size(); i++) {
     std::vector<std::string> branch = splitString(branches[i], ":");
     if (branch.size() != 2) {
-      // check format
+      throw std::invalid_argument("Branching format should be output:destination");
     }
     if (!std::regex_match(branch[1], std::regex("[0-9]*"))) {
       throw std::invalid_argument("Branching destination should be a task id.");
@@ -39,12 +27,15 @@ int BranchTask::checkTask(std::unique_ptr<TaskCom> & task_com) {
     }
     branch[0].erase(0, branch[0].find_first_not_of(" "));
     branch[0].erase(branch[0].find_last_not_of(" ") + 1);
+    // Already check the format, so stoi here will not throw exception
     output_id_map_[branch[0]] = stoi(branch[1]);
   }
   return 0;
 }
 
 exitStatusOutputPair BranchTask::executeTask(std::unique_ptr<TaskCom> & task_com) {
+  // Append " 2>&1" and redirect stderr to stdout because the pipe I used in
+  // executeAndGetOutput() only get stdout
   exitStatusOutputPair es_output = executeAndGetOutput(command_ + " 2>&1");
   if (output_id_map_.find(es_output.second) == output_id_map_.end()) {
     if (es_output.first != 0) {
@@ -55,15 +46,14 @@ exitStatusOutputPair BranchTask::executeTask(std::unique_ptr<TaskCom> & task_com
       throw std::runtime_error("Cannot find any corresponding task for the given output");
     }
   }
+
   for (auto p : output_id_map_) {
     if (p.first != es_output.second) {
       task_com->setSkipped(p.second);
     }
   }
-
-  if (es_output.first != 0) {
-    //   return es_output;
-  }
+  // If this task is successfully executed, it will complete setting skipped
+  // tasks and has no return output
   return std::make_pair(0, std::string());
 }
 
@@ -80,6 +70,8 @@ std::vector<std::string> splitString(std::string str, const std::string & delimi
 
 exitStatusOutputPair executeAndGetOutput(const std::string & cmd) {
   std::string result;
+  // Open a pipe. Since this pipe only record stdout, the input argument cmd
+  // will need to have " 2>&1" appended to the command to redirect stderr
   FILE * pipe = popen(cmd.c_str(), "r");
   if (!pipe) {
     throw std::runtime_error("popen() failed!");
@@ -93,6 +85,6 @@ exitStatusOutputPair executeAndGetOutput(const std::string & cmd) {
   }
   free(line);
   int es = pclose(pipe);
-  // result.erase(result.find_last_not_of("\n") + 1);
+  // Return the pair of exit status and output
   return std::make_pair(es, result);
 }

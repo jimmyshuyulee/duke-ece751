@@ -23,16 +23,17 @@ std::shared_ptr<Task> Graph::createTask(const std::string & type,
     return std::shared_ptr<Task>(new DummyTask(id, name, args));
   }
   else {
-    return nullptr;  // new Task(id, name, args);
+    return nullptr;
   }
 }
 
-void Graph::addTask  //(std::shared_ptr<Task> t) {
-    (const std::string & type,
-     const TaskID & id,
-     const std::string & name,
-     const std::string & args) {
-  //TaskID id = t->get_id();
+void Graph::addTask(const std::string & type,
+                    const TaskID & id,
+                    const std::string & name,
+                    const std::string & args) {
+  // If there exists multiple definition to one task id, only use the first
+  // definition in ther file, and print an warning to both stderr and log file
+  // to inform the user
   if (tasks_.find(id) != tasks_.end() || adj_list_.find(id) != adj_list_.end()) {
     std::stringstream ss;
     ss << "Multiple assingments on Task id " << id
@@ -61,6 +62,7 @@ bool Graph::checkAcyclic() {
   std::vector<TaskID> sorted;
   AdjList graph_to_be_sorted(adj_list_);
   std::queue<TaskID> q;
+  // First push all starting nodes, which has no dependancy, into the queue
   for (auto adj : graph_to_be_sorted) {
     if (adj.second.empty()) {
       q.push(adj.first);
@@ -71,6 +73,8 @@ bool Graph::checkAcyclic() {
     q.pop();
     sorted.push_back(n);
     graph_to_be_sorted.erase(n);
+    // Erase the dependancies on n, then after this update, push all of the nodes
+    // having no dependancy into the queue
     for (auto itr = graph_to_be_sorted.begin(); itr != graph_to_be_sorted.end(); itr++) {
       if (itr->second.find(n) != itr->second.end()) {
         itr->second.erase(n);
@@ -86,17 +90,20 @@ bool Graph::checkAcyclic() {
 bool Graph::executeOneTask(const TaskID & a_task_id) {
   bool execute_failure;
   std::stringstream ss;
+  // Enter this block if the task is skipped by branching
   if (task_com_->getSkipped(a_task_id)) {
     execute_failure = false;
     ss << "Task " << a_task_id << " is skipped by branching";
     logger_->warning(name_, ss.str());
   }
+  // Enter this block if at least one of the task's dependancies has failed
   else if (!upstream_status_[a_task_id]) {
     execute_failure = true;
     ss << "Task " << a_task_id
        << " is not executed due to failure in its depending tasks";
     logger_->error(name_, ss.str());
   }
+  // Enter this block in normal cases
   else {
     exitStatusOutputPair es_output = tasks_[a_task_id]->executeTask(task_com_);
     execute_failure = es_output.first;
@@ -134,6 +141,7 @@ void Graph::runWorkflow(bool real_execution) {
   std::vector<TaskID> failed_tasks;
   while (!incompleted_tasks.empty()) {
     std::vector<TaskID> available_tasks;
+    // Available tasks are those having no incompleted depandancies
     for (auto i_task : incompleted_tasks) {
       if (i_task.second.empty()) {
         available_tasks.push_back(i_task.first);

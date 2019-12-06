@@ -11,6 +11,7 @@
 
 class Graph {
   std::string name_;
+  // This variable stores the scheduled time for this workflow to be executed
   std::string time_;
   std::unordered_map<TaskID, std::shared_ptr<Task> > tasks_;
   AdjList adj_list_;
@@ -56,26 +57,37 @@ class Graph {
       upstream_status_(std::unordered_map<TaskID, bool>()),
       task_com_(new TaskCom(adj_list_)),
       logger_(logger) {}
+
   // At this stage delete copy constructor and copy assignment operator.
   // The graph can only be constructed from a workflow definition file
   Graph(const Graph & rhs) = delete;
   Graph & operator=(const Graph & rhs) = delete;
-  std::string get_time() { return time_; }
-  std::shared_ptr<Task> getTask(const TaskID & id);
+  inline std::string get_time() { return time_; }
+  inline std::shared_ptr<Task> getTask(const TaskID & id);
 
   // It will call createTask() to instantiate one kind of Task object.
   void addTask(const std::string & type,
                const TaskID & id,
                const std::string & name,
                const std::string & args);
+
+  // This funtion adds an edge from s to t, which means the execution of s
+  // depends on the result of t
   void addDependency(const TaskID & s, const TaskID & t);
+
   // Use topological sort to check whether this graph contains a cycle
   bool checkAcyclic();
+
+  // This function checks the logic of the workflow, for example whether branch
+  // tasks branch the flow to its following tasks
   void checkWorkflow() { runWorkflow(false); }
+
+  // This function actually runs the workflow
   void executeWorkflow() {
     logger_->info(name_, "Start running " + name_);
     runWorkflow(true);
   }
+
   // Print the adj list. Currently just for debugging
   void printGraph();
   ~Graph() {}
