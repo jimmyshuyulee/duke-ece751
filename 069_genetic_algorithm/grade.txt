@@ -1,11 +1,9 @@
-Grading at 11/05/2019:03:39:03.635734
-For commit ID 85d774f83b033b30364359ea635fd2dbd4f3a9b9
-Grading at Mon Nov  4 22:39:03 EST 2019
+Grading at 12/08/2019:20:58:12.427602
+For commit ID bfbc647eb45506c61133dad67158754c5b646756
+Grading at Sun Dec  8 15:58:12 EST 2019
 Compiling Genetic Algorithm
 g++ --std=gnu++11 -Wall -g -pedantic -pthread -o main fitness.o per_thread_random.o
-Theirs < Ours
-Theirs < Ours
-Theirs < Ours
-Theirs < Ours
+Test 1 timed out!
+Test1 failed!
 
-Overall Grade: A
+Overall Grade: F
