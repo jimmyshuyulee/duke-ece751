@@ -37,9 +37,9 @@ class GeneticAlgorithm {
    */
   void initialize_population(ECE751::ThreadPool<> & tp, const InitParams & ip) {
     for (size_t i = 0; i < total_popsize; i++) {
-      tp.enqueue([&tp, this, &ip] {
+      tp.enqueue([&tp, this, &ip, i] {
         Gene g = makeRandomGene(ip);
-        (*prev_gen)[j] = std::make_pair(g, fitness(g));
+        population1[i] = std::make_pair(g, fitness(g));
       });
     }
     tp.waitAll();
@@ -64,11 +64,11 @@ class GeneticAlgorithm {
    */
   void breed_pop(ECE751::ThreadPool<> & tp) {
     for (size_t i = 0; i < total_popsize; i++) {
-      int t1 = per_thread_random() % survive_popsize;
-      int t2 = per_thread_random() % survive_popsize;
-      tp.enqueue([&tp, this, t1, t2] {
-        Gene g = breed((*prev_gen)[t1].first, (*prev_gen)[t2].first);
-        (*next_gen)[j] = std::make_pair(g, fitness(g));
+      int t1 = std::abs(per_thread_random()) % survive_popsize;
+      int t2 = std::abs(per_thread_random()) % survive_popsize;
+      tp.enqueue([&tp, this, t1, t2, i] {
+        Gene g = breed(population1[t1].first, population1[t2].first);
+        population2[i] = std::make_pair(g, fitness(g));
       });
     }
     tp.waitAll();
@@ -95,12 +95,12 @@ class GeneticAlgorithm {
   Gene run(ECE751::ThreadPool<> & tp, const InitParams & ip) {
     initialize_population(tp, ip);
     for (size_t i = 0; i < max_iter; i++) {
-      sort_pop(tp, prev_gen);
+      sort_pop(tp, &population1);
       breed_pop(tp);
-      std::swap(prev_gen, next_gen);
+      std::swap(population1, population2);
     }
-    sort_pop(tp, next_gen);
-    return (*next_gen)[0].first;
+    sort_pop(tp, &population2);
+    return population2[0].first;
   }
   //return Gene(); }
 };

@@ -1,3 +1,4 @@
+
 #include <limits.h>
 
 #include <algorithm>
@@ -25,9 +26,13 @@
 std::pair<size_t, size_t> read_matrix_size(std::ifstream & f) {
   std::string str;
   std::getline(f, str);
-  std::size_t pos = str.find(' ');
 
-  return std::make_pair(stoi(str.substr(0, pos - 1)), stoi(str.substr(pos + 1)));
+  std::stringstream ss(str);
+  std::string s1;
+  std::string s2;
+  ss >> s1;
+  ss >> s2;
+  return std::make_pair(stoi(s1), stoi(s2));
 }
 
 /*
@@ -42,17 +47,32 @@ std::vector<std::vector<double> > read_dev_file(std::string fname) {
   std::vector<std::vector<double> > res(matrixSize.first,
                                         std::vector<double>(matrixSize.second));
   // Read the matrix
-  for (unsigned i = 0; i < res.size(); i++) {
+  std::string line;
+  unsigned int dev = 0;
+  while (getline(f, line)) {
+    std::istringstream is(line);
+    for (unsigned int task = 0; task < matrixSize.second; ++task) {
+      is >> res[dev][task];
+    }
+    ++dev;
+  }
+  return res;
+  /* for (unsigned i = 0; i < res.size(); i++) {
     std::string str;
     std::getline(f, str);
     std::size_t pos1 = 0;
+    int j = 0;
     while (pos1 != std::string::npos) {
+      if (pos1 != 0) {
+        pos1 += 1;
+      }
       std::size_t pos2 = str.find(' ', pos1 + 1);
-      res[i].push_back(stoi(str.substr(pos1 + 1, pos2 - pos1 - 1)));
+      res[i][j++] = stod(str.substr(pos1, pos2 - pos1));
       pos1 = pos2;
     }
   }
   return res;
+  */
 }
 
 /*
@@ -64,12 +84,22 @@ std::vector<std::vector<double> > read_dev_file(std::string fname) {
 double ebs_one_trial(const std::vector<unsigned> & task_mapping,
                      const std::vector<std::vector<double> > & estimates,
                      const std::vector<std::vector<double> > & history) {
+  size_t past_tasks = history[0].size();
+  std::vector<double> schedule_per_dev(estimates.size(), 0);
+  for (unsigned int idx = 0; idx < task_mapping.size(); ++idx) {
+    unsigned int dev = task_mapping[idx];
+    unsigned int task_idx = rand() % past_tasks;
+    schedule_per_dev[dev] += estimates[dev][idx] / history[dev][task_idx];
+  }
+  return *std::max_element(schedule_per_dev.begin(), schedule_per_dev.end());
+  /*
   double ans = 0;
   for (unsigned i = 0; i < task_mapping.size(); i++) {
     double rand_num = rand() % history[i].size();
     ans += estimates[task_mapping[i]][i] * history[i][rand_num];
   }
   return ans;
+  */
 }
 
 /*
@@ -82,12 +112,20 @@ double evidence_based_scheduling(const std::vector<unsigned> & task_mapping,
                                  const std::vector<std::vector<double> > & history,
                                  unsigned n_trials,
                                  double confidence) {
-  std::vector<double> record;
+  std::vector<double> trial_res(n_trials);
+  for (unsigned int i = 0; i < n_trials; ++i) {
+    trial_res[i] = ebs_one_trial(task_mapping, estimates, history);
+  }
+  std::sort(trial_res.begin(), trial_res.end());
+  return trial_res[n_trials * confidence];
+  /*
+      std::vector<double> record;
   for (unsigned i = 0; i < n_trials; i++) {
     record.push_back(ebs_one_trial(task_mapping, estimates, history));
   }
   std::sort(record.begin(), record.end());
   return record[(int)(record.size() * 0.95)];
+*/
 }
 
 /*
@@ -176,7 +214,7 @@ EBSInitParams * initializeParams(std::vector<std::vector<double> > estimates,
  * ThreadPool and GeneticAlgorithm with appropriate parameters.
  */
 int main(int argc, char ** argv) {
-  if (argc < 4) {
+  if (argc < 3) {
     std::cout << "Incorrect # of arguments\n";
     return EXIT_FAILURE;
   }
