@@ -38,17 +38,22 @@ class GeneticAlgorithm {
   void initialize_population(ECE751::ThreadPool<> & tp, const InitParams & ip) {
     auto task = [ip, this](int lower, int upper) {
       for (int j = lower; j < upper; j++) {
-        *prev_gen[j] = makeRandomGene(ip);
+        Gene g = makeRandomGene(ip);
+        (*prev_gen)[j] = std::make_pair(g, fitness(g));
       }
     };
-    for (int i = 0; i < tp.size(); i++) {
+    for (size_t i = 0; i < tp.size(); i++) {
       if (i == tp.size() - 1) {
-        tp.runTaskToCompletion(task(i * (prev_gen->size() / tp.size()),
-                                    (i + 1) * (prev_gen->size() / tp.size())));
+        tp.runTaskToCompletion([&tp, this, i, &task] {
+          task(i * (prev_gen->size() / tp.size()),
+               (i + 1) * (prev_gen->size() / tp.size()));
+        });
       }
       else {
-        tp.enqueue(task(i * (prev_gen->size() / tp.size()),
-                        (i + 1) * (prev_gen->size() / tp.size())));
+        tp.enqueue([&tp, this, i, &task] {
+          task(i * (prev_gen->size() / tp.size()),
+               (i + 1) * (prev_gen->size() / tp.size()));
+        });
       }
     }
   }
@@ -61,7 +66,7 @@ class GeneticAlgorithm {
     auto c = [](std::pair<Gene, double> a, std::pair<Gene, double> b) {
       return a.second < b.second;
     };
-    parallel_qsort(tp, population, c);
+    parallel_qsort(tp, (*population), c);
   }
 
   /*
@@ -75,17 +80,22 @@ class GeneticAlgorithm {
       for (int j = lower; j < upper; j++) {
         int t1 = per_thread_random() % prev_gen->size();
         int t2 = per_thread_random() % prev_gen->size();
-        *next_gen[j] = breed(*prev_gen[t1], *prev_gen[t2]);
+        Gene g = breed((*prev_gen)[t1].first, (*prev_gen)[t2].first);
+        (*next_gen)[j] = std::make_pair(g, fitness(g));
       }
     };
-    for (int i = 0; i < tp.size(); i++) {
+    for (size_t i = 0; i < tp.size(); i++) {
       if (i == tp.size() - 1) {
-        tp.runTaskToCompletion(task(i * (next_gen->size() / tp.size()),
-                                    (i + 1) * (next_gen->size() / tp.size())));
+        tp.runTaskToCompletion([&tp, this, i, &task] {
+          task(i * (next_gen->size() / tp.size()),
+               (i + 1) * (next_gen->size() / tp.size()));
+        });
       }
       else {
-        tp.enqueue(task(i * (next_gen->size() / tp.size()),
-                        (i + 1) * (next_gen->size() / tp.size())));
+        tp.enqueue([&tp, this, i, &task] {
+          task(i * (next_gen->size() / tp.size()),
+               (i + 1) * (next_gen->size() / tp.size()));
+        });
       }
     }
   }
@@ -115,9 +125,10 @@ class GeneticAlgorithm {
       breed_pop(tp);
       std::swap(prev_gen, next_gen);
     }
-    std::sort(next_gen->begin(), next->end());
-    return next_gen[next_gen->size() - 1];
-    //return Gene(); }
-  };
+    sort_pop(tp, next_gen);
+    return (*next_gen)[next_gen->size() - 1].first;
+  }
+  //return Gene(); }
+};
 
 #endif
