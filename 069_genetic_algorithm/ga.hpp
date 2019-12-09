@@ -101,7 +101,7 @@ Gene run(ECE751::ThreadPool<> & tp, const InitParams & ip) {
     std::swap(*prev_gen, *next_gen);
   }
   sort_pop(tp, next_gen);
-  return (*next_gen)[next_gen->size() - 1].first;
+  return (*next_gen)[0ke].first;
 }
 //return Gene(); }
 }
