@@ -108,7 +108,16 @@ class GeneticAlgorithm {
    *     prev and next generation.
    *  3. Sort the final result and return the resulting gene. 
    */
-  Gene run(ECE751::ThreadPool<> & tp, const InitParams & ip) { return Gene(); }
-};
+  Gene run(ECE751::ThreadPool<> & tp, const InitParams & ip) {
+    initialize_population(tp, ip);
+    for (size_t i = 0; i < max_iter; i++) {
+      sort_pop(tp, prev_gen);
+      breed_pop(tp);
+      std::swap(prev_gen, next_gen);
+    }
+    std::sort(next_gen->begin(), next->end());
+    return next_gen[next_gen->size() - 1];
+    //return Gene(); }
+  };
 
 #endif
