@@ -123,7 +123,7 @@ class GeneticAlgorithm {
     for (size_t i = 0; i < max_iter; i++) {
       sort_pop(tp, prev_gen);
       breed_pop(tp);
-      std::swap(prev_gen, next_gen);
+      std::swap(*prev_gen, *next_gen);
     }
     sort_pop(tp, next_gen);
     return (*next_gen)[next_gen->size() - 1].first;
