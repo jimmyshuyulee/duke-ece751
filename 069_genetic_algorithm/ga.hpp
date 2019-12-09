@@ -35,57 +35,56 @@ class GeneticAlgorithm {
    * containing a random gene and the fitness of that gene.
    * You should split work evenly across threads. 
    */
-  void initialize_population(ECE751::ThreadPool<> & tp, const InitParams & ip){};
-  for (size_t i = 0; i < total_popsize; i++) {
-    tp.enqueue([&tp, this, &ip] {
-      Gene g = makeRandomGene(ip);
-      (*prev_gen)[j] = std::make_pair(g, fitness(g));
-    });
+  void initialize_population(ECE751::ThreadPool<> & tp, const InitParams & ip) {
+    for (size_t i = 0; i < total_popsize; i++) {
+      tp.enqueue([&tp, this, &ip] {
+        Gene g = makeRandomGene(ip);
+        (*prev_gen)[j] = std::make_pair(g, fitness(g));
+      });
+    }
+    tp.waitAll();
   }
-  tp.waitAll();
-}
   /*
    * Sorts the given population. You should define a comparison function and 
    * pass it into parallel_qsort
    */
   void sort_pop(ECE751::ThreadPool<> & tp,
                 std::vector<std::pair<Gene, double> > * population) {
-  auto c = [](std::pair<Gene, double> a, std::pair<Gene, double> b) {
-    return a.second < b.second;
-  };
-  parallel_qsort(tp, (*population), c);
-}
+    auto c = [](std::pair<Gene, double> a, std::pair<Gene, double> b) {
+      return a.second < b.second;
+    };
+    parallel_qsort(tp, (*population), c);
+  }
 
-/*
+  /*
    * Populates next_gen by breeding genes from the previous generation
    * together. You should use per_thread_random to determine your random
    * indexes.
    * You should split work evenly across threads.
    */
-void breed_pop(ECE751::ThreadPool<> & tp) {
-  for (size_t i = 0; i < total_popsize; i++) {
-    int t1 = per_thread_random() % survive_popsize;
-    int t2 = per_thread_random() % survive_popsize;
-    tp.enqueue([&tp, this, t1, t2] {
-      Gene g = breed((*prev_gen)[t1].first, (*prev_gen)[t2].first);
-      (*next_gen)[j] = std::make_pair(g, fitness(g));
-    });
+  void breed_pop(ECE751::ThreadPool<> & tp) {
+    for (size_t i = 0; i < total_popsize; i++) {
+      int t1 = per_thread_random() % survive_popsize;
+      int t2 = per_thread_random() % survive_popsize;
+      tp.enqueue([&tp, this, t1, t2] {
+        Gene g = breed((*prev_gen)[t1].first, (*prev_gen)[t2].first);
+        (*next_gen)[j] = std::make_pair(g, fitness(g));
+      });
+    }
+    tp.waitAll();
   }
-  tp.waitAll();
-}
 
-public:
-GeneticAlgorithm(size_t total, size_t keep, size_t iter) :
-    total_popsize(total),
-    survive_popsize(keep),
-    max_iter(iter),
-    population1(total),
-    population2(total),
-    prev_gen(&population1),
-    next_gen(&population2) {
-}
+ public:
+  GeneticAlgorithm(size_t total, size_t keep, size_t iter) :
+      total_popsize(total),
+      survive_popsize(keep),
+      max_iter(iter),
+      population1(total),
+      population2(total),
+      prev_gen(&population1),
+      next_gen(&population2) {}
 
-/*
+  /*
    * Runs the genetic algorithm. There are 3 steps:
    *  1. Initialize population.
    *  2. Perform max_iter runs of the genetic algorithm. This involves
@@ -93,18 +92,17 @@ GeneticAlgorithm(size_t total, size_t keep, size_t iter) :
    *     prev and next generation.
    *  3. Sort the final result and return the resulting gene. 
    */
-Gene run(ECE751::ThreadPool<> & tp, const InitParams & ip) {
-  initialize_population(tp, ip);
-  for (size_t i = 0; i < max_iter; i++) {
-    sort_pop(tp, prev_gen);
-    breed_pop(tp);
-    std::swap(*prev_gen, *next_gen);
+  Gene run(ECE751::ThreadPool<> & tp, const InitParams & ip) {
+    initialize_population(tp, ip);
+    for (size_t i = 0; i < max_iter; i++) {
+      sort_pop(tp, prev_gen);
+      breed_pop(tp);
+      std::swap(*prev_gen, *next_gen);
+    }
+    sort_pop(tp, next_gen);
+    return (*next_gen)[0].first;
   }
-  sort_pop(tp, next_gen);
-  return (*next_gen)[0ke].first;
-}
-//return Gene(); }
-}
-;
+  //return Gene(); }
+};
 
 #endif
